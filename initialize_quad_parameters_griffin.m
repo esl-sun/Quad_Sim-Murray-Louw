@@ -16,7 +16,7 @@ Rn = 0.022; % virtual yaw moment arm
 % Propulsion:
 tau_T = 0.07; % motor time constant
 virtual_controls_mat = [1 1 1 1; -1/sqrt(2) 1/sqrt(2) 1/sqrt(2) -1/sqrt(2); 1/sqrt(2) -1/sqrt(2) 1/sqrt(2) -1/sqrt(2); 1 1 -1 -1];
-mixing_matrix = virtual_controls_mat';
+mixing_matrix = 4 * virtual_controls_mat'; % Anton thesis pg. 43
 max_total_T_kg = 4 * 3.2; % max thrust in kg (total)
 max_total_T = max_total_T_kg * g; % maximum total thrust
 max_T = max_total_T / 4; % maximum thrust per motor
@@ -27,6 +27,8 @@ hover_T = hover_total_T / 4; % hover thrust per motor
 
 % Aerodynamic:
 C_D = [0.064; 0.067; 0.089]; % From Pierro - need to calculate in flight test
+% C_D = [0.2; 0.2; 0.2]; % Anton Thesis
+
 Cdp = 0.01*1;
 tau_w = 5;
 v_w_kmh = [0; 0; 0];

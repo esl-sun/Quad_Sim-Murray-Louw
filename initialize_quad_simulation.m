@@ -60,7 +60,6 @@ end
 % waypoints for simulation                                
 waypoints = [...
     [0, 0, 0], 
-    [0, 0, 0], 
 %     [2, 0, 10], 
 %     [2, 0, 10], 
 %     [6, 0, 12], 
