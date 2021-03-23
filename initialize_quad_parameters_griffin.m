@@ -48,7 +48,7 @@ drift_tau = 4;
 
 
 %% Payload model
-mp = 2;
+mp = 0.0001;
 l = 1;
 k = 0;
 c = 0.03;
