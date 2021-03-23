@@ -1,5 +1,4 @@
 %% initialize simulation
-is_step = true;
 enable_payload = 1;
 
 
@@ -88,10 +87,6 @@ waypoints = [...
 %     [0, 0, 0],
 %     [0, 0, 0],
     [1, 0, 0]];
-
-if is_step
-    waypoints = [0 0 0];
-end
 
 waypoints = vec2mat(waypoints, 3);
 waypoints(:,3) = -waypoints(:,3); % Convert z to down
