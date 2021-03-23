@@ -103,9 +103,6 @@ waypoint_time_vector = [0:waypoint_time:waypoint_time*size(waypoints,1)-1]';
 % title('waypoints')
 % legend('x', 'y', 'z');
 
-
-
-
 %% Simulation inputs
 % initialize state inputs
 initialize_inputs;
@@ -124,7 +121,7 @@ initialize_step
 % 
 %sim('quad_simulation_with_payload_lqr')
 
-
+% Test comment from laptop
 
 
 
