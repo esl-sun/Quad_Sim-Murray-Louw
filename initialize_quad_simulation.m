@@ -2,7 +2,7 @@
 enable_payload = 1;
 
 %% Simulation constants
-sim_time = 300;
+sim_time = 20;
 sim_freq = 250;
 
 
@@ -65,7 +65,7 @@ waypoint_start = [0, 0, 10]; % Starting waypoint [x,y,z] (z is up positive for n
 waypoints(1,:) = waypoint_start;
 
 waypoint_max = [15, 15, 20]; % Max values in waypoint [x,y,z]
-waypoint_min = [-10, -10, 10]; % Min values in waypoint [x,y,z]
+waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 
 step_max = [5, 0, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
@@ -80,12 +80,21 @@ for i = 2:num_waypoints % Populate waypoint matrix
     waypoint_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
 end
 
+% waypoints = [ ...
+%     0, 0, 0;
+%     0, 0, 0;
+%     0, 1, 0];
+% waypoint_time = [...
+%     5;
+%     5;
+%     5];
+
 waypoints(:,3) = -waypoints(:,3); % Convert z to down-positive
 threshold = 1e-3; % Threshold to reach waypoint
 
-plot(cumsum(waypoint_time),waypoints)
-title('waypoints')
-legend('x', 'y', 'z');
+% plot(cumsum(waypoint_time),waypoints)
+% title('waypoints')
+% legend('x', 'y', 'z');
 
 %% Simulation inputs
 % initialize state inputs
