@@ -56,31 +56,36 @@ end
 
 %% Waypoints
 
-num_waypoints = 5; % Number of waypoints
+num_waypoints = 100; % Number of waypoints
 waypoints = zeros(num_waypoints,3); % Initialize empty matrix
-waypoints(1,:) = waypoint_start;
-waypoint_start = [0, 0, 10]; % Starting waypoint [x,y,z] (z is up positive for now)
+waypoint_time = zeros(num_waypoints,1); % Vector of time between waypoints. If time < 0: wait till reach threshhold before next waypoint
 
-waypoint_max = [10, 10, 18]; % Max values in waypoint [x,y,z]
+minmax = @(x, min_x, max_x) max(min(x,max_x),min_x); % function to restrict input x between min and max values
+waypoint_start = [0, 0, 10]; % Starting waypoint [x,y,z] (z is up positive for now)
+waypoints(1,:) = waypoint_start;
+
+waypoint_max = [15, 15, 20]; % Max values in waypoint [x,y,z]
 waypoint_min = [-10, -10, 10]; % Min values in waypoint [x,y,z]
 
-step_max = [4, 0, 2]; % Max step/change in waypoint [x,y,z]
+step_max = [5, 0, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
+
+time_max = 30; % Min time between waypoints
+time_min = 5; % Max time between waypoints
 
 for i = 2:num_waypoints % Populate waypoint matrix
     waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
-    waypoints(i,:) = waypoints(i-1,:) + waypoint_step;
+    waypoints(i,:) = waypoints(i-1,:) + waypoint_step; % Generate next waypoint
+    waypoints(i,:) = minmax(waypoints(i,:), waypoint_min, waypoint_max); % Limit waypoints to within min and max range
+    waypoint_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
 end
 
 waypoints(:,3) = -waypoints(:,3); % Convert z to down-positive
-
-waypoint_time = 5; % Time before next waypoint given. If time < 0: wait till reach threshhold before next waypoint
 threshold = 1e-3; % Threshold to reach waypoint
-waypoint_time_vector = [0:waypoint_time:waypoint_time*size(waypoints,1)-1]';
 
-% plot(waypoint_time_vector,waypoints)
-% title('waypoints')
-% legend('x', 'y', 'z');
+plot(cumsum(waypoint_time),waypoints)
+title('waypoints')
+legend('x', 'y', 'z');
 
 %% Simulation inputs
 % initialize state inputs
