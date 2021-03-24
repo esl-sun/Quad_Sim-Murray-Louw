@@ -55,57 +55,25 @@ end
 % freq_factor = 1.0;
 
 %% Waypoints
-% waypoints for simulation                                
-waypoints = [...
-    [0, 0, 0], 
-    [2, 0, 10], 
-    [2, 0, 10], 
-    [6, 0, 12], 
-    [6, 0, 12], 
-    [6, 0, 15], 
-    [6, 0, 20], 
-    [4, 0, 20], 
-    [4, 0, 20], 
-    [5, 0, 17], 
-    [7, 0, 17],
-    [7, 0, 10],
-    [2, 0, 10],
-    [2, 0, 10],
-    [2, 0, 12],
-    [12, 0, 12],
-    [12, 0, 12],
-    [12, 0, 12],
-    [5, 0, 12],
-    [5, 0, 12],
-    [2, 0, 15],
-    [2, 0, 15],
-    [2, 0, 11],
-    [5, 0, 11],
-    [4, 0, 10],
-    [5, 0, 10],
-    [0, 0, 0],    
-    [7, 0, 17],
-    [7, 0, 12],
-    [7, 0, 13],
-    [7, 0, 13],
-    [7, 0, 10],
-    [12, 0, 19],
-    [10, 0, 19],
-    [15, 0, 15],
-    [5, 0, 16],
-    [8, 0, 17],
-    [3, 0, 14],
-    [10, 0, 11],
-    [3, 0, 11],
-    [5, 0, 11],
-    [5, 0, 8],
-    [7, 0, 8],
-    [0, 0, 0],
-    [0, 0, 0],
-    [1, 0, 0]];
 
-waypoints = vec2mat(waypoints, 3);
-waypoints(:,3) = -waypoints(:,3); % Convert z to down
+num_waypoints = 5; % Number of waypoints
+waypoints = zeros(num_waypoints,3); % Initialize empty matrix
+waypoints(1,:) = waypoint_start;
+waypoint_start = [0, 0, 10]; % Starting waypoint [x,y,z] (z is up positive for now)
+
+waypoint_max = [10, 10, 18]; % Max values in waypoint [x,y,z]
+waypoint_min = [-10, -10, 10]; % Min values in waypoint [x,y,z]
+
+step_max = [4, 0, 2]; % Max step/change in waypoint [x,y,z]
+step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
+
+for i = 2:num_waypoints % Populate waypoint matrix
+    waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
+    waypoints(i,:) = waypoints(i-1,:) + waypoint_step;
+end
+
+waypoints(:,3) = -waypoints(:,3); % Convert z to down-positive
+
 waypoint_time = 5; % Time before next waypoint given. If time < 0: wait till reach threshhold before next waypoint
 threshold = 1e-3; % Threshold to reach waypoint
 waypoint_time_vector = [0:waypoint_time:waypoint_time*size(waypoints,1)-1]';

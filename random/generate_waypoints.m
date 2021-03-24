@@ -9,13 +9,15 @@ waypoint_min = [-10, -10, 10]; % Min values in waypoint [x,y,z]
 step_max = [4, 0, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
-waypoints = zeros();
+waypoints = zeros(num_waypoints,3);
+waypoints(1,:) = waypoint_start;
 
-current_waypoint = waypoint_start
-for i = 1:num_waypoints
-    waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3))
-    next_waypoint = current_waypoint + waypoint_step;
+for i = 2:num_waypoints
+    waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
+    waypoints(i,:) = waypoints(i-1,:) + waypoint_step;
 end
+
+waypoints
 
 %%
 
