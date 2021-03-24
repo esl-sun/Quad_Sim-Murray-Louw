@@ -7,11 +7,9 @@ Iyy = 0.235;
 Izz = 0.328;
 I = [Ixx 0 0 ; 0 Iyy 0 ; 0 0 Izz]; % inertia matrix
 
-
 % Geometry
 d = 0.49; % quad arm length
 Rn = 0.022; % virtual yaw moment arm
-
 
 % Propulsion:
 tau_T = 0.07; % motor time constant
@@ -23,7 +21,6 @@ max_T = max_total_T / 4; % maximum thrust per motor
 hover_perc = mq*g / max_total_T; % hover percentage of full throttle
 hover_total_T = max_total_T * hover_perc; % total hover thrust
 hover_T = hover_total_T / 4; % hover thrust per motor
-
 
 % Aerodynamic:
 C_D = [0.064; 0.067; 0.089]; % From Pierro - need to calculate in flight test
