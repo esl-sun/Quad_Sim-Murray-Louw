@@ -2,7 +2,7 @@
 enable_payload = 1;
 
 %% Simulation constants
-sim_time = 20;
+sim_time = 500;
 sim_freq = 250;
 
 
@@ -73,6 +73,7 @@ step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 time_max = 30; % Min time between waypoints
 time_min = 5; % Max time between waypoints
 
+rng(0); % Initialise random number generator for repeatability
 for i = 2:num_waypoints % Populate waypoint matrix
     waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
     waypoints(i,:) = waypoints(i-1,:) + waypoint_step; % Generate next waypoint
