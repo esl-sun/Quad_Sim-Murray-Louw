@@ -1,4 +1,4 @@
-%% Implentation of Hankel Alternative View Of Koopman for 2D Drone
+%% Implentation of Hankel Alternative View Of Koopman for 3D Quad_Sim
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
@@ -8,7 +8,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 10; % Max value of q in grid search
+q_max = 15; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -22,44 +22,40 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 
 % Extract data
 % simulation_data_file = 'With_payload_and_noise_data_3';
-simulation_data_file = 'With_payload_data_12';
-load(['Data/', simulation_data_file, '.mat']) % Load simulation data
+simulation_data_file = 'Steps_XZ_1';
+load(['data/', simulation_data_file, '.mat']) % Load simulation data
 
 Ts = 0.03;     % Desired sample time
 Ts_havok = Ts;
-y_rows = 1:4;
 MAE_weight = [1; 1; 1; 1]; % Weighting of error of each state when calculating mean
 
 % Adjust for constant disturbance / mean control values
 % u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
-u_bar = [0, (m + M)*g];
-out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
+% u_bar = [0, (m + M)*g];
+% out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
 
 % Training data
-train_time = 0:Ts:200;
-x_train = resample(out.x, train_time );% Resample time series to desired sample time and training period  
+train_time = (0:Ts:200)';
+y_train = resample(out.y, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(out.u, train_time );  
-t_train = x_train.Time';
+t_train = y_train.Time';
 N_train = length(t_train);
 
-x_train = x_train.Data';
-y_train = x_train(y_rows,:);
+y_train = y_train.Data';
 u_train = u_train.Data';
 
 % Testing data
 test_time = 300:Ts:400;
-x_test = resample(out.x, test_time );  
+y_test = resample(out.y, test_time );  
 u_test = resample(out.u, test_time );  
-t_test = x_test.Time';
+t_test = y_test.Time';
 N_test = length(t_test); % Num of data samples for testing
 
-x_test = x_test.Data';
-y_test = x_test(y_rows,:); % One sample of testing data overlaps for initial condition
+y_test = y_test.Data';
 u_test = u_test.Data';
 
 % Data dimentions
-nx = size(x_train,1); % number of states
-ny = size(y_train,1); % number of measurements
+ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
 % Add noise
@@ -80,7 +76,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 % Read previous results
 comment = '';
 sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['Data/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['data/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
 
 try
     load(results_file);
