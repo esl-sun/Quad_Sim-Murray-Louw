@@ -76,7 +76,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 % Read previous results
 comment = '';
 sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['data/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['results/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
 
 try
     load(results_file);
