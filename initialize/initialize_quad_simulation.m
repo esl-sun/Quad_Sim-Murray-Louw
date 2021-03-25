@@ -67,7 +67,7 @@ waypoints(1,:) = waypoint_start;
 waypoint_max = [15, 15, 20]; % Max values in waypoint [x,y,z]
 waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 
-step_max = [5, 0, 2]; % Max step/change in waypoint [x,y,z]
+step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
 time_max = 30; % Min time between waypoints
@@ -81,6 +81,7 @@ for i = 2:num_waypoints % Populate waypoint matrix
     waypoint_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
 end
 
+% Manual waypoints:
 % waypoints = [ ...
 %     0, 0, 0;
 %     0, 0, 0;
