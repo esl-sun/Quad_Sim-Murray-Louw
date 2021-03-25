@@ -8,7 +8,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 25; % Max value of q in grid search
+q_max = 35; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -21,18 +21,16 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-% simulation_data_file = 'With_payload_and_noise_data_3';
-simulation_data_file = 'Steps_XZ_1';
+simulation_data_file = 'Steps_XYZ_noise_1';
 load(['data/', simulation_data_file, '.mat']) % Load simulation data
 
 Ts = 0.03;     % Desired sample time
 Ts_havok = Ts;
-MAE_weight = [1; 1; 1; 1]; % Weighting of error of each state when calculating mean
+MAE_weight = ones(ny,1); % Weighting of error of each state when calculating mean
 
 % Adjust for constant disturbance / mean control values
-% u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
-% u_bar = [0, (m + M)*g];
-% out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
+u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
+out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
 
 % Training data
 train_time = (0:Ts:200)';
@@ -58,12 +56,6 @@ u_test = u_test.Data';
 ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
-% Add noise
-% rng('default');
-% rng(1); % Repeatable random numbers
-sigma = 0; % Noise standard deviation
-% y_train = y_train + sigma*randn(size(y_train));
-
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
 VariableNames = {'Ts',     'N_train', 'q',     'p',     'MAE_mean'};
@@ -75,8 +67,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 
 % Read previous results
 comment = '';
-sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['results/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);

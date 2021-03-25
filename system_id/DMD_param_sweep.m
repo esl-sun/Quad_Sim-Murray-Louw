@@ -8,7 +8,7 @@ total_timer = tic; % Start timer for this script
 
 % % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 10; % Max value of q in grid search
+q_max = 20; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -81,7 +81,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 % Read previous results
 sigma = 0;
 sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['Data/dmd_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['data/dmd_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
 
 try
     load(results_file);

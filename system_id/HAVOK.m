@@ -1,58 +1,7 @@
 %% Implentation of Hankel Alternative View Of Koopman for 2D Drone
 % close all;
 
-% % Extract data
-% simulation_data_file = 'With_payload_and_noise_data_1';
-% load(['Data/', simulation_data_file, '.mat']) % Load simulation data
-% 
-% Ts = 0.03;     % Desired sample time
-% Ts_havok = Ts;
-% y_rows = 1:4;
-% 
-% % Adjust for constant disturbance / mean control values
-% % u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
-% u_bar = [0, (m + M)*g];
-% out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
-
-% Training data
-% train_time = 0:Ts:300;
-% x_train = resample(out.x, train_time );% Resample time series to desired sample time and training period  
-% u_train = resample(out.u, train_time );  
-% t_train = x_train.Time';
-% N_train = length(t_train);
-% 
-% x_train = x_train.Data';
-% y_train = x_train(y_rows,:);
-% u_train = u_train.Data';
-% 
-% % Testing data
-% % test_time = 400:Ts:500;
-% x_test = resample(out.x, test_time );  
-% u_test = resample(out.u, test_time );  
-% t_test = x_test.Time';
-% N_test = length(t_test); % Num of data samples for testing
-% 
-% x_test = x_test.Data';
-% y_test = x_test(y_rows,:); % One sample of testing data overlaps for initial condition
-% u_test = u_test.Data';
-% 
-% % Data dimentions
-% nx = size(x_train,1); % number of states
-% ny = size(y_train,1); % number of measurements
-% nu = size(u_train,1); % number of inputs
-
-% % Add noise
-% rng('default');
-% rng(1); % Repeatable random numbers
-% sigma = 0.001; % Noise standard deviation
-% y_train = y_train + sigma*randn(size(y_train));
-
-% comment = ''; % Extra comment to differentiate this run
-% 
-% % Read previous results
-% sigma = 0;
-% sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['data/havok_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);
@@ -158,16 +107,21 @@ y_hat_bar = Y_hat(1:ny, :); % Extract only non-delay time series
 MAE = sum(abs(y_hat_bar - y_test), 2)./N_test % For each measured state
 
 %% Plot data vs model
+% close all;
+
 figure;
 plot(t_train, y_train);
-hold on;
-plot(t_test, y_test);
+title(['HAVOK - Train - ', simulation_data_file]);
 
-% plot(t_test, y_hat, 'k--', 'LineWidth', 1); % Plot only non-delay coordinate
-plot(t_test, y_hat_bar, 'r--', 'LineWidth', 1); % Plot only non-delay coordinate
-title('Training and Testing data vs Model (red = HAVOK, black = DMD)');
-% legend('','','','','','', 'x hat','z hat','theta hat', 'x hat bar','z hat bar','theta hat bar');
-hold off;
+for i = 1:ny
+    figure;
+    plot(t_test, y_test(i,:), 'b');
+    hold on;
+    plot(t_test, y_hat_bar(i,:), 'r--', 'LineWidth', 1);
+    hold off;
+    legend('actual', 'predicted')
+    title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
+end
 
 function A = stabilise(A_unstable,max_iterations)
     % If some eigenvalues are unstable due to machine tolerance,
