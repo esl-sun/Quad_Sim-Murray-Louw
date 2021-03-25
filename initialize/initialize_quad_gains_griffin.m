@@ -172,6 +172,10 @@ end
 % Vertical Position Controller
 K_dp = 0.9;
 
+
+% Low Pass Filter to decrease jump of position step input
+vel_ref_LPF = 1e-1;
+
 %% PID
 function [p, i, d] = pid_control(k, z1, z2)
     i = k;
