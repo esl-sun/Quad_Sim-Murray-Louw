@@ -113,7 +113,7 @@ function [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min,
     rng(rng_seed); % Initialise random number generator for repeatability
     
     waypoints = zeros(num_waypoints,3); % Initialize empty matrix
-    waypoint_time = zeros(num_waypoints,1); % Vector of time between waypoints. If time < 0: wait till reach threshhold before next waypoint
+    waypoints_time = zeros(num_waypoints,1); % Vector of time between waypoints. If time < 0: wait till reach threshhold before next waypoint
 
     waypoint_start = [0, 0, 10]; % Starting waypoint [x,y,z] (z is up positive for now)
     waypoints(1,:) = waypoint_start;
@@ -122,7 +122,7 @@ function [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min,
         waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
         waypoints(i,:) = waypoints(i-1,:) + waypoint_step; % Generate next waypoint
         waypoints(i,:) = minmax(waypoints(i,:), waypoint_min, waypoint_max); % Limit waypoints to within min and max range
-        waypoint_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
+        waypoints_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
     end
 
     waypoints(:,3) = -waypoints(:,3); % Convert z to down-positive
