@@ -92,8 +92,6 @@ initialize_inputs;
 %% Step response
 initialize_step 
 
-
-% Test comment from laptop
 function [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed)
 %% Returns matrix with a random waypoints per row, and random time intervals between waypoints
 
