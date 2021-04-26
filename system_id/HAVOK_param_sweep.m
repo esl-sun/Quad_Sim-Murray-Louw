@@ -8,7 +8,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 35; % Max value of q in grid search
+q_max = 30; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -21,12 +21,11 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-simulation_data_file = 'Steps_XYZ_noise_1';
+simulation_data_file = 'Steps_XYZ_noise_2';
 load(['data/', simulation_data_file, '.mat']) % Load simulation data
 
 Ts = 0.03;     % Desired sample time
 Ts_havok = Ts;
-MAE_weight = ones(ny,1); % Weighting of error of each state when calculating mean
 
 % Adjust for constant disturbance / mean control values
 u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
@@ -43,7 +42,7 @@ y_train = y_train.Data';
 u_train = u_train.Data';
 
 % Testing data
-test_time = 300:Ts:400;
+test_time = 300:Ts:330;
 y_test = resample(out.y, test_time );  
 u_test = resample(out.u, test_time );  
 t_test = y_test.Time';
@@ -55,6 +54,8 @@ u_test = u_test.Data';
 % Data dimentions
 ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
+
+MAE_weight = [1;1;1;0;0]; % Weighting of error of each state when calculating mean
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE

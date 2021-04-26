@@ -39,6 +39,7 @@ initialize_quad_gains_griffin;
 % execute .m file to initialize all linear models of quad dynamics for
 % different controllers
 initialize_quad_models_controllers;
+initialize_mpc; % Initialise mpc controller
 
 hover_init = hover_perc; % hover percentage of full throttle
 hover_T_init = hover_T; % hover thrust per motor
@@ -72,18 +73,18 @@ rng_seed = 0;
 [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
 
 % Manual waypoints:
-waypoints = [ ...
-    0, 0, 0;
-    0, 0, 0;
-    0, 0, 0];
-waypoint_time = [...
-    50;
-    50;
-    50];
+% waypoints = [ ...
+%     0, 0, 0;
+%     0, 0, 0;
+%     0, 0, 0];
+% waypoints_time = [...
+%     50;
+%     50;
+%     50];
 
-% plot(cumsum(waypoint_time),waypoints)
-% title('waypoints')
-% legend('x', 'y', 'z');
+plot(cumsum(waypoints_time),waypoints)
+title('waypoints')
+legend('x', 'y', 'z');
 
 %% Simulation inputs
 % initialize state inputs
