@@ -72,14 +72,14 @@ rng_seed = 0;
 [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
 
 % Manual waypoints:
-% waypoints = [ ...
-%     0, 0, 0;
-%     0, 0, 0;
-%     0, 1, 0];
-% waypoint_time = [...
-%     5;
-%     5;
-%     5];
+waypoints = [ ...
+    0, 0, 0;
+    0, 0, 0;
+    0, 0, 0];
+waypoint_time = [...
+    50;
+    50;
+    50];
 
 % plot(cumsum(waypoint_time),waypoints)
 % title('waypoints')
