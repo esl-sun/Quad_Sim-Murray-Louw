@@ -35,18 +35,18 @@ rho = 1.225; % air density
 
 % Noise parameters
 omega_b_noise = 6e-8; % Tuned by Anton to look similar to practical data
-quat_noise = 6e-8;
-vel_e_noise = 4e-8;
-pos_e_noise = 4e-7;
+quat_noise    = 6e-8;
+vel_e_noise   = 4e-8;
+pos_e_noise   = 4e-7;
 
-phi_noise = 1e-9; % Tuned by Murray to look decent. Not yet practically compared
-theta_noise = 1e-9;
+phi_noise   = 4*1e-9; % Tuned by Murray to look decent. Not yet practically compared
+theta_noise = 2*1e-10;
 
 omega_b_bias = -[1, 2, 1.5]*3*pi/180*0;
-vel_e_bias = [0.2, -0.1, 0.3]*0;
+vel_e_bias   = [0.2, -0.1, 0.3]*0;
 
 drift_factor = 200;
-drift_tau = 4;
+drift_tau    = 4;
 
 
 %% Payload model
