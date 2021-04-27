@@ -1,5 +1,7 @@
 function add_delay_coordinates(block)
 % Creates an extended state vector with current state and delay coordinates
+% Input  = current state vector
+% Output = extended state vector
 % e.g. with q = 3 delays:
 % x_ext = [x(k); x(k-1); x(k-2)]
 % Used with an MPC for a state-space model created with HAVOK
