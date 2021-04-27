@@ -1,1 +1,2 @@
-save('data/Steps_XYZ_no_noise_1', 'out')
+save('data/MPC_test_1', 'out')
+disp('saved data')

@@ -78,7 +78,7 @@ function Output(block)
     ny = block.DialogPrm(4).Data;
 
     x = block.InputPort(1).Data; % Measurement vector
-    y = x(y_rows);
+    y = x(1:ny);
     
     y_ext_prev = block.Dwork(1).Data; % Previous xtended measurement vector
     y_ext = [y; y_ext_prev(1:length(y_ext_prev) - ny)]; % Extended measurement vector for output, discard oldest delay, add new measurement

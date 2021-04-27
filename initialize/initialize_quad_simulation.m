@@ -66,7 +66,7 @@ step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
 time_max = 30; % Min time between waypoints (s)
-time_min = 5; % Max time between waypoints (s)
+time_min = 10; % Max time between waypoints (s)
 
 rng_seed = 0;
 [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
