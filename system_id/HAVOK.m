@@ -1,4 +1,6 @@
 %% Implentation of Hankel Alternative View Of Koopman for 2D Drone
+% Always run HAVOK_param_swep.m first before running this file.
+% This will set all varaibkles correctly
 % close all;
 
 results_file = ['results/havok_results_', simulation_data_file, comment, '.mat'];
