@@ -28,17 +28,34 @@ ph = mpc_vel.PredictionHorizon; % Prediction Horizon
 x_mpc = mpcstate(mpc_vel); % Current state of mpc
 v = []; % No measured distrubances
 
-% % Plot
+%% Plot
 % close all
-% figure
-% plot(t, mv_data)
-% title('mv')
-% 
-% figure
-% plot(t, mo_data(1:5,:))
-% title('mo')
+figure
+plot(t, ref_data)
+legend('fx', 'fy', 'fz')
+title('ref-data')
 
+figure
+plot(out.y)
+legend('dx', 'dy', 'dz', 'th', 'phi')
+title('out.y')
 
+figure
+plot(out.u)
+legend('fx', 'fy', 'fz')
+title('out.u')
+
+figure
+plot(t, mv_data + u_bar')
+legend('fx', 'fy', 'fz')
+title('mv-data')
+
+figure
+plot(t, mo_data)
+% legend()
+title('mo-data')
+
+stop
 % x_mpc = x_mpc_19; % State of mpc at 19.5 s
 y_rows = 1:5
 
@@ -67,6 +84,8 @@ for k = 1:N % every timestep k
         hold on;
         plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
         hold off;
+        
         pause
+        
     end
 end

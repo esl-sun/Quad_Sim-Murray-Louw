@@ -3,7 +3,7 @@ enable_payload = 1;
 
 %% Simulation constants
 sim_time = 500;
-sim_freq = 500; % Used for sample time of blocks and fixed step size of models
+sim_freq = 250; % Used for sample time of blocks and fixed step size of models
 
 %% Simulation Folder Setup
 % Add subfolders to path   
@@ -38,7 +38,7 @@ initialize_quad_gains_griffin;
 % execute .m file to initialize all linear models of quad dynamics for
 % different controllers
 initialize_quad_models_controllers;
-initialize_mpc; % Initialise mpc controller
+initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
 
 hover_init = hover_perc; % hover percentage of full throttle
 hover_T_init = hover_T; % hover thrust per motor
