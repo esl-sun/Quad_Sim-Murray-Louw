@@ -93,6 +93,13 @@ initialize_inputs;
 %% Step response
 initialize_step 
 
+%% Run simulation
+% tic;
+% disp('Start simulation.')
+% sim 'quad_simulation_with_payload.slx'
+% disp('Execution time:')
+% toc
+
 
 
 

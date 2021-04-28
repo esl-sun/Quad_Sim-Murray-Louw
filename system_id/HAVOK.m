@@ -127,8 +127,7 @@ for i = 1:ny
 end
 
 %% Save model
-comment = '';
-model_file = ['models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), comment, '.mat'];
+model_file = ['system_id/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
 disp('model saved')
 
