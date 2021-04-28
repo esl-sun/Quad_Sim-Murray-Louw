@@ -2,8 +2,8 @@
 enable_payload = 1;
 
 %% Simulation constants
-sim_time = 500;
-sim_freq = 250; % Used for sample time of blocks and fixed step size of models
+sim_time = 5;
+sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 
 %% Simulation Folder Setup
 % Add subfolders to path   
@@ -19,6 +19,8 @@ Simulink.fileGenControl('set', 'CacheFolder', myCacheFolder, 'CodeGenFolder', my
 
 % Generate QUAD_MODEL s-function
 %mex Payload_parameter_estimation/RLS_MASS.c -outdir Payload_parameter_estimation
+
+coder.extrinsic('dcm2quat') % Because function not supported for code generation
 
 %% Constants
 % execute .m file to initialize constants
