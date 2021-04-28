@@ -3,7 +3,7 @@
 % This will set all varaibkles correctly
 % close all;
 
-results_file = ['results/havok_results_', simulation_data_file, comment, '.mat'];
+results_file = ['system_id/results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);
@@ -125,6 +125,12 @@ for i = 1:ny
     legend('actual', 'predicted')
     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
 end
+
+%% Save model
+comment = '';
+model_file = ['models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), comment, '.mat'];
+save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
+disp('model saved')
 
 function A = stabilise(A_unstable,max_iterations)
     % If some eigenvalues are unstable due to machine tolerance,

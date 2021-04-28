@@ -68,7 +68,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 
 % Read previous results
 comment = '';
-results_file = ['results/havok_results_', simulation_data_file, comment, '.mat'];
+results_file = ['system_id/results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);
