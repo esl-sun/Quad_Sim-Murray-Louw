@@ -2,7 +2,7 @@
 enable_payload = 1;
 
 %% Simulation constants
-sim_time = 10;
+sim_time = 100;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 
 %% Simulation Folder Setup
