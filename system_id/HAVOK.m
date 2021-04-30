@@ -2,6 +2,12 @@
 % Always run HAVOK_param_swep.m first before running this file.
 % This will set all varaibkles correctly
 % close all;
+% %% Run simulation
+% tic;
+% disp('Start simulation.')
+% sim 'quad_simulation_with_payload.slx'
+% disp('Execution time:')
+% toc
 
 results_file = ['system_id/results/havok_results_', simulation_data_file, comment, '.mat'];
 

@@ -2,7 +2,7 @@
 enable_payload = 1;
 
 %% Simulation constants
-sim_time = 5;
+sim_time = 50;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 
 %% Simulation Folder Setup
@@ -93,12 +93,12 @@ initialize_inputs;
 %% Step response
 initialize_step 
 
-%% Run simulation
-tic;
-disp('Start simulation.')
-sim 'quad_simulation_with_payload.slx'
-disp('Execution time:')
-toc
+% %% Run simulation
+% tic;
+% disp('Start simulation.')
+% sim 'quad_simulation_with_payload.slx'
+% disp('Execution time:')
+% toc
 
 
 
