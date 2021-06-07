@@ -1,5 +1,12 @@
 %% initialize simulation
+% Run this script to setup all params to run Simulink file: quad_simulation_with_payload
+
+%% Simulation options
 enable_payload = 1;
+enable_velocity_step = 0; % 1 = do velocity step input test, 0 = normal control
+x_vel_step = 1; % Step size of x velocity
+y_vel_step = 0; % Step size of x velocity
+z_vel_step = 0; % Step size of x velocity
 
 %% Simulation constants
 sim_time = 50;
@@ -26,19 +33,20 @@ initialize_quad_sim_constants;
 
 %% Quad model
 % execute .m file to initialize quadrotor parameters for sim model
-initialize_quad_parameters_griffin;
+% initialize_quad_parameters_griffin;
+initialize_quad_parameters_honeybee_reg;
 
 %% Quad Controller Gains
 % execute .m to initialize standard PID controller gains as well as
 % saturation values
-initialize_quad_gains_griffin;
-%init_quad_control_adaptive_griffin;
+% initialize_quad_gains_griffin;
+initialize_quad_gains_honeybee_reg;
 
 %% Quad Models and Controllers
 % execute .m file to initialize all linear models of quad dynamics for
 % different controllers
 initialize_quad_models_controllers;
-initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+% initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
 
 hover_init = hover_perc; % hover percentage of full throttle
 hover_T_init = hover_T; % hover thrust per motor
@@ -81,10 +89,10 @@ rng_seed = 0;
 %     50;
 %     50];
 
-figure(1)
-plot(cumsum(waypoints_time),waypoints) % Plot waypoints to visualise it
-title('waypoints')
-legend('x', 'y', 'z');
+% figure(1)
+% plot(cumsum(waypoints_time),waypoints) % Plot waypoints to visualise it
+% title('waypoints')
+% legend('x', 'y', 'z');
 
 %% Simulation inputs
 % initialize state inputs

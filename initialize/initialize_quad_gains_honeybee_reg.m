@@ -2,7 +2,7 @@
 
 %% Body Rates
 
-body_rates_dterm_cutoff = 30; %Hz
+body_rates_dterm_cutoff = 0; %Hz
 
 [body_rates_filter_num, body_rates_filter_denom] = filter(body_rates_dterm_cutoff, sim_freq);
 
@@ -11,12 +11,12 @@ body_rates_dterm_cutoff = 30; %Hz
 % *************************************************************************
 
 % Pitch Rate
-K_qp = 0.086;
-K_qi = 0.02;
-K_qd = 0.003;
+K_qp = 0.06;
+K_qi = 0.2;
+K_qd = 0.0017;
 
 % Pitch rate limit
-q_max = 120 * pi/180; %rad
+q_max = 220 * pi/180; %rad
 
 % Integrator limit for anti-windup
 q_int_lim = 0.3;
@@ -26,12 +26,12 @@ q_int_lim = 0.3;
 % *************************************************************************
 
 % Roll Rate
-K_pp = 0.086 * Ixx/Iyy;
-K_pi = 0.02 * Ixx/Iyy;
-K_pd = 0.003 * Ixx/Iyy;
+K_pp = 0.06;
+K_pi = 0.2;
+K_pd = 0.0017;
 
 % Roll rate limit
-p_max = 120 * pi/180; %rad
+p_max = 220 * pi/180; %rad
 
 % Integrator limit for anti-windup
 p_int_lim = 0.3;
@@ -41,46 +41,46 @@ p_int_lim = 0.3;
 % *************************************************************************
 
 % Yaw Rate
-K_rp = 0.35;
-K_ri = 0.03;
-K_rd = 0.0;
+K_rp = 0.15;
+K_ri = 0.2;
+K_rd = 0;
 
 % Yaw rate limit
-r_max = 45 * pi/180; %rad
+r_max = 200 * pi/180; %rad
 
 % Integrator limit
 r_int_lim = 0.3;
 
 %% Attitude
 
-max_tilt = 30; %deg
+max_tilt = 45; %deg
 
 % *************************************************************************
 % Pitch
 % *************************************************************************
 
 % Pitch Angle Controller
-K_theta = 3;
+K_theta = 2.2;
 
 % *************************************************************************
 % Roll
 % *************************************************************************
 
 % Roll Angle Controller
-K_phi = 3;
+K_phi = 2.2;
 
 % *************************************************************************
 % Yaw
 % *************************************************************************
 
 % Yaw Angle Controller
-K_psi = 1.2;
+K_psi = 1;
 
 %% Thrust (Velocity outputs inertial thrust which is converted to an attitude)
  %velocity controller outputs inertial force which is converted to attitude
 
 thr_max = 1.0;
-thr_min = 0.08;
+thr_min = 0.02;
 
 %% Velocity
 
@@ -88,18 +88,18 @@ vel_dterm_cutoff = 5; %Hz
 
 [vel_filt_num, vel_filt_denom] = filter(vel_dterm_cutoff, sim_freq);
 
-max_vel_xy = 12;
-max_vel_z_up = 3;
-max_vel_z_down = -1;
+max_vel_xy = 8.0;
+max_vel_z_up = 8.0;
+max_vel_z_down = 2.0;
 
 % *************************************************************************
 % X
 % *************************************************************************
 
 % Longitudinal Velocity Controller
-K_up = 0.048;
-K_ui = 0.008;
-K_ud = 0.002;
+K_up = 0.09;
+K_ui = 0.02;
+K_ud = 0.01;
 % 
 if enable_payload
     % 2kg
@@ -118,9 +118,9 @@ end
 % *************************************************************************
 
 % Lateral Velocity Controller
-K_vp = 0.048;
-K_vi = 0.008;
-K_vd = 0.002;
+K_vp = 0.09;
+K_vi = 0.02;
+K_vd = 0.01;
 
 if enable_payload
     % 2kg
@@ -134,9 +134,9 @@ end
 % *************************************************************************
 
 % Vertical Velocity Controller
-K_wp = 0.1;
-K_wi = 0.01;
-K_wd = 0.0;
+K_wp = 0.2;
+K_wi = 0.02;
+K_wd = 0;
 
 %% Position
 
@@ -145,9 +145,7 @@ K_wd = 0.0;
 % *************************************************************************
 
 % Longitudinal Position Controller
-K_np = 0.35;
-K_ni = 0;
-K_nd = 0;
+K_np = 0.95;
 
 if enable_payload
 %    K_np = 0.25;
@@ -159,7 +157,7 @@ end
 % *************************************************************************
 
 % Lateral Position Controller
-K_ep = 0.35;
+K_ep = 0.95;
 
 if enable_payload
 %    K_ep = 0.25;
@@ -170,10 +168,10 @@ end
 % *************************************************************************
 
 % Vertical Position Controller
-K_dp = 0.9;
+K_dp = 1.0;
 
 % Low Pass Filter to decrease jump of position step input
-vel_ref_LPF = 1e-1;
+% vel_ref_LPF = ;
 
 %% PID
 function [p, i, d] = pid_control(k, z1, z2)

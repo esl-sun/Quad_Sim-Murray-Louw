@@ -35,7 +35,7 @@ fb_Vn = bandwidth(G_VN_CL);
 
 % Longitudinal Position Controller
 G_PN_OL = G_VN_CL * 1/s;
-D_PN = K_np + K_ni/s + K_nd*s;
+D_PN = K_np;
 G_PN_CL = (G_PN_OL*D_PN)/(1+G_PN_OL*D_PN);
 
 [G_PN_OL_NUM, G_PN_OL_DENOM] = tfdata(G_PN_OL, 'v');
