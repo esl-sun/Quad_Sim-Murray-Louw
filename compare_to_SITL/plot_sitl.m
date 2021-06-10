@@ -1,10 +1,11 @@
+%% Plot results from SITL
 disp('start')
 
 %% Load topics from csv into matrix
-load_csv_again = 0; % Set to 1 to load new csv every time
+load_csv_again = 1; % Set to 1 to load new csv every time
 if load_csv_again
     current_dir = pwd;
-    [filename,csv_folder] = uigetfile([current_dir, '/*.csv'], 'Choose GAZEBO csv file') % GUI to choose file. % [ulog filename, path to folder with csv files]
+    [filename,csv_folder] = uigetfile([current_dir, '/compare_to_SITL/*.csv'], 'Choose GAZEBO csv file') % GUI to choose file. % [ulog filename, path to folder with csv files]
 %     file_name = erase(file_name, '.csv'); % remove file extention
 
     gazebo = readmatrix([csv_folder,filename]);
@@ -14,7 +15,7 @@ end
 g_time = gazebo(:,1);
 g_data = gazebo(:,2);
 
-%% Plots
+%% Plot SITL
 % close all;
 
 figure;
@@ -34,7 +35,36 @@ g_time = g_time(start_index:end_index) - time_start;
 g_data = g_data(start_index:end_index);
 
 plot(g_time, g_data);
+hold on;
+grid on;
 title(['SITL - ', filename])
 
-disp('exit')
+%% Load data from sim into matrix
+
+m_time = out.pos.Time;
+m_data = out.pos.Data;
+
+%% Allign SITl and MATLAB plots
+plot(m_time, m_data);
+title('SITL vs MATLAB')
+legend('SITL', 'MATLAB')
+
+disp('To allign x axis, click on SITL then MATLAB plots on one x-grid-line')
+[allign_x,~] = ginput(2); % Get start of responce from user click
+time_shift = allign_x(2) - allign_x(1);
+m_time = m_time - time_shift;
+
+%% Replot shifted SITl vs MATLAB graphs
+hold off;
+plot(g_time, g_data);
+hold on;
+grid on;
+plot(m_time, m_data);
+plot(prev_m_time, prev_m_data);
+
+
+legend('SITL', 'MATLAB')
+
+
+disp('Done.')
 
