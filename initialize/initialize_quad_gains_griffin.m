@@ -97,20 +97,20 @@ max_vel_z_down = -1;
 % *************************************************************************
 
 % Longitudinal Velocity Controller
-K_up = 0.048;
-K_ui = 0.008;
-K_ud = 0.002;
+K_up = 0.048*g/hover_init;
+K_ui = 0.008*g/hover_init;
+K_ud = 0.002*g/hover_init;
 % 
 if enable_payload
     % 2kg
-%     K_up = 0.04;
-%     K_ui = 0.006;
-%     K_ud = 0.0133;
+%     K_up = 0.04*g/hover_init;
+%     K_ui = 0.006*g/hover_init;
+%     K_ud = 0.0133*g/hover_init;
     
     % 1kg
-%     K_up = 0.035;
-%     K_ui = 0.006;
-%     K_ud = 0.015;
+%     K_up = 0.035*g/hover_init;
+%     K_ui = 0.006*g/hover_init;
+%     K_ud = 0.015*g/hover_init;
 end
 
 % *************************************************************************
@@ -118,9 +118,9 @@ end
 % *************************************************************************
 
 % Lateral Velocity Controller
-K_vp = 0.048;
-K_vi = 0.008;
-K_vd = 0.002;
+K_vp = K_up;
+K_vi = K_ui;
+K_vd = K_ud;
 
 if enable_payload
     % 2kg
@@ -134,9 +134,9 @@ end
 % *************************************************************************
 
 % Vertical Velocity Controller
-K_wp = 0.1;
-K_wi = 0.01;
-K_wd = 0.0;
+K_wp = 0.1*g/hover_init;
+K_wi = 0.01*g/hover_init;
+K_wd = 0.0*g/hover_init;
 
 %% Position
 

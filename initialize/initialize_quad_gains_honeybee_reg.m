@@ -97,10 +97,17 @@ max_vel_z_down = 2.0;
 % *************************************************************************
 
 % Longitudinal Velocity Controller
-K_up = 0.09;
-K_ui = 0.02;
-K_ud = 0.01;
-% 
+% Original gains:
+% K_up = 0.09;
+% K_ui = 0.02;
+% K_ud = 0.01;
+
+% Scaled gains:
+% NEW = OLD*g/hover_init;
+K_up = 3.7351; % MPC_XY_VEL_P_ACC
+K_ui = 0.8300;
+K_ud = 0.4150;
+ 
 if enable_payload
     % 2kg
 %     K_up = 0.04;
@@ -118,24 +125,25 @@ end
 % *************************************************************************
 
 % Lateral Velocity Controller
-K_vp = 0.09;
-K_vi = 0.02;
-K_vd = 0.01;
-
-if enable_payload
-    % 2kg
-%     K_vp = 0.04;
-%     K_vi = 0.006;
-%     K_vd = 0.0133;
-end
+K_vp = K_up; % MPC_XY_VEL_P_ACC
+K_vi = K_ui;
+K_vd = K_ud;
 
 % *************************************************************************
 % Z
 % *************************************************************************
 
 % Vertical Velocity Controller
-K_wp = 0.2;
-K_wi = 0.02;
+
+% Original gains:
+% K_wp = 0.2;
+% K_wi = 0.02;
+% K_wd = 0;
+
+% Scaled gains:
+% NEW = OLD*g/hover_init;
+K_wp = 8.3002; % MPC_Z_VEL_P_ACC
+K_wi = 0.8300;
 K_wd = 0;
 
 %% Position
