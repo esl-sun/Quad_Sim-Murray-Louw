@@ -10,11 +10,10 @@ uav_name = 'griffin'
 enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 1
 enable_noise = 1
-enable_mpc = 1 % Set to 1 to uncomment MPC block
+enable_mpc = 0 % Set to 1 to uncomment MPC block
 enable_random_waypoints = 1
 
 %% Enable payload
-no_payload_variant = Simulink.Variant('enable_payload == 0'); % Variant subsytem block to uncomment payload if needed
 payload_variant = Simulink.Variant('enable_payload == 1');
 
 %% Enable noise
