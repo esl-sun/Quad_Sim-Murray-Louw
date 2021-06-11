@@ -6,10 +6,10 @@ sim_time = 300;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
 
-uav_name = 'griffin'
+uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 1
-enable_noise = 1
+enable_payload = 0
+enable_noise = 0
 enable_mpc = 0 % Set to 1 to uncomment MPC block
 enable_random_waypoints = 1
 
