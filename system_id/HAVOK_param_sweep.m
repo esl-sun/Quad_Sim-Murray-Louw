@@ -21,11 +21,11 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-simulation_data_file = 'PID_XYZ_smoothed_no_noise_1_no_payload';
+simulation_data_file = 'PID_XY_smoothed_no_noise_1_no_payload';
 
 load([uav_name, '/data/', simulation_data_file, '.mat']) % Load simulation data
 
-Ts = 0.005;     % Desired sample time
+Ts = 0.03;     % Desired sample time
 Ts_havok = Ts;
 
 % Adjust for constant disturbance / mean control values
@@ -33,7 +33,7 @@ Ts_havok = Ts;
 % out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
 
 % Training data
-train_time = (0:Ts:100)';
+train_time = (0:Ts:200)';
 y_train = resample(out.y, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(out.u, train_time );  
 t_train = y_train.Time';
@@ -56,7 +56,8 @@ u_test = u_test.Data';
 ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
-MAE_weight = [1;1;1]; % Weighting of error of each state when calculating mean
+MAE_weight = [1;1]; % Weighting of error of each state when calculating mean
+% MAE_weight = [1;1;1;0;0]; % Weighting of error of each state when calculating mean
 
 if length(MAE_weight) ~= ny
     error('Mismatch between MAE_weight and number of measured states');
