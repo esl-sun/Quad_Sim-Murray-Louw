@@ -2,13 +2,17 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-enable_payload = 1;
 enable_velocity_step = 0; % 1 = do velocity step input test, 0 = normal control
 enable_aerodynamics = 0; % 1 = add effect of air
 
 x_vel_step = 1; % Step size of x velocity
 y_vel_step = 0; % Step size of x velocity
 z_vel_step = 0; % Step size of x velocity
+
+%% Enable payload
+enable_payload = 1;
+no_payload_variant = Simulink.Variant('enable_payload == 0'); % Variant subsytem block to uncomment payload if needed
+payload_variant = Simulink.Variant('enable_payload == 1');
 
 %% Simulation constants
 sim_time = 50;
@@ -50,7 +54,13 @@ initialize_quad_gains_honeybee_reg;
 initialize_quad_models_controllers;
 
 %% MPC
-initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+enable_mpc = 1; % Set to 1 to uncomment MPC block
+no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
+mpc_variant = Simulink.Variant('enable_mpc == 1');
+
+if enable_mpc
+    initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+end
 
 %% Hover
 hover_init = hover_perc; % hover percentage of full throttle
@@ -80,21 +90,21 @@ step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
 time_max = 15; % MAx time between waypoints (s)
 time_min = 5; % Min time between waypoints (s)
-
-rng_seed = 0;
-[waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
+% 
+% rng_seed = 0;
+% [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
 
 % Manual waypoints: [x, y, z] = [N, E, Up]
-% takeoff_height = 1;
-% waypoints = [ ...
-%     0, 0, takeoff_height;
-%     0, 0, takeoff_height;
-%     1, 0, takeoff_height];
-% 
-% waypoints_time = [...
-%     5;
-%     5;
-%     15];
+takeoff_height = 1;
+waypoints = [ ...
+    0, 0, takeoff_height;
+    0, 0, takeoff_height;
+    1, 0, takeoff_height];
+
+waypoints_time = [...
+    5;
+    5;
+    10];
 
 % figure(1)
 % plot(cumsum(waypoints_time),waypoints) % Plot waypoints to visualise it
