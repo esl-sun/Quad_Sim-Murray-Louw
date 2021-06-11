@@ -2,7 +2,7 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-enable_payload = 0;
+enable_payload = 1;
 enable_velocity_step = 0; % 1 = do velocity step input test, 0 = normal control
 enable_aerodynamics = 0; % 1 = add effect of air
 
@@ -11,7 +11,7 @@ y_vel_step = 0; % Step size of x velocity
 z_vel_step = 0; % Step size of x velocity
 
 %% Simulation constants
-sim_time = 15;
+sim_time = 50;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 
 %% Simulation Folder Setup
@@ -50,7 +50,7 @@ initialize_quad_gains_honeybee_reg;
 initialize_quad_models_controllers;
 
 %% MPC
-% initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
 
 %% Hover
 hover_init = hover_perc; % hover percentage of full throttle
@@ -78,23 +78,23 @@ waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
-time_max = 30; % Min time between waypoints (s)
-time_min = 10; % Max time between waypoints (s)
+time_max = 15; % MAx time between waypoints (s)
+time_min = 5; % Min time between waypoints (s)
 
 rng_seed = 0;
-% [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
+[waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
 
 % Manual waypoints: [x, y, z] = [N, E, Up]
-takeoff_height = 1;
-waypoints = [ ...
-    0, 0, takeoff_height;
-    0, 0, takeoff_height;
-    1, 0, takeoff_height];
-
-waypoints_time = [...
-    5;
-    5;
-    15];
+% takeoff_height = 1;
+% waypoints = [ ...
+%     0, 0, takeoff_height;
+%     0, 0, takeoff_height;
+%     1, 0, takeoff_height];
+% 
+% waypoints_time = [...
+%     5;
+%     5;
+%     15];
 
 % figure(1)
 % plot(cumsum(waypoints_time),waypoints) % Plot waypoints to visualise it

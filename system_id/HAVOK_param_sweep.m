@@ -21,7 +21,7 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-simulation_data_file = 'Steps_XYZ_noise_1';
+simulation_data_file = 'Steps_XYZ_no_noise_1';
 load(['data/', simulation_data_file, '.mat']) % Load simulation data
 
 Ts = 0.03;     % Desired sample time
@@ -195,7 +195,9 @@ plot_results = 1;
 if plot_results
     figure
     semilogy(results.q, results.MAE_mean, '.')
-    y_limits = [2e-2, 1e0];
+    ylabel('MAE of prediction');
+    xlabel('Number of delays in model, q');
+    y_limits = [1e-2, 1e0];
     ylim(y_limits)
 %     xlim([18 50])
     title('HAVOK')
