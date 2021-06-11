@@ -1,10 +1,8 @@
 %% Initialise mpc for quad simulation.
 % (ensure havok or dmd models have been loaded before this script)
 
-mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
-
 % Internal plant model
-model_file = ['system_id/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+model_file = ['system_id/', uav_name, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 load(model_file) % Load plant model from saved data
 
 model = 'havok'; % Choose which model to use for MPC

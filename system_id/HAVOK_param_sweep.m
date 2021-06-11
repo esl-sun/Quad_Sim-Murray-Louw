@@ -22,7 +22,7 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 
 % Extract data
 simulation_data_file = 'Steps_XYZ_no_noise_1';
-load(['data/', simulation_data_file, '.mat']) % Load simulation data
+load([uav_name, '/data/', simulation_data_file, '.mat']) % Load simulation data
 
 Ts = 0.03;     % Desired sample time
 Ts_havok = Ts;
@@ -68,7 +68,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 
 % Read previous results
 comment = '';
-results_file = ['system_id/results/havok_results_', simulation_data_file, comment, '.mat'];
+results_file = ['system_id/',uav_name, '/results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);

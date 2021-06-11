@@ -9,7 +9,7 @@
 % disp('Execution time:')
 % toc
 
-results_file = ['system_id/results/havok_results_', simulation_data_file, comment, '.mat'];
+results_file = ['system_id/',uav_name, '/results/havok_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);
@@ -133,7 +133,7 @@ for i = 1:ny
 end
 
 %% Save model
-model_file = ['system_id/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+model_file = ['system_id/', uav_name, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
 disp('model saved')
 
