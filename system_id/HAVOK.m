@@ -24,18 +24,19 @@ try
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
         '!!!!! Chosen q !!!!!!!'
-        q = 10;
+        q = 22;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
         p = double(best_results.p);
     end
     
-    override = 1;
+    override = 0;
     if override
         '!!!!!Override!!!!!!!'
+        q = 22
         p = 10
-        q = 20
+        
     end
     % % Override parameters:
     % q = 80
@@ -115,13 +116,19 @@ y_hat_bar = Y_hat(1:ny, :); % Extract only non-delay time series
 % Vector of Mean Absolute Error on testing data
 MAE = sum(abs(y_hat_bar - y_test), 2)./N_test % For each measured state
 
-%% Plot data vs model
+%% Plot training data
 % close all;
 
 figure;
 plot(t_train, y_train);
-title(['HAVOK - Train - ', simulation_data_file]);
+title(['HAVOK - Train y - ', simulation_data_file]);
 
+figure;
+plot(t_train, u_train);
+title(['HAVOK - Train u - ', simulation_data_file]);
+legend('x', 'y', 'z')
+
+%% Plot preditions
 for i = 1:ny
     figure;
     plot(t_test, y_test(i,:), 'b');

@@ -8,10 +8,14 @@ mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MP
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 0
+enable_payload = 1
 enable_noise = 0
 enable_mpc = 0 % Set to 1 to uncomment MPC block
-enable_random_waypoints = 1
+enable_random_waypoints = 1 % Generate random waypoints
+enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
+
+%% Input smoothing
+moving_ave_exp = 0.97;
 
 %% Enable payload
 payload_variant = Simulink.Variant('enable_payload == 1');
@@ -101,22 +105,28 @@ step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 time_max = 30; % Max time between waypoints (s)
 time_min = 10; % Min time between waypoints (s)
 
-switch enable_random_waypoints
-    case 0
-        % Manual waypoints: [x, y, z] = [N, E, Up]
-        takeoff_height = 1;
-        waypoints = [ ...
-                    0, 0, takeoff_height;
-                    0, 0, takeoff_height;
-                    1, 0, takeoff_height];
+if enable_random_waypoints
+    rng_seed = 0;
+    [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
+else
+    % Manual waypoints: [x, y, z] = [N, E, Up]
+    takeoff_height = 1;
+    waypoints = [ ...
+                0, 0, takeoff_height;
+                0, 0, takeoff_height;
+                1, 0, takeoff_height];
 
-        waypoints_time = [...
-                    5;
-                    5;
-                    10];        
-    case 1
-        rng_seed = 0;
-        [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min, step_max, waypoint_min, waypoint_max, time_min, time_max, rng_seed);
+    waypoints = [ ...
+                0, 0, 0;
+                0, 0, 1;
+                0, 0, -1
+                0, 0, -2];
+            
+    waypoints_time = [...
+                5;
+                5;
+                5;
+                5];        
 end
 
 % figure(1)
