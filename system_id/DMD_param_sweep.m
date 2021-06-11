@@ -81,7 +81,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 % Read previous results
 sigma = 0;
 sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['data/dmd_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+results_file = ['system_id/',uav_name, '/results/dmd_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);

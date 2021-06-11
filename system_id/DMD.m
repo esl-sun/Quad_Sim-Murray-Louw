@@ -52,7 +52,7 @@
 % % Read previous results
 % sigma = 0;
 % sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['data/dmd_results_', comment, simulation_data_file, '_sig=', sig_str, '.mat'];
+% results_file = ['system_id/',uav_name, '/results/dmd_results_', simulation_data_file, comment, '.mat'];
 
 try
     load(results_file);
@@ -159,17 +159,28 @@ end
 % Vector of Mean Absolute Error on testing data
 MAE = sum(abs(y_hat - y_test), 2)./N_test % For each measured state
 
-%% Plot data vs model
+%% Plot training data
+% close all;
+
 figure;
 plot(t_train, y_train);
-hold on;
-plot(t_test, y_test);
+title(['DMD - Train y - ', simulation_data_file]);
 
-% plot(t_test, y_hat, 'k--', 'LineWidth', 1); % Plot only non-delay coordinate
-plot(t_test, y_hat, 'r--', 'LineWidth', 1); % Plot only non-delay coordinate
-title('Training and Testing data vs Model (red = HAVOK, black = DMD)');
-% legend('','','','','','', 'x hat','z hat','theta hat', 'x hat bar','z hat bar','theta hat bar');
-hold off;
+figure;
+plot(t_train, u_train);
+title(['DMD - Train u - ', simulation_data_file]);
+legend('x', 'y', 'z')
+
+%% Plot preditions
+for i = 1:ny
+    figure;
+    plot(t_test, y_test(i,:), 'b');
+    hold on;
+    plot(t_test, y_hat_bar(i,:), 'r--', 'LineWidth', 1);
+    hold off;
+    legend('actual', 'predicted')
+    title(['DMD - Test y', num2str(i), ' - ', simulation_data_file]);
+end
 
 function A = stabilise(A_unstable,max_iterations)
     % If some eigenvalues are unstable due to machine tolerance,
