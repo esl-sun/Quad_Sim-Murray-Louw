@@ -24,18 +24,18 @@ try
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
         '!!!!! Chosen q !!!!!!!'
-        q = 4;
+        q = 10;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '!!!!!Override!!!!!!!'
-        p = 13
-        q = 13
+        p = 10
+        q = 20
     end
     % % Override parameters:
     % q = 80
