@@ -77,5 +77,5 @@ mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
 % mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*[1, 1, 1]/tuning_weight;
 mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
 
-disp('RUNNING SIM FROM init_mpc.')
-out = sim('quad_simulation_with_payload.slx')
+% disp('RUNNING SIM FROM init_mpc.')
+% out = sim('quad_simulation_with_payload.slx')

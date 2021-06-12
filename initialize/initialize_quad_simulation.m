@@ -109,8 +109,8 @@ waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
-time_max = 30; % Max time between waypoints (s)
-time_min = 10; % Min time between waypoints (s)
+time_max = 10; % Max time between waypoints (s)
+time_min = 4; % Min time between waypoints (s)
 
 if enable_random_waypoints
     rng_seed = 0;
