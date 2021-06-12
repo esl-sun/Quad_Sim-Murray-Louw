@@ -44,20 +44,20 @@ mpc_sys.OutputGroup.MO = 1:q*ny; % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 
-tuning_weight = 1e-1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
-mv_weight = 1e-0; % Tuning weight for manipulated variables only
+tuning_weight = 1e0; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
+mv_weight = 1e-5; % Tuning weight for manipulated variables only
 mvrate_weight = 1e-0; % Tuning weight for rate of manipulated variables only
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
 x_mpc = mpcstate(mpc_vel); % Initial state
-% covariance = zeros(size(x_mpc.Covariance));
+covariance = zeros(size(x_mpc.Covariance));
 % covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state
-% covariance(1:ny, 1:ny) = diag(1e-3*ones(1,ny)); % Uncertainty of each measured state
+covariance(1:ny, 1:ny) = diag(1e-3*ones(1,ny)); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 6; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 3; % Control period, desired control settling time
+Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
+Tu = 4; % Control period, desired control settling time
 mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 
@@ -69,3 +69,6 @@ mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
 
 % mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*[1, 1, 1]/tuning_weight;
 mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
+
+% disp('RUNNING SIM FROM init_mpc.')
+% out = sim('quad_simulation_with_payload.slx')

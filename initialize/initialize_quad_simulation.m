@@ -2,7 +2,7 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 400;
+sim_time = 50;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
 
@@ -11,6 +11,7 @@ enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 0
 enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
+use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 1 % Generate random waypoints
 enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
 run_simulation = 1 % Set to 1 to automatically run simulink from MATLAB script
@@ -80,7 +81,6 @@ end
 initialize_quad_models_controllers;
 
 %% MPC
-
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
 pid_states = setdiff(pid_states, mpc_states); % States controlled by PID if MPC active 
 
@@ -90,7 +90,7 @@ nu = ny; % Number of controlled states by MPC
 no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
 mpc_variant = Simulink.Variant('enable_mpc == 1');
 if enable_mpc
-    initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+    initialize_mpc_honeybee; % Initialise mpc controller (ensure havok or dmd models have been loaded)
 end
 
 %% notch filter

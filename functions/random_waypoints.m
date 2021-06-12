@@ -26,7 +26,7 @@ function [waypoints, waypoints_time] = random_waypoints(num_waypoints, step_min,
         waypoint_step = ((step_max - step_min).*rand(1,3) + step_min).*sign(randn(1,3)); % Step size to next waypoint [x,y,z]
         waypoints(i,:) = waypoints(i-1,:) + waypoint_step; % Generate next waypoint
         waypoints(i,:) = minmax(waypoints(i,:), waypoint_min, waypoint_max); % Limit waypoints to within min and max range
-        waypoints_time(i) = floor(((time_max - time_min).*rand() + time_min)); % Time interval between waypoints
+        waypoints_time(i) = max([floor(time_max.*rand()), time_min]); % Time interval between waypoints
     end
 
     waypoints(:,3) = -waypoints(:,3); % Convert z to down-positive
