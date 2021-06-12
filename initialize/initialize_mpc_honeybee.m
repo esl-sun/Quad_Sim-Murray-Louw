@@ -45,8 +45,15 @@ mpc_sys.OutputGroup.MO = 1:q*ny; % Measured Output
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 
 tuning_weight = 1e0; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
+
+% Very much like PID, but slower rate change
 mv_weight = 1e-5; % Tuning weight for manipulated variables only
-mvrate_weight = 1e-0; % Tuning weight for rate of manipulated variables only
+mvrate_weight = 1e0; % Tuning weight for rate of manipulated variables only
+
+% Faster responce, but higher peaks than PID
+% mv_weight = 1e-4; % Tuning weight for manipulated variables only
+% mvrate_weight = 9e-1; % Tuning weight for rate of manipulated variables only
+
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
@@ -70,5 +77,5 @@ mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
 % mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*[1, 1, 1]/tuning_weight;
 mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
 
-% disp('RUNNING SIM FROM init_mpc.')
-% out = sim('quad_simulation_with_payload.slx')
+disp('RUNNING SIM FROM init_mpc.')
+out = sim('quad_simulation_with_payload.slx')
