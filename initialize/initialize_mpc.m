@@ -51,10 +51,10 @@ mpc_vel = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
 x_mpc = mpcstate(mpc_vel); % Initial state
-covariance = zeros(size(x_mpc.Covariance));
+% covariance = zeros(size(x_mpc.Covariance));
 % covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state
-covariance(1:ny, 1:ny) = diag([1e-3, 1e-3]); % Manually tune uncertainty of each state
-x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
+% covariance(1:ny, 1:ny) = diag(1e-3*ones(1,ny)); % Uncertainty of each measured state
+% x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
 Ty = 6; % Prediction period, For guidance, minimum desired settling time (s)
 Tu = 3; % Control period, desired control settling time
@@ -62,10 +62,10 @@ mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizo
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 
 % mpc_vel.Weights.OutputVariables        = [1, 1, 1, 10, 10, zeros(1, (q-1)*ny)]*tuning_weight;
-mpc_vel.Weights.OutputVariables        = [1, 1, zeros(1, (q-1)*ny)]*tuning_weight;
+mpc_vel.Weights.OutputVariables        = [ones(1,nu), zeros(1, (q-1)*ny)]*tuning_weight;
 
 % mpc_vel.Weights.ManipulatedVariables   = mv_weight*[1, 1, 1]*tuning_weight;
-mpc_vel.Weights.ManipulatedVariables   = mv_weight*[1, 1]*tuning_weight;
+mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
 
 % mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*[1, 1, 1]/tuning_weight;
-mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*[1, 1]/tuning_weight;
+mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;

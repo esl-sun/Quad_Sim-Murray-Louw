@@ -13,6 +13,7 @@ enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 enable_random_waypoints = 1 % Generate random waypoints
 enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
+run_simulation = 1 % Set to 1 to automatically run simulink from MATLAB script
 
 %% Input smoothing
 moving_ave_exp = 0.97;
@@ -79,9 +80,15 @@ end
 initialize_quad_models_controllers;
 
 %% MPC
+
+mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
+pid_states = setdiff(pid_states, mpc_states); % States controlled by PID if MPC active 
+
+ny = length(mpc_states); % Number of measured states for mpc
+nu = ny; % Number of controlled states by MPC
+
 no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
 mpc_variant = Simulink.Variant('enable_mpc == 1');
-
 if enable_mpc
     initialize_mpc; % Initialise mpc controller (ensure havok or dmd models have been loaded)
 end
@@ -142,11 +149,13 @@ initialize_inputs;
 initialize_step 
 
 %% Run simulation
-tic;
-disp('Start simulation.')
-out = sim('quad_simulation_with_payload.slx')
-disp('Execution time:')
-toc
+if run_simulation
+    tic;
+    disp('Start simulation.')
+    out = sim('quad_simulation_with_payload.slx')
+    disp('Execution time:')
+    toc
+end
 
 disp('Done.')
 

@@ -14,7 +14,7 @@
 % mv_data   = mv_resamp.Data';
 % ref_data  = ref_resamp.Data';
 
-load('data/MPC_test_2.mat')
+% load('data/MPC_test_2.mat')
 
 % Extract data
 mo_data   = out.mo.Data';
@@ -46,7 +46,7 @@ legend('fx', 'fy', 'fz')
 title('out.u')
 
 figure
-plot(t, mv_data + u_bar')
+plot(t, mv_data)
 legend('fx', 'fy', 'fz')
 title('mv-data')
 
@@ -55,9 +55,8 @@ plot(t, mo_data)
 % legend()
 title('mo-data')
 
-stop
 % x_mpc = x_mpc_19; % State of mpc at 19.5 s
-y_rows = 1:5
+y_rows = 1
 
 for k = 1:N % every timestep k
     k*Ts_mpc
@@ -75,6 +74,7 @@ for k = 1:N % every timestep k
             plot(info.Topt + t(k), ref_data(state,(0:ph)+k)')
             plot(info.Topt + t(k), mo_data(state,(0:ph)+k)', ':', 'LineWidth', 2)
             legend('ref', 'prediction', 'actual')
+            title('State')
             ylim([-2.5, 2.5])
             hold off;
         end
@@ -84,6 +84,8 @@ for k = 1:N % every timestep k
         hold on;
         plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
         hold off;
+        legend('optimised', 'actual')
+        title('Input given')
         
         pause
         
