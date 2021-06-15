@@ -11,8 +11,8 @@ enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 0
 enable_noise = 0
 enable_mpc = 0 % Set to 1 to uncomment MPC block
-use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
-enable_random_waypoints = 1 % Generate random waypoints
+use_mpc_control = 0 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 
@@ -118,22 +118,49 @@ if enable_random_waypoints
 else
     % Manual waypoints: [x, y, z] = [N, E, Up]
     takeoff_height = 1;
-    waypoints = [ ...
-                0, 0, takeoff_height;
-                0, 0, takeoff_height;
-                1, 0, takeoff_height];
+%     waypoints = [ ...
+%                 0, 0, takeoff_height;
+%                 0, 0, takeoff_height;
+%                 1, 0, takeoff_height];
+% 
+%     waypoints = [ ...
+%                 0, 0, 0;
+%                 0, 0, 1;
+%                 0, 0, -1
+%                 0, 0, -2];
+%     waypoints_time = [...
+%                 5;
+%                 5;
+%                 5;
+%                 5];  
 
-    waypoints = [ ...
-                0, 0, 0;
-                0, 0, 1;
-                0, 0, -1
-                0, 0, -2];
-            
-    waypoints_time = [...
-                5;
-                5;
-                5;
-                5];        
+% Waypoints to write ESL:
+    waypoints = [
+                1, 0, 2;
+                16, 0, 2;
+                16, 12, 2;
+                16, 0, 2;
+                8, 0, 2;
+                8, 8, 2;
+                8, 0, 2;
+                0, 0, 2;
+
+                0, 22, 2;
+
+                4, 26, 2;
+                8, 22, 2;
+                8, 18, 2;
+                12, 14, 2;
+                16, 18, 2;
+
+                16, 30, 2;
+
+                0, 30, 2;
+                0, 42, 2
+            ]
+
+    waypoints_time = ones(size(waypoints,1),1)*5;
+      
 end
 
 % figure(1)
