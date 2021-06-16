@@ -1,0 +1,65 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_b7f2a/fast && /usr/bin/make  -f CMakeFiles/cmTC_b7f2a.dir/build.make CMakeFiles/cmTC_b7f2a.dir/build
+make[1]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b7f2a.dir/src.c.o
+/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -Wall  -O3 -march=native   -o CMakeFiles/cmTC_b7f2a.dir/src.c.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_b7f2a
+/home/esl/cmake-install/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b7f2a.dir/link.txt --verbose=1
+/usr/bin/cc   -Wall  -O3 -march=native   -rdynamic CMakeFiles/cmTC_b7f2a.dir/src.c.o -o cmTC_b7f2a 
+CMakeFiles/cmTC_b7f2a.dir/src.c.o: In function `main':
+src.c:(.text.startup+0x23): undefined reference to `pthread_create'
+src.c:(.text.startup+0x2c): undefined reference to `pthread_detach'
+src.c:(.text.startup+0x35): undefined reference to `pthread_cancel'
+src.c:(.text.startup+0x40): undefined reference to `pthread_join'
+src.c:(.text.startup+0x4b): undefined reference to `pthread_atfork'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_b7f2a.dir/build.make:98: recipe for target 'cmTC_b7f2a' failed
+make[1]: *** [cmTC_b7f2a] Error 1
+make[1]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp'
+Makefile:127: recipe for target 'cmTC_b7f2a/fast' failed
+make: *** [cmTC_b7f2a/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_07d03/fast && /usr/bin/make  -f CMakeFiles/cmTC_07d03.dir/build.make CMakeFiles/cmTC_07d03.dir/build
+make[1]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_07d03.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -Wall  -O3 -march=native  -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_07d03.dir/CheckFunctionExists.c.o -c /home/esl/cmake-install/share/cmake-3.20/Modules/CheckFunctionExists.c
+Linking C executable cmTC_07d03
+/home/esl/cmake-install/bin/cmake -E cmake_link_script CMakeFiles/cmTC_07d03.dir/link.txt --verbose=1
+/usr/bin/cc   -Wall  -O3 -march=native  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_07d03.dir/CheckFunctionExists.c.o -o cmTC_07d03  -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_07d03.dir/build.make:98: recipe for target 'cmTC_07d03' failed
+make[1]: *** [cmTC_07d03] Error 1
+make[1]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles/CMakeTmp'
+Makefile:127: recipe for target 'cmTC_07d03/fast' failed
+make: *** [cmTC_07d03/fast] Error 2
+
+
+
