@@ -24,7 +24,7 @@ void GazeboWorldImpl::reset() {
 }
 
 void GazeboWorldImpl::resetTime() {
-    return m_world->ResetTime();
+    // return m_world->ResetTime(); //@jmurraylouw
 }
 
 } // namespace gazebotransport
