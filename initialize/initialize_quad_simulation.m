@@ -5,7 +5,8 @@
 sim_time = 50;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.002; % [s] Position control sample time (Ts = 1/freq)
+Ts_pos_control = 1/50; % [s] Position control sample time (Ts = 1/freq)
+Ts_pub_setpoint = 1/50; % [s] Publishing rate of setpoint
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
