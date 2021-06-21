@@ -48,7 +48,7 @@ tuning_weight = 1e0; % Tuning weight for mv and mv rate together. Smaller = robu
 
 % Very much like PID, but slower rate change
 mv_weight = 1e-5; % Tuning weight for manipulated variables only
-mvrate_weight = 1e0; % Tuning weight for rate of manipulated variables only
+mvrate_weight = 7e-1; % Tuning weight for rate of manipulated variables only
 
 % Faster responce, but higher peaks than PID
 % mv_weight = 1e-4; % Tuning weight for manipulated variables only
