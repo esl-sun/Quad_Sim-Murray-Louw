@@ -5,7 +5,7 @@
 sim_time = 25;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.01; % [s] Position control sample time (Ts = 1/freq)
+Ts_pos_control = 0.008; % [s] Position control sample time (Ts = 1/freq)
 Ts_pub_setpoint = Ts_pos_control; % [s] Publishing rate of setpoint
 step_size_ros = 0.008; % [s] Step size for solver of simulink ROS nodes
 
