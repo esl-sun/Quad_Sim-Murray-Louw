@@ -36,7 +36,7 @@ for i = 1:q-1
     delays_0 = [delays_0; y0];
 end
 
-payload_angle_ref = zeros(1,2); % Payload angle setpoint to add to reference vector for MPC
+payload_angle_ref = zeros(1,ny-nu); % Payload angle setpoint to add to reference vector for MPC
 
 % MPC object
 old_status = mpcverbosity('off'); % No display messages
@@ -44,8 +44,8 @@ mpc_sys.OutputGroup.MO = 1:q*ny; % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 
-tuning_weight = 1e0; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
-
+tuning_weight = 1.6; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
+payload_angle_weight = 2; % Larger = less swing angle, Smaller = more swing
 % Very much like PID, but slower rate change
 mv_weight = 1e-5; % Tuning weight for manipulated variables only
 mvrate_weight = 7e-1; % Tuning weight for rate of manipulated variables only
@@ -69,7 +69,7 @@ mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizo
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 
 % mpc_vel.Weights.OutputVariables        = [1, 1, 1, 10, 10, zeros(1, (q-1)*ny)]*tuning_weight;
-mpc_vel.Weights.OutputVariables        = [ones(1,nu), zeros(1, (q-1)*ny)]*tuning_weight;
+mpc_vel.Weights.OutputVariables        = [ones(1,nu), payload_angle_weight*ones(1, (ny-nu) ), zeros(1, (q-1)*ny)]*tuning_weight;
 
 % mpc_vel.Weights.ManipulatedVariables   = mv_weight*[1, 1, 1]*tuning_weight;
 mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;

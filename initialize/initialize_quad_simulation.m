@@ -2,16 +2,16 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 40;
+sim_time = 25;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.008; % [s] Position control sample time (Ts = 1/freq)
+Ts_pos_control = 0.01; % [s] Position control sample time (Ts = 1/freq)
 Ts_pub_setpoint = Ts_pos_control; % [s] Publishing rate of setpoint
 step_size_ros = 0.008; % [s] Step size for solver of simulink ROS nodes
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 0
+enable_payload = 1
 enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
@@ -113,8 +113,8 @@ waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
-time_max = 10; % Max time between waypoints (s)
-time_min = 4; % Min time between waypoints (s)
+time_max = 20; % Max time between waypoints (s)
+time_min = 6; % Min time between waypoints (s)
 
 if enable_random_waypoints
     rng_seed = 0;

@@ -21,7 +21,7 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-simulation_data_file = 'PID_X_smoothed_no_noise_1_no_payload';
+simulation_data_file = 'PID_X_smoothed_no_noise_payload_2';
 
 load([uav_name, '/data/', simulation_data_file, '.mat']) % Load simulation data
 
@@ -43,7 +43,7 @@ y_train = y_train.Data';
 u_train = u_train.Data';
 
 % Testing data
-test_time = 300:Ts:360;
+test_time = 200:Ts:260;
 y_test = resample(out.y, test_time );  
 u_test = resample(out.u, test_time );  
 t_test = y_test.Time';
@@ -56,7 +56,8 @@ u_test = u_test.Data';
 ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
-MAE_weight = [1]; % Weighting of error of each state when calculating mean
+% Weight drone states 1, pendulum states 0
+MAE_weight = [1;0]; % Weighting of error of each state when calculating mean
 % MAE_weight = [1;1;1;0;0]; % Weighting of error of each state when calculating mean
 
 if length(MAE_weight) ~= ny
