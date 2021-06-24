@@ -5,7 +5,7 @@ Ts_havok = Ts;
 
 if use_sitl_data    
     % Load data from csv into matrix (csv file created with payload_angle.py)
-%     [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', 'Choose csv file to access')
+    [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose csv file with SITL log data (from payload_angle.y)')
     data = readmatrix(strcat(parent_dir, '/', file_name));
     
     simulation_data_file = file_name;
@@ -24,48 +24,45 @@ if use_sitl_data
     angle_x = data(:,8); % Payload angle about x axis in local NED
     angle_y = data(:,9);
     
-    % Gather data    
-    y_data_noise = [vel_x, angle_y];
-    u_data_noise = [acc_sp_x];
+    % Gather data  
+    %% ??? For some reason, angle_x works with x. in x direction. Should it not be angle about y axis?
+    control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
+    switch control_vel_axis
+        case 'x'
+            y_data_noise = [vel_x, angle_x];
+            u_data_noise = [acc_sp_x];
+        case 'xy'
+            y_data_noise = [vel_x, vel_y, angle_x, angle_y];
+            u_data_noise = [acc_sp_x, acc_sp_y];
+        otherwise
+            error('Only supports control_vel_axis = x or xy')
+    end
     
-    % Smooth data
+    % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
-    u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6);
+    u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
     
-    % Plot    
-    figure(5)
-    plot(time, y_data_smooth)
-    hold on
-    plot(time, y_data)
-    plot(time, u_data_smooth)
-    plot(time, u_data)    
-    hold off
-    title('Data noisy vs smooth')
-    xlim([321.6674  328.8901])
-    ylim([-4.4410    6.5628])
+    %% Plot    
+%     figure(5)
+%     plot(time, y_data_smooth)
+%     hold on
+%     plot(time, y_data_noise)
+%     plot(time, u_data_smooth)
+%     plot(time, u_data_noise)    
+%     hold off
+%     title('Data noisy vs smooth')
+%     xlim([321.6674  328.8901])
+%     ylim([-4.4410    6.5628])
     
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
     u_data = timeseries(u_data_smooth, time);    
     
-    %% Plot
-    
-%     vel_x_smooth = smoothdata(vel_x, 'loess', 20);
-%     
-%     figure(1)
-%     plot(time, vel_x_smooth)
-%     hold on
-%     plot(time, vel_x)
-%     hold off
-%     legend('noisy', 'smooth')
-%     
-%     plot(time, angle_y.*(180/pi))
-    
 else
     % Extract data from .mat file saved from Simulink run
     simulation_data_file = 'PID_X_smoothed_no_noise_payload_2';
 
-    load([uav_name, '/data/', simulation_data_file, '.mat']) % Load simulation data
+    load([uav_folder, '/data/', simulation_data_file, '.mat']) % Load simulation data
 
     % Adjust for constant disturbance / mean control values
     % u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
@@ -76,7 +73,16 @@ else
     u_data = out.u;
 end
 
-time_offset = 100;
+time_offset = 100; % Time offset for where train and test time lies on data
+    
+% Remove input offset
+
+% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
+% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
+% u_bar = mean(u_hover.Data);
+u_bar = mean(u_data.Data);
+u_data.Data = u_data.Data - u_bar;
+
 % Training data
 train_time = time_offset+(0:Ts:200)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
@@ -97,14 +103,13 @@ N_test = length(t_test); % Num of data samples for testing
 y_test = y_test.Data';
 u_test = u_test.Data';
 
-%% Plot
-
-figure
-plot(t_train, y_train)
-hold on
-plot(t_train, u_train)
-hold off
-title('Training data')
+%% Plot 
+% figure
+% plot(t_train, y_train)
+% hold on
+% plot(t_train, u_train)
+% hold off
+% title('Training data')
 
 
 

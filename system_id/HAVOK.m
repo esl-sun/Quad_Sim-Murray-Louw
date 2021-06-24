@@ -1,7 +1,7 @@
 %% Implentation of Hankel Alternative View Of Koopman for 2D Drone
 % Always run HAVOK_param_swep.m first before running this file.
 % This will set all varaibkles correctly
-close all;
+% close all;
 % %% Run simulation
 % tic;
 % disp('Start simulation.')
@@ -9,7 +9,11 @@ close all;
 % disp('Execution time:')
 % toc
 
-results_file = ['system_id/',uav_name, '/results/havok_results_', simulation_data_file, comment, '.mat'];
+% Extract data
+use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
+extract_data;
+
+results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
 
 try
     load(results_file);
@@ -21,10 +25,16 @@ try
     q = double(best_results.q);
     p = double(best_results.p);
     
+    iterate_p = 0
+    if iterate_p
+        '--------------------------------------------- Iterate p -------------------------------------------------------'
+        p = try_p;
+    end
+    
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
         '---------------------------------------------- Chosen q --------------------------------------------------------'
-        q = 13;
+        q = 3;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
@@ -34,8 +44,8 @@ try
     override = 0;
     if override
         '---------------------------------------------- Override --------------------------------------------------------'
-        q = 30
-        p = 14
+        q = 25
+        p = 20
         
     end
     % % Override parameters:
@@ -63,7 +73,7 @@ YU_bar = [Y; Upsilon];
 
 % SVD of the Hankel matrix
 [U1,S1,V1] = svd(YU_bar, 'econ');
-figure, semilogy(diag(S1), 'x'), hold on;
+figure(1), semilogy(diag(S1), 'x'), hold on;
 title('Singular values of Omega, showing p truncation')
 plot(p, S1(p,p), 'ro'), hold off;
 
@@ -93,9 +103,9 @@ A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matr
 B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
 
 %% Run with HAVOK (A_havok, B_havok and x)
-figure;
-plot(V1(:,1:5))
-title('First 5 modes of SVD')
+% figure;
+% plot(V1(:,1:5))
+% title('First 5 modes of SVD')
 
 %% Compare to testing data
 % Initial condition (last entries of training data)
@@ -119,18 +129,18 @@ MAE = sum(abs(y_hat_bar - y_test), 2)./N_test % For each measured state
 %% Plot training data
 % close all;
 
-figure;
-plot(t_train, y_train);
-title(['HAVOK - Train y - ', simulation_data_file]);
-
-figure;
-plot(t_train, u_train);
-title(['HAVOK - Train u - ', simulation_data_file]);
-legend('x', 'y', 'z')
+% figure;
+% plot(t_train, y_train);
+% title(['HAVOK - Train y - ', simulation_data_file]);
+% 
+% figure;
+% plot(t_train, u_train);
+% title(['HAVOK - Train u - ', simulation_data_file]);
+% legend('x', 'y', 'z')
 
 %% Plot preditions
 for i = 1:ny
-    figure;
+    figure(i+1);
     plot(t_test, y_test(i,:), 'b');
     hold on;
     plot(t_test, y_hat_bar(i,:), 'r--', 'LineWidth', 1);
@@ -140,7 +150,7 @@ for i = 1:ny
 end
 
 %% Save model
-model_file = ['system_id/', uav_name, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
 disp('model saved')
 

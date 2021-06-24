@@ -3,6 +3,8 @@
 % Saves all the results for different parameter combinations
 
 % close all;
+sim_type = 'SITL' % Choose source of data: SITL or Simulink
+uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
 total_timer = tic; % Start timer for this script
 
@@ -18,8 +20,6 @@ p_increment = 1; % Increment value of p in grid search
 q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % p_search defined before p for loop
 
-% comment = ''; % Extra comment to differentiate this run
-
 % Extract data
 use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 extract_data;
@@ -28,12 +28,12 @@ extract_data;
 ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
-% Weight drone states 1, pendulum states 0
-MAE_weight = [1;0]; % Weighting of error of each state when calculating mean
-% MAE_weight = [1;1;1;0;0]; % Weighting of error of each state when calculating mean
-
-if length(MAE_weight) ~= ny
-    error('Mismatch between MAE_weight and number of measured states');
+% Weighting of error of each state when calculating mean
+switch ny
+    case 2 % [x, angle_y]
+        MAE_weight = [1; 0]; % Pendulum states are not controlled, therefore not important for tracking
+    case 4 % [x, y, angle_x, angle_y]
+        MAE_weight = [1; 1; 0; 0];
 end
 
 % Create empty results table
@@ -46,9 +46,7 @@ end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
 
 % Read previous results
-uav_folder = ['system_id/', uav_name]; % Base folder for this uav
 results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
-
 try
     load(results_file);
     results(~results.q,:) = []; % remove empty rows
@@ -174,12 +172,13 @@ plot_results = 1;
 if plot_results
     figure
     semilogy(results.q, results.MAE_mean, '.')
+    grid on
     ylabel('MAE of prediction');
     xlabel('Number of delays in model, q');
     y_limits = [1e-2, 1e0];
     ylim(y_limits)
 %     xlim([18 50])
-    title('HAVOK')
+    title(['HAVOK, best q = ', num2str(best_results_overall.q)])
 end
 
 function A = stabilise(A_unstable,max_iterations)

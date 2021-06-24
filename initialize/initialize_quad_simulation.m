@@ -19,6 +19,9 @@ enable_random_waypoints = 1 % Set to 1 to generate random waypoints. Set to 0 to
 enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 
+if enable_payload
+    uav_name = [uav_name, '_payload'];
+end
 %% Input smoothing
 moving_ave_exp = 0.97;
 
@@ -56,7 +59,7 @@ initialize_quad_sim_constants;
 switch uav_name
     case 'griffin'
         initialize_quad_parameters_griffin;
-    case 'honeybee'
+    case 'honeybee_payload'
         initialize_quad_parameters_honeybee_reg;
 end
 
@@ -75,7 +78,7 @@ end
 switch uav_name
     case 'griffin'
         initialize_quad_gains_griffin;
-    case 'honeybee'
+    case 'honeybee_payload'
         initialize_quad_gains_honeybee_reg;
 end
 
