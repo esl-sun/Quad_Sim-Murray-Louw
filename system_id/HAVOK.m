@@ -10,10 +10,7 @@
 % toc
 
 % Extract data
-use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 extract_data;
-
-results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
 
 try
     load(results_file);
@@ -25,7 +22,7 @@ try
     q = double(best_results.q);
     p = double(best_results.p);
     
-    iterate_p = 0
+    iterate_p = 0;
     if iterate_p
         '--------------------------------------------- Iterate p -------------------------------------------------------'
         p = try_p;

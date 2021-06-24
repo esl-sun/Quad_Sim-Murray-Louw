@@ -2,7 +2,7 @@
 % (ensure havok or dmd models have been loaded before this script)
 
 % Internal plant model
-model_file = ['system_id/', uav_name, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 load(model_file) % Load plant model from saved data
 
 model = 'havok'; % Choose which model to use for MPC
@@ -44,11 +44,11 @@ mpc_sys.OutputGroup.MO = 1:q*ny; % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 
-tuning_weight = 1.6; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
-payload_angle_weight = 2; % Larger = less swing angle, Smaller = more swing
+tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
+payload_angle_weight = 0.5; % Larger = less swing angle, Smaller = more swing
 % Very much like PID, but slower rate change
-mv_weight = 1e-5; % Tuning weight for manipulated variables only
-mvrate_weight = 7e-1; % Tuning weight for rate of manipulated variables only
+mv_weight = 1e-8; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
+mvrate_weight = 5e-1; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 % Faster responce, but higher peaks than PID
 % mv_weight = 1e-4; % Tuning weight for manipulated variables only
@@ -64,7 +64,7 @@ covariance(1:ny, 1:ny) = diag(1e-3*ones(1,ny)); % Uncertainty of each measured s
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
 Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 4; % Control period, desired control settling time
+Tu = 5; % Control period, desired control settling time
 mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 

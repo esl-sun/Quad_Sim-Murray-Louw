@@ -55,6 +55,6 @@ drift_tau    = 4;
 
 %% Payload model
 mp = 0.5;
-l = 0.5;
+l = 0.8;
 k = 0;
-c = 0.003; % From Willem simulations for match prac to sim 
+c = 0.0; % From Willem simulations for match prac to sim 

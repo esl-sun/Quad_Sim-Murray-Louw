@@ -3,9 +3,6 @@
 % Saves all the results for different parameter combinations
 
 % close all;
-sim_type = 'SITL' % Choose source of data: SITL or Simulink
-uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
-
 total_timer = tic; % Start timer for this script
 
 % Search space
@@ -21,7 +18,6 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % p_search defined before p for loop
 
 % Extract data
-use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 extract_data;
 
 % Data dimentions
@@ -48,7 +44,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 % Read previous results
 results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
 try
-    load(results_file);
+    load(results_file)
     results(~results.q,:) = []; % remove empty rows
     results = [results; table('Size',Size,'VariableTypes',VariableTypes,'VariableNames',VariableNames)];
     

@@ -10,6 +10,8 @@ if use_sitl_data
     
     simulation_data_file = file_name;
     
+    time_offset = 100; % Time offset for where train and test time lies on data
+    
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
     
@@ -60,29 +62,17 @@ if use_sitl_data
     
 else
     % Extract data from .mat file saved from Simulink run
-    simulation_data_file = 'PID_X_smoothed_no_noise_payload_2';
-
-    load([uav_folder, '/data/', simulation_data_file, '.mat']) % Load simulation data
-
-    % Adjust for constant disturbance / mean control values
-    % u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
-    % out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
+%     simulation_data_file = 'PID_X_payload_mp_0-4_l_0-5';
+    data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
+    load(data_file) % Load simulation data
+    
+    time_offset = 0; % Time offset for where train and test time lies on data
     
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
 end
-
-time_offset = 100; % Time offset for where train and test time lies on data
     
-% Remove input offset
-
-% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
-% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
-% u_bar = mean(u_hover.Data);
-u_bar = mean(u_data.Data);
-u_data.Data = u_data.Data - u_bar;
-
 % Training data
 train_time = time_offset+(0:Ts:200)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
@@ -93,6 +83,14 @@ N_train = length(t_train);
 y_train = y_train.Data';
 u_train = u_train.Data';
 
+% Remove input offset
+
+% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
+% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
+% u_bar = mean(u_hover.Data);
+u_bar = mean(u_train);
+u_train = u_train - u_bar;
+
 % Testing data
 test_time = time_offset+(200:Ts:260)';
 y_test = resample(y_data, test_time );  
@@ -102,6 +100,9 @@ N_test = length(t_test); % Num of data samples for testing
 
 y_test = y_test.Data';
 u_test = u_test.Data';
+
+% Remove input offset
+u_test = u_test - u_bar;
 
 %% Plot 
 % figure
