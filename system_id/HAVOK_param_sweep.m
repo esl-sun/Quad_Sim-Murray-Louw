@@ -8,7 +8,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 20; % Max value of q in grid search
+q_max = 30; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -21,36 +21,8 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % comment = ''; % Extra comment to differentiate this run
 
 % Extract data
-simulation_data_file = 'PID_X_smoothed_no_noise_payload_2';
-
-load([uav_name, '/data/', simulation_data_file, '.mat']) % Load simulation data
-
-Ts = 0.03;     % Desired sample time
-Ts_havok = Ts;
-
-% Adjust for constant disturbance / mean control values
-% u_bar = mean(out.u.Data,1); % Input needed to keep at a fixed point
-% out.u.Data  = out.u.Data - u_bar; % Adjust for unmeasured input
-
-% Training data
-train_time = (0:Ts:200)';
-y_train = resample(out.y, train_time );% Resample time series to desired sample time and training period  
-u_train = resample(out.u, train_time );  
-t_train = y_train.Time';
-N_train = length(t_train);
-
-y_train = y_train.Data';
-u_train = u_train.Data';
-
-% Testing data
-test_time = 200:Ts:260;
-y_test = resample(out.y, test_time );  
-u_test = resample(out.u, test_time );  
-t_test = y_test.Time';
-N_test = length(t_test); % Num of data samples for testing
-
-y_test = y_test.Data';
-u_test = u_test.Data';
+use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
+extract_data;
 
 % Data dimentions
 ny = size(y_train,1); % number of states
@@ -74,8 +46,8 @@ end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
 
 % Read previous results
-comment = '';
-results_file = ['system_id/',uav_name, '/results/havok_results_', simulation_data_file, comment, '.mat'];
+uav_folder = ['system_id/', uav_name]; % Base folder for this uav
+results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
 
 try
     load(results_file);

@@ -1,7 +1,7 @@
 %% Implentation of Hankel Alternative View Of Koopman for 2D Drone
 % Always run HAVOK_param_swep.m first before running this file.
 % This will set all varaibkles correctly
-% close all;
+close all;
 % %% Run simulation
 % tic;
 % disp('Start simulation.')
@@ -21,9 +21,9 @@ try
     q = double(best_results.q);
     p = double(best_results.p);
     
-    only_q_Ts = 1; % Try best result for specific q
+    only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
-        '!!!!! Chosen q !!!!!!!'
+        '---------------------------------------------- Chosen q --------------------------------------------------------'
         q = 13;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
@@ -33,9 +33,9 @@ try
     
     override = 0;
     if override
-        '!!!!!Override!!!!!!!'
-        q = 22
-        p = 10
+        '---------------------------------------------- Override --------------------------------------------------------'
+        q = 30
+        p = 14
         
     end
     % % Override parameters:
@@ -93,11 +93,11 @@ A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matr
 B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
 
 %% Run with HAVOK (A_havok, B_havok and x)
-% figure;
-% plot(U1(:,1:5))
-% title('First 5 modes of SVD')
+figure;
+plot(V1(:,1:5))
+title('First 5 modes of SVD')
 
-% Compare to testing data
+%% Compare to testing data
 % Initial condition (last entries of training data)
 y_hat_0 = zeros(q*ny,1); % Y[k] at top
 for row = 0:q-1 % First column of spaced Hankel matrix
