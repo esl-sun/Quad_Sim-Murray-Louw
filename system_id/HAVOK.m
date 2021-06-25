@@ -109,13 +109,13 @@ A_havok(1:num_axis, 1:num_axis)            =    eye(num_axis); % 1*pos(k)
 A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
 
 %% Add payload angular velocity
-A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
-A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
-B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
-
-% Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+% A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+% A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
+% B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+% 
+% % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+% A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+% A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
 %% Run with HAVOK (A_havok, B_havok and x)
 % figure;
@@ -133,13 +133,13 @@ end
 y_hat_0 = [p_test(:,q); y_hat_0];
 
 % Add ZERO for initial angular velocity to top
-switch num_axis
-    case 1 % y_test = [vx; angle_x ... delays]
-        dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity
-    case 2 % y_test = [vx; vy; angle_x; angle_y... delays]
-        dtheta_0 = 1/Ts * y_test([3 4], q)  -  1/Ts * y_test([3 4], q-1); % initial angular velocity
-end
-y_hat_0 = [dtheta_0; y_hat_0];
+% switch num_axis
+%     case 1 % y_test = [vx; angle_x ... delays]
+%         dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity
+%     case 2 % y_test = [vx; vy; angle_x; angle_y... delays]
+%         dtheta_0 = 1/Ts * y_test([3 4], q)  -  1/Ts * y_test([3 4], q-1); % initial angular velocity
+% end
+% y_hat_0 = [dtheta_0; y_hat_0];
 
 % Run model
 % figure
@@ -176,15 +176,15 @@ end
 
 
 %% Plot preditions
-for i = 1:ny+2*num_axis
-    figure(i+1);
-    plot(t_test, y_test(i,:), 'b');
-    hold on;
-    plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
-    hold off;
-    legend('actual', 'predicted')
-    title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
-end
+% for i = 1:ny+num_axis
+%     figure(i+1);
+%     plot(t_test, y_test(i,:), 'b');
+%     hold on;
+%     plot(t_test, y_hat_bar(i+num_axis,:), 'r--', 'LineWidth', 1);
+%     hold off;
+%     legend('actual', 'predicted')
+%     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
+% end
 
 %% Plot angle and angular velocity
 figure, hold on
