@@ -41,8 +41,8 @@ try
     override = 0;
     if override
         '---------------------------------------------- Override --------------------------------------------------------'
-        q = 25
-        p = 20
+        q = 3
+        p = 3
         
     end
     % % Override parameters:
@@ -99,29 +99,68 @@ B_havok = AB_havok(1:q*ny, q*ny+1:end);
 A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
 B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
 
+%% Add position state (with integration)
+A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
+B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+
+% Numeric integration: pos(k+1) = pos(k) + Ts*vel(k)
+A_havok(1:num_axis, 1:num_axis)            =    eye(num_axis); % 1*pos(k)
+A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
+
+%% Add payload angular velocity
+A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
+B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+
+% Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+
 %% Run with HAVOK (A_havok, B_havok and x)
 % figure;
 % plot(V1(:,1:5))
 % title('First 5 modes of SVD')
 
 %% Compare to testing data
-% Initial condition (last entries of training data)
+% Initial condition (starts at index = q of training data)
 y_hat_0 = zeros(q*ny,1); % Y[k] at top
 for row = 0:q-1 % First column of spaced Hankel matrix
     y_hat_0(row*ny+1:(row+1)*ny, 1) = y_test(:,q-row);
 end
 
+% Add initial position to top
+y_hat_0 = [p_test(:,q); y_hat_0];
+
+% Add ZERO for initial angular velocity to top
+switch num_axis
+    case 1 % y_test = [vx; angle_x ... delays]
+        dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity
+    case 2 % y_test = [vx; vy; angle_x; angle_y... delays]
+        dtheta_0 = 1/Ts * y_test([3 4], q)  -  1/Ts * y_test([3 4], q-1); % initial angular velocity
+end
+y_hat_0 = [dtheta_0; y_hat_0];
+
 % Run model
+% figure
 Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
 Y_hat(:,q) = y_hat_0; % Initial condition
 for k = q:N_test-1
     Y_hat(:,k+1) = A_havok*Y_hat(:,k) + B_havok*u_test(:,k);
+%     plot(t_test, Y_hat(1:(ny+num_axis), :))
+%     legend('pos', 'vel', 'theta')
+%     pause
 end
 
-y_hat_bar = Y_hat(1:ny, :); % Extract only non-delay time series
+y_hat_bar = Y_hat(1:(ny+num_axis), :); % Extract only non-delay time series and position
 
 % Vector of Mean Absolute Error on testing data
-MAE = sum(abs(y_hat_bar - y_test), 2)./N_test % For each measured state
+switch num_axis
+    case 1
+        MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
+    case 2
+        MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
+end
 
 %% Plot training data
 % close all;
@@ -135,16 +174,24 @@ MAE = sum(abs(y_hat_bar - y_test), 2)./N_test % For each measured state
 % title(['HAVOK - Train u - ', simulation_data_file]);
 % legend('x', 'y', 'z')
 
+
 %% Plot preditions
-for i = 1:ny
+for i = 1:ny+2*num_axis
     figure(i+1);
     plot(t_test, y_test(i,:), 'b');
     hold on;
-    plot(t_test, y_hat_bar(i,:), 'r--', 'LineWidth', 1);
+    plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
     hold off;
     legend('actual', 'predicted')
     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
 end
+
+%% Plot angle and angular velocity
+figure, hold on
+plot(t_test, y_test(2,:))
+plot(t_test, y_hat_bar(1,:))
+legend('angle_x', 'angle_x velocity')
+hold off
 
 %% Save model
 model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];

@@ -2,6 +2,9 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
+Ts = 0.03; % Desired sample time
+Ts_havok = Ts;
+
 % close all;
 total_timer = tic; % Start timer for this script
 
@@ -25,12 +28,13 @@ ny = size(y_train,1); % number of states
 nu = size(u_train,1); % number of inputs  
 
 % Weighting of error of each state when calculating mean
-switch ny
-    case 2 % [x, angle_y]
+switch control_vel_axis
+    case 'x' % [dx angle_y]
         MAE_weight = [1; 0]; % Pendulum states are not controlled, therefore not important for tracking
-    case 4 % [x, y, angle_x, angle_y]
-        MAE_weight = [1; 1; 0; 0];
+    case 'xy' % [dx, dy, angle_x, angle_y]
+        MAE_weight = [1; 1;  0; 0];
 end
+MAE_weight = MAE_weight./sum(MAE_weight);
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
@@ -133,7 +137,7 @@ for q = q_search
             MAE = sum(abs(y_hat - y_test), 2)./N_test; % For each measured state
             
             % Save results
-            results(emptry_row,:) = [{Ts, N_train, q, p, mean(MAE.*MAE_weight)}, num2cell(MAE')]; % add to table of results
+            results(emptry_row,:) = [{Ts, N_train, q, p, sum(MAE.*MAE_weight)}, num2cell(MAE')]; % add to table of results
             emptry_row = emptry_row + 1; 
             
         end % p

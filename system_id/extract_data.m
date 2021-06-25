@@ -1,7 +1,5 @@
 %% Get data in a form for HAVOK or DMD to be performed
 close all
-Ts = 0.03;     % Desired sample time
-Ts_havok = Ts;
 
 if use_sitl_data    
     % Load data from csv into matrix (csv file created with payload_angle.py)
@@ -28,7 +26,7 @@ if use_sitl_data
     
     % Gather data  
     %% ??? For some reason, angle_x works with x. in x direction. Should it not be angle about y axis?
-    control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
+    
     switch control_vel_axis
         case 'x'
             y_data_noise = [vel_x, angle_x];
@@ -62,7 +60,7 @@ if use_sitl_data
     
 else
     % Extract data from .mat file saved from Simulink run
-%     simulation_data_file = 'PID_X_payload_mp_0-4_l_0-5';
+%     simulation_data_file = '';
     data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
     load(data_file) % Load simulation data
     
@@ -83,13 +81,6 @@ N_train = length(t_train);
 y_train = y_train.Data';
 u_train = u_train.Data';
 
-% Remove input offset
-
-% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
-% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
-% u_bar = mean(u_hover.Data);
-u_bar = mean(u_train);
-u_train = u_train - u_bar;
 
 % Testing data
 test_time = time_offset+(200:Ts:260)';
@@ -101,8 +92,32 @@ N_test = length(t_test); % Num of data samples for testing
 y_test = y_test.Data';
 u_test = u_test.Data';
 
-% Remove input offset
+% Remove offset / Centre input around zero
+
+% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
+% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
+% u_bar = mean(u_hover.Data);
+u_bar = mean(u_train, 2);
+u_train = u_train - u_bar;
 u_test = u_test - u_bar;
+
+% Seperate position from data
+disp('!!! Remove this and regenerate data ')
+switch control_vel_axis
+    case 'x'
+        p_train = y_train(1,:);
+        v_train = y_train(2,:);
+        y_train = y_train(2:end,:);
+
+        p_test = y_test(1,:);
+        v_test = y_test(2,:);
+        y_test = y_test(2:end,:);
+        
+        num_axis = 1; % Number of controlled axis. i.e. x only therefore 1
+    otherwise
+        error('still need to implement numeric integration for other directions')
+end
+
 
 %% Plot 
 % figure
