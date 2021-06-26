@@ -117,6 +117,11 @@ A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
 % A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
 % A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
+%% Save model
+model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
+disp('model saved')
+
 %% Run with HAVOK (A_havok, B_havok and x)
 % figure;
 % plot(V1(:,1:5))
@@ -133,70 +138,66 @@ end
 y_hat_0 = [p_test(:,q); y_hat_0];
 
 % Add ZERO for initial angular velocity to top
-% switch num_axis
-%     case 1 % y_test = [vx; angle_x ... delays]
-%         dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity
-%     case 2 % y_test = [vx; vy; angle_x; angle_y... delays]
-%         dtheta_0 = 1/Ts * y_test([3 4], q)  -  1/Ts * y_test([3 4], q-1); % initial angular velocity
-% end
-% y_hat_0 = [dtheta_0; y_hat_0];
+switch num_axis
+    case 1 % y_test = [vx; angle_x ... delays]
+        dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity
+    case 2 % y_test = [vx; vy; angle_x; angle_y... delays]
+        dtheta_0 = 1/Ts * y_test([3 4], q)  -  1/Ts * y_test([3 4], q-1); % initial angular velocity
+end
+y_hat_0 = [dtheta_0; y_hat_0];
 
 % Run model
 % figure
-Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
-Y_hat(:,q) = y_hat_0; % Initial condition
-for k = q:N_test-1
-    Y_hat(:,k+1) = A_havok*Y_hat(:,k) + B_havok*u_test(:,k);
-%     plot(t_test, Y_hat(1:(ny+num_axis), :))
-%     legend('pos', 'vel', 'theta')
-%     pause
-end
-
-y_hat_bar = Y_hat(1:(ny+num_axis), :); % Extract only non-delay time series and position
-
-% Vector of Mean Absolute Error on testing data
-switch num_axis
-    case 1
-        MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
-    case 2
-        MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
-end
-
-%% Plot training data
-% close all;
-
-% figure;
-% plot(t_train, y_train);
-% title(['HAVOK - Train y - ', simulation_data_file]);
+% Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
+% Y_hat(:,q) = y_hat_0; % Initial condition
+% for k = q:N_test-1
+%     Y_hat(:,k+1) = A_havok*Y_hat(:,k) + B_havok*u_test(:,k);
+% %     plot(t_test, Y_hat(1:(ny+num_axis), :))
+% %     legend('pos', 'vel', 'theta')
+% %     pause
+% end
 % 
-% figure;
-% plot(t_train, u_train);
-% title(['HAVOK - Train u - ', simulation_data_file]);
-% legend('x', 'y', 'z')
-
-
-%% Plot preditions
-% for i = 1:ny+num_axis
+% y_hat_bar = Y_hat(1:(ny+2*num_axis), :); % Extract only non-delay time series and position
+% 
+% % Vector of Mean Absolute Error on testing data
+% switch num_axis
+%     case 1
+%         MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
+%     case 2
+%         MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
+% end
+% 
+% %% Plot training data
+% % close all;
+% % 
+% % figure;
+% % plot(t_train, y_train);
+% % title(['HAVOK - Train y - ', simulation_data_file]);
+% % 
+% % figure;
+% % plot(t_train, u_train);
+% % title(['HAVOK - Train u - ', simulation_data_file]);
+% % legend('x', 'y', 'z')
+% 
+% 
+% %% Plot preditions
+% for i = 1:ny
 %     figure(i+1);
 %     plot(t_test, y_test(i,:), 'b');
 %     hold on;
-%     plot(t_test, y_hat_bar(i+num_axis,:), 'r--', 'LineWidth', 1);
+%     plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
 %     hold off;
 %     legend('actual', 'predicted')
 %     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
 % end
+% 
+% %% Plot angle and angular velocity
+% figure, hold on
+% plot(t_test, y_test(2,:))
+% plot(t_test, y_hat_bar(1,:))
+% legend('angle_x', 'angle_x velocity')
+% hold off
 
-%% Plot angle and angular velocity
-figure, hold on
-plot(t_test, y_test(2,:))
-plot(t_test, y_hat_bar(1,:))
-legend('angle_x', 'angle_x velocity')
-hold off
-
-%% Save model
-model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
-disp('model saved')
 
 function A = stabilise(A_unstable,max_iterations)
     % If some eigenvalues are unstable due to machine tolerance,
