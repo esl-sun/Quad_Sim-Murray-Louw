@@ -49,11 +49,11 @@ end
 % MPC object
 old_status = mpcverbosity('off'); % No display messages
 
-mpc_sys.OutputGroup.MO = (1:q*ny); % Measured Output
+% mpc_sys.OutputGroup.MO = (1:q*ny); % Measured Output
 
 % Use dtheta as unmeasured output
-% mpc_sys.OutputGroup.UO = 1:num_axis; % Measured Output. Top row of matrix is unmeasured angular velocity
-% mpc_sys.OutputGroup.MO = num_axis + (1:q*ny); % Measured Output
+mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
+mpc_sys.OutputGroup.MO = num_axis + 1:(q*ny); % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 % mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
@@ -61,13 +61,13 @@ mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-pos_weight = 1; % Position tracking weight
+pos_weight = 2; % Position tracking weight
 vel_weight = 0; % Velocity tracking weight
-theta_weight = 1; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 0; % Derivative of Payload swing angle
+theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
+dtheta_weight = 1; % Derivative of Payload swing angle
 
 mv_weight = 1e-5; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 5e-1; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mvrate_weight = 10e-1; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
@@ -86,7 +86,7 @@ mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 % mpc_vel.Weights.OutputVariables        = [1, 1, 1, 10, 10, zeros(1, (q-1)*ny)]*tuning_weight;
 
 mpc_vel.Weights.OutputVariables = mo_weight*tuning_weight*  [ ...  
-%                                         dtheta_weight* ones(1,num_axis), ...
+                                        dtheta_weight* ones(1,num_axis), ...
                                         pos_weight*    ones(1, num_axis), ...
                                         vel_weight*    ones(1,num_axis), ...
                                         theta_weight*  ones(1, (ny-nu) ), ...
@@ -103,5 +103,5 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 % alpha = 0.302;
 % setindist(mpc_vel, 'model', getindist(mpc_vel)*alpha);
 
-% disp('RUNNING SIM FROM init_mpc.')
-% out = sim('quad_simulation_with_payload.slx')
+disp('RUNNING SIM FROM init_mpc.')
+out = sim('quad_simulation_with_payload.slx')

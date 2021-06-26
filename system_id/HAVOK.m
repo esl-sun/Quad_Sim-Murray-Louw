@@ -109,13 +109,13 @@ A_havok(1:num_axis, 1:num_axis)            =    eye(num_axis); % 1*pos(k)
 A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
 
 %% Add payload angular velocity
-% A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
-% A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
-% B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
-% 
-% % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-% A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-% A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
+B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+
+% Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
 %% Save model
 model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];

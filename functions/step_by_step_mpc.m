@@ -17,7 +17,9 @@
 % load('data/MPC_test_2.mat')
 
 % Extract data
+dtheta_data = out.dtheta.Data'; % payload angular velocity is an unmeasured state
 mo_data   = out.mo.Data';
+ov_data = [dtheta_data; mo_data]; % Output Variables [UO; MO]
 mv_data   = out.mv.Data';
 ref_data  = out.ref.Data';
 
@@ -27,6 +29,42 @@ N = size(mo_data,2); % Number of data samples
 ph = mpc_vel.PredictionHorizon; % Prediction Horizon
 x_mpc = mpcstate(mpc_vel); % Current state of mpc
 v = []; % No measured distrubances
+
+y_rows = 1:4
+
+%% Plot step for step
+
+for k = 1:N % every timestep k
+    k*Ts_mpc
+    ym = mo_data(:, k);
+    r = ref_data(:, k);
+    [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
+    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)
+        for state = y_rows
+            figure(state)
+            ylabel(state)
+            plot(info.Topt + t(k), info.Yopt(:,state));
+            hold on;
+            plot(info.Topt + t(k), ref_data(state,(0:ph)+k)')
+            plot(info.Topt + t(k), ov_data(state,(0:ph)+k)', ':', 'LineWidth', 2)
+            legend('prediction', 'ref', 'actual')
+            title(state)
+            ylim([-2.5, 7])
+            hold off;
+        end
+        
+%         figure(2*state + 1)
+%         plot(info.Topt + t(k), info.Uopt)
+%         hold on;
+%         plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
+%         hold off;
+%         legend('optimised', 'actual')
+%         title('Input given')
+        
+        pause
+        
+    end
+end
 
 %% Plot
 % close all
@@ -55,39 +93,3 @@ plot(t, mo_data)
 % legend()
 title('mo-data')
 
-% x_mpc = x_mpc_19; % State of mpc at 19.5 s
-y_rows = 1
-
-for k = 1:N % every timestep k
-    k*Ts_mpc
-    ym = mo_data(:, k);
-    r = ref_data(:, k);
-    [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
-    if mod(k, 0.2/Ts_mpc) == 0 && (k*Ts_mpc > 0)
-        for state = y_rows
-            figure(state)
-            ylabel(state)
-            ylim([-2.5, 2])
-            plot(info.Topt + t(k), info.Yopt(:,state));
-            ylim([-15, 10])
-            hold on;
-            plot(info.Topt + t(k), ref_data(state,(0:ph)+k)')
-            plot(info.Topt + t(k), mo_data(state,(0:ph)+k)', ':', 'LineWidth', 2)
-            legend('ref', 'prediction', 'actual')
-            title('State')
-            ylim([-2.5, 2.5])
-            hold off;
-        end
-        
-        figure(state + 1)
-        plot(info.Topt + t(k), info.Uopt)
-        hold on;
-        plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
-        hold off;
-        legend('optimised', 'actual')
-        title('Input given')
-        
-        pause
-        
-    end
-end
