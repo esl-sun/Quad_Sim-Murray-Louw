@@ -1,0 +1,8 @@
+prefix=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install
+
+Name: robotrosgetstartedexample_edit
+Description: Description of robotrosgetstartedexample_edit
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib 
+Requires: geometry_msgs roscpp std_msgs

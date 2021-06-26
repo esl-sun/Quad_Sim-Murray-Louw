@@ -16,7 +16,7 @@ enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
-enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
+enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
@@ -99,8 +99,13 @@ else
 end
 uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
-simulation_data_file = ['PID_X_payload', '_mp', num2str(mp), '_l', num2str(l)];
+if enable_smoother
+    smoother = '_smooth';
+else
+    smoother = '';
+end
 
+simulation_data_file = ['PID_', control_vel_axis,'_payload', '_mp', num2str(mp), '_l', num2str(l), smoother]
 %% MPC
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
 pid_states = setdiff([1 2 3], mpc_states); % States controlled by PID if MPC active 

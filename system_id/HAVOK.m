@@ -147,56 +147,57 @@ end
 y_hat_0 = [dtheta_0; y_hat_0];
 
 % Run model
-% figure
-% Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
-% Y_hat(:,q) = y_hat_0; % Initial condition
-% for k = q:N_test-1
-%     Y_hat(:,k+1) = A_havok*Y_hat(:,k) + B_havok*u_test(:,k);
-% %     plot(t_test, Y_hat(1:(ny+num_axis), :))
-% %     legend('pos', 'vel', 'theta')
-% %     pause
-% end
+figure
+Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
+Y_hat(:,q) = y_hat_0; % Initial condition
+for k = q:N_test-1
+    Y_hat(:,k+1) = A_havok*Y_hat(:,k) + B_havok*u_test(:,k);
+%     plot(t_test, Y_hat(1:(ny+num_axis), :))
+%     legend('pos', 'vel', 'theta')
+%     pause
+end
+
+y_hat_bar = Y_hat(1:(ny+2*num_axis), :); % Extract only non-delay time series and position
+
+% Vector of Mean Absolute Error on testing data
+switch num_axis
+    case 1
+        MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
+    case 2
+        MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
+end
+
+%% Plot training data
+% close all;
 % 
-% y_hat_bar = Y_hat(1:(ny+2*num_axis), :); % Extract only non-delay time series and position
+% figure;
+% plot(t_train, y_train);
+% title(['HAVOK - Train y - ', simulation_data_file]);
 % 
-% % Vector of Mean Absolute Error on testing data
-% switch num_axis
-%     case 1
-%         MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
-%     case 2
-%         MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
-% end
-% 
-% %% Plot training data
-% % close all;
-% % 
-% % figure;
-% % plot(t_train, y_train);
-% % title(['HAVOK - Train y - ', simulation_data_file]);
-% % 
-% % figure;
-% % plot(t_train, u_train);
-% % title(['HAVOK - Train u - ', simulation_data_file]);
-% % legend('x', 'y', 'z')
-% 
-% 
-% %% Plot preditions
-% for i = 1:ny
-%     figure(i+1);
-%     plot(t_test, y_test(i,:), 'b');
-%     hold on;
-%     plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
-%     hold off;
-%     legend('actual', 'predicted')
-%     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
-% end
-% 
-% %% Plot angle and angular velocity
-% figure, hold on
-% plot(t_test, y_test(2,:))
-% plot(t_test, y_hat_bar(1,:))
-% legend('angle_x', 'angle_x velocity')
-% hold off
+% figure;
+% plot(t_train, u_train);
+% title(['HAVOK - Train u - ', simulation_data_file]);
+% legend('x', 'y', 'z')
+
+
+%% Plot preditions
+for i = 1:ny
+    figure(i+1);
+    plot(t_test, y_test(i,:), 'b');
+    hold on;
+    plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
+    hold off;
+    legend('actual', 'predicted')
+    title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
+end
+
+%% Plot angle and angular velocity
+figure, hold on
+plot(t_test, y_test(2,:))
+plot(t_test, y_hat_bar(1,:))
+legend('angle_x', 'angle_x velocity')
+title('angle and angular velocity')
+hold off
 
 
 function A = stabilise(A_unstable,max_iterations)

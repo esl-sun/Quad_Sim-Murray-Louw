@@ -60,7 +60,7 @@ if use_sitl_data
     
 else
     % Extract data from .mat file saved from Simulink run
-%     simulation_data_file = '';
+%     simulation_data_file = 'PID_x_payload_mp0.2_l0.5_smooth'
     data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
     load(data_file) % Load simulation data
     
@@ -100,24 +100,6 @@ u_test = u_test.Data';
 u_bar = mean(u_train, 2);
 u_train = u_train - u_bar;
 u_test = u_test - u_bar;
-
-% Seperate position from data
-disp('!!! Remove this and regenerate data ')
-switch control_vel_axis
-    case 'x'
-        p_train = y_train(1,:);
-        v_train = y_train(2,:);
-        y_train = y_train(2:end,:);
-
-        p_test = y_test(1,:);
-        v_test = y_test(2,:);
-        y_test = y_test(2:end,:);
-        
-        num_axis = 1; % Number of controlled axis. i.e. x only therefore 1
-    otherwise
-        error('still need to implement numeric integration for other directions')
-end
-
 
 %% Plot 
 % figure

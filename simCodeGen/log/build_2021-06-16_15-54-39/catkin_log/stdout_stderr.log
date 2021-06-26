@@ -1,0 +1,289 @@
+CMake Warning (dev) in CMakeLists.txt:
+  No project() command is present.  The top-level CMakeLists.txt file must
+  contain a literal, direct call to the project() command.  Add a line of
+  code such as
+
+    project(ProjectName)
+
+  near the top of the file, but after cmake_minimum_required().
+
+  CMake is pretending there is a "project(Project)" command on the first
+  line.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Deprecation Warning at CMakeLists.txt:4 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Using CATKIN_DEVEL_PREFIX: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
+-- Using CMAKE_PREFIX_PATH: /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2021a/toolbox/ros/mlroscpp/custom_messages
+-- This workspace overlays: /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2021a/toolbox/ros/mlroscpp/custom_messages
+-- Found PythonInterp: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/test_results
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+CMake Deprecation Warning at /usr/src/googletest/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at /usr/src/googletest/googlemock/CMakeLists.txt:41 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at /usr/src/googletest/googletest/CMakeLists.txt:48 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Found PythonInterp: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found version "2.7.17") 
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.17
+-- BUILD_SHARED_LIBS is on
+-- BUILD_SHARED_LIBS is on
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 1 packages in topological order:
+-- ~~  - robotrosgetstartedexample_edit
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'robotrosgetstartedexample_edit'
+-- ==> add_subdirectory(robotrosgetstartedexample_edit)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
+cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/esl/cmake-install/bin/cmake -S/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src -B/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build --check-build-system CMakeFiles/Makefile.cmake 0
+cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/esl/cmake-install/bin/cmake -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit//CMakeFiles/progress.marks
+cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/all
+make[1]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_py
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target roscpp_generate_messages_lisp
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_cpp
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target std_msgs_generate_messages_cpp
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_nodejs
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+Consolidate compiler generated dependencies of target robotROSGetStartedExample_edit
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[ 12%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/main.cpp.o
+[ 25%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/robotROSGetStartedExample_edit.cpp.o
+[ 37%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/robotROSGetStartedExample_edit_data.cpp.o
+[ 50%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/rosnodeinterface.cpp.o
+[ 62%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_busmsg_conversion.cpp.o
+[ 75%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_initialize.cpp.o
+[ 87%] Building CXX object robotrosgetstartedexample_edit/CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_generic_param.cpp.o
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_busmsg_conversion.h:7:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/slros_busmsg_conversion.cpp:1:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h: In member function ‘virtual void slros::ROSPropertyWarnStatus::emitTruncationWarning(int, int) const’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:44: warning: unused parameter ‘numReceivedItems’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                            ^~~~~~~~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:66: warning: unused parameter ‘maxArraySize’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                                                  ^~~~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/slros_generic_param.cpp:3:0:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = int]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:38:64: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<int>(const int& paramValue) {
+                                                                ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = double]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:49:70: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<double>(const double& paramValue) {
+                                                                      ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = bool]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:60:66: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<bool>(const bool& paramValue) {
+                                                                  ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = std::__cxx11::basic_string<char>]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:71:80: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<std::string>(const std::string& paramValue) {
+                                                                                ^~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_busmsg_conversion.h:7:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:4,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit.h:28,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/robotROSGetStartedExample_edit_data.cpp:21:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h: In member function ‘virtual void slros::ROSPropertyWarnStatus::emitTruncationWarning(int, int) const’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:44: warning: unused parameter ‘numReceivedItems’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                            ^~~~~~~~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:66: warning: unused parameter ‘maxArraySize’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                                                  ^~~~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_busmsg_conversion.h:7:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:4,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit.h:28,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/robotROSGetStartedExample_edit.cpp:21:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h: In member function ‘virtual void slros::ROSPropertyWarnStatus::emitTruncationWarning(int, int) const’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:44: warning: unused parameter ‘numReceivedItems’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                            ^~~~~~~~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:66: warning: unused parameter ‘maxArraySize’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                                                  ^~~~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_busmsg_conversion.h:7:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:4,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/slros_initialize.cpp:1:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h: In member function ‘virtual void slros::ROSPropertyWarnStatus::emitTruncationWarning(int, int) const’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:44: warning: unused parameter ‘numReceivedItems’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                            ^~~~~~~~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_msgconvert_utils.h:27:66: warning: unused parameter ‘maxArraySize’ [-Wunused-parameter]
+     virtual void emitTruncationWarning(int numReceivedItems, int maxArraySize) const {};
+                                                                  ^~~~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic.h:10:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:5,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit.h:28,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/robotROSGetStartedExample_edit.cpp:21:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = int]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:38:64: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<int>(const int& paramValue) {
+                                                                ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = double]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:49:70: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<double>(const double& paramValue) {
+                                                                      ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = bool]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:60:66: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<bool>(const bool& paramValue) {
+                                                                  ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = std::__cxx11::basic_string<char>]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:71:80: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<std::string>(const std::string& paramValue) {
+                                                                                ^~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic.h:10:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:5,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit.h:28,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/robotROSGetStartedExample_edit_data.cpp:21:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = int]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:38:64: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<int>(const int& paramValue) {
+                                                                ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = double]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:49:70: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<double>(const double& paramValue) {
+                                                                      ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = bool]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:60:66: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<bool>(const bool& paramValue) {
+                                                                  ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = std::__cxx11::basic_string<char>]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:71:80: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<std::string>(const std::string& paramValue) {
+                                                                                ^~~~~~~~~~
+In file included from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic.h:10:0,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_initialize.h:5,
+                 from /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/src/slros_initialize.cpp:1:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = int]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:38:64: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<int>(const int& paramValue) {
+                                                                ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = double]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:49:70: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<double>(const double& paramValue) {
+                                                                      ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = bool]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:60:66: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<bool>(const bool& paramValue) {
+                                                                  ^~~~~~~~~~
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h: In function ‘XmlRpc::XmlRpcValue::Type param_parser::getXmlRpcType(const T&) [with T = std::__cxx11::basic_string<char>]’:
+/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src/robotrosgetstartedexample_edit/include/robotrosgetstartedexample_edit/slros_generic_param.h:71:80: warning: unused parameter ‘paramValue’ [-Wunused-parameter]
+ inline XmlRpc::XmlRpcValue::Type getXmlRpcType<std::string>(const std::string& paramValue) {
+                                                                                ^~~~~~~~~~
+[100%] Linking CXX executable /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel/lib/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit
+/usr/bin/c++ CMakeFiles/robotROSGetStartedExample_edit.dir/src/main.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/robotROSGetStartedExample_edit.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/robotROSGetStartedExample_edit_data.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/rosnodeinterface.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_busmsg_conversion.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_initialize.cpp.o CMakeFiles/robotROSGetStartedExample_edit.dir/src/slros_generic_param.cpp.o -o /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel/lib/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit  -Wl,-rpath,/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/libroscpp.so -lpthread /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_filesystem.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/librosconsole.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/librosconsole_print.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/librosconsole_backend_interface.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_regex.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/libxmlrpcpp.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/libroscpp_serialization.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/librostime.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/lib/libcpp_common.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_system.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_thread.so -lpthread /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_chrono.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_date_time.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/boost/lib/libmwboost_atomic.so /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1/console_bridge/lib/libconsole_bridge.so.0.4 -ldl 
+make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+[100%] Built target robotROSGetStartedExample_edit
+make[1]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+/home/esl/cmake-install/bin/cmake -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles 0
+cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/preinstall
+Install the project...
+/home/esl/cmake-install/bin/cmake -P cmake_install.cmake
+-- Install configuration: ""
+-- Installing: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/pkgconfig/robotrosgetstartedexample_edit.pc
+-- Up-to-date: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig.cmake
+-- Up-to-date: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig-version.cmake
+-- Installing: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/package.xml
+-- Installing: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit
+Base path: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen
+Source space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src
+Build space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
+Devel space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
+Install space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install
+####
+#### Running command: "make cmake_check_build_system" in "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build"
+####
+####
+#### Running command: "make install -j8 -l8" in "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit"
+####
