@@ -16,14 +16,21 @@ enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
-enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
+enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
-
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+use_sitl_data = 1% Use data from SITL, else use data saved from Simulink
 
+%% Other setting variables
 if enable_payload
     uav_name = [uav_name, '_payload'];
+end
+
+switch control_vel_axis
+    case 'x' % [dx angle_y]
+        num_axis = 1; % Number of controlled axis
+    case 'xy' % [dx, dy, angle_x, angle_y]
+        num_axis = 2; % Number of controlled axis
 end
 
 %% Input smoothing

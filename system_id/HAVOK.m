@@ -10,7 +10,21 @@
 % toc
 
 % Extract data
+reload_data = 0; % Re-choose csv data file for SITL data
 extract_data;
+
+% Other testing data
+test_time = -50+(200:Ts:260)';
+y_test = resample(y_data, test_time );  
+u_test = resample(u_data, test_time );  
+t_test = y_test.Time';
+N_test = length(t_test); % Num of data samples for testing
+
+y_test = y_test.Data';
+u_test = u_test.Data';
+
+% Remove offset / Centre input around zero
+u_test = u_test - u_bar;
 
 try
     load(results_file);
@@ -31,18 +45,18 @@ try
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
         '---------------------------------------------- Chosen q --------------------------------------------------------'
-        q = 3;
+        q = 19;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '---------------------------------------------- Override --------------------------------------------------------'
-        q = 3
-        p = 3
+        q = 19
+        p = 18
         
     end
     % % Override parameters:
@@ -99,7 +113,7 @@ B_havok = AB_havok(1:q*ny, q*ny+1:end);
 A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
 B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
 
-%% Add position state (with integration)
+%% Add position state (with integration) for MPC tracking position
 A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
 A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
 B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
@@ -108,7 +122,7 @@ B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
 A_havok(1:num_axis, 1:num_axis)            =    eye(num_axis); % 1*pos(k)
 A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
 
-%% Add payload angular velocity
+%% Add payload angular velocity for MPC tracking position
 A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
 A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
 B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
@@ -135,9 +149,10 @@ for row = 0:q-1 % First column of spaced Hankel matrix
 end
 
 % Add initial position to top
-y_hat_0 = [p_test(:,q); y_hat_0];
+% y_hat_0 = [p_test(:,q); y_hat_0];
+y_hat_0 = [0; y_hat_0]; % Add placeholder
 
-% Add ZERO for initial angular velocity to top
+% Add initial angular velocity to top
 switch num_axis
     case 1 % y_test = [vx; angle_x ... delays]
         dtheta_0 = 1/Ts * y_test(2, q)  -  1/Ts * y_test(2, q-1); % initial angular velocity

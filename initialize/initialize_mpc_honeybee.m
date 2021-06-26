@@ -2,7 +2,13 @@
 % (ensure havok or dmd models have been loaded before this script)
 
 % Internal plant model
-model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+% model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+chosoe_model = 0
+if choose_model
+    [model_file_name, model_parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.mat', '[init_mpc_honeybee.m] Choose .mat file with model to use for mpc')
+    model_file = (strcat(model_parent_dir, '/', model_file_name));
+end
+
 load(model_file) % Load plant model from saved data
 
 model = 'havok'; % Choose which model to use for MPC
@@ -103,5 +109,5 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 % alpha = 0.302;
 % setindist(mpc_vel, 'model', getindist(mpc_vel)*alpha);
 
-disp('RUNNING SIM FROM init_mpc.')
-out = sim('quad_simulation_with_payload.slx')
+% disp('RUNNING SIM FROM init_mpc.')
+% out = sim('quad_simulation_with_payload.slx')

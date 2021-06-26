@@ -3,8 +3,10 @@ close all
 
 if use_sitl_data    
     % Load data from csv into matrix (csv file created with payload_angle.py)
-    [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose csv file with SITL log data (from payload_angle.y)')
-    data = readmatrix(strcat(parent_dir, '/', file_name));
+    if reload_data
+        [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose csv file with SITL log data (from payload_angle.y)')
+        data = readmatrix(strcat(parent_dir, '/', file_name));
+    end
     
     simulation_data_file = file_name;
     
@@ -29,11 +31,13 @@ if use_sitl_data
     
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel_x, angle_x];
+            y_data_noise = [vel_x, angle_x]; % Data still noisy
             u_data_noise = [acc_sp_x];
+%             p_data_noise = [pos_x]; % position data not in y
         case 'xy'
             y_data_noise = [vel_x, vel_y, angle_x, angle_y];
             u_data_noise = [acc_sp_x, acc_sp_y];
+%             p_data_noise = [pos_x, pos_y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
     end
@@ -41,6 +45,7 @@ if use_sitl_data
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
     u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
+%     p_data_smooth = smoothdata(u_data_noise, 'loess', 20); % Smooth u differently because of non-differentialable spikes
     
     %% Plot    
 %     figure(5)
@@ -57,6 +62,7 @@ if use_sitl_data
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
     u_data = timeseries(u_data_smooth, time);    
+%     p_data = timeseries(p_data_smooth, time);    
     
 else
     % Extract data from .mat file saved from Simulink run
@@ -69,6 +75,7 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
+%     p_data = out.pos; % position data not in y
 end
     
 % Training data
@@ -81,7 +88,6 @@ N_train = length(t_train);
 y_train = y_train.Data';
 u_train = u_train.Data';
 
-
 % Testing data
 test_time = time_offset+(200:Ts:260)';
 y_test = resample(y_data, test_time );  
@@ -92,6 +98,10 @@ N_test = length(t_test); % Num of data samples for testing
 y_test = y_test.Data';
 u_test = u_test.Data';
 
+% Position data (not in y)
+% p_test = resample(p_data, test_time );  
+% p_test = p_test.Data';
+
 % Remove offset / Centre input around zero
 
 % hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
@@ -100,6 +110,10 @@ u_test = u_test.Data';
 u_bar = mean(u_train, 2);
 u_train = u_train - u_bar;
 u_test = u_test - u_bar;
+
+% Dimentions
+ny = size(y_train,1);
+nu = size(u_train,1);
 
 %% Plot 
 % figure
