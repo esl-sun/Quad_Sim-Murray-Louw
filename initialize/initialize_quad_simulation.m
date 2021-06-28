@@ -2,24 +2,25 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 25;
+sim_time = 15;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
 Ts_pos_control = 0.02; % [s] Position control sample time (Ts = 1/freq)
 Ts_pub_setpoint = Ts_pos_control; % [s] Publishing rate of setpoint
-step_size_ros = 0.008; % [s] Step size for solver of simulink ROS nodes
+step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 1
+enable_payload = 0
 enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
-use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+use_mpc_control = 0 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 1% Use data from SITL, else use data saved from Simulink
+use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
+choose_model = 0 % Manually choose model file for MPC
 
 %% Other setting variables
 if enable_payload
@@ -117,9 +118,6 @@ simulation_data_file = ['PID_', control_vel_axis,'_payload', '_mp', num2str(mp),
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
 pid_states = setdiff([1 2 3], mpc_states); % States controlled by PID if MPC active 
 
-ny = length(mpc_states); % Number of measured states for mpc
-nu = ny; % Number of controlled states by MPC
-
 no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
 mpc_variant = Simulink.Variant('enable_mpc == 1');
 if enable_mpc
@@ -206,7 +204,7 @@ else
         5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*5;
+    waypoints_time = ones(size(waypoints,1),1)*4.5;
     
     waypoints
 end

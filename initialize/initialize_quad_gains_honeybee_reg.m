@@ -26,9 +26,9 @@ q_int_lim = 0.3;
 % *************************************************************************
 
 % Roll Rate
-K_pp = 0.06;
-K_pi = 0.2;
-K_pd = 0.0017;
+K_pp = K_qp;
+K_pi = K_qi;
+K_pd = K_qdpitch;
 
 % Roll rate limit
 p_max = 220 * pi/180; %rad
@@ -105,6 +105,7 @@ max_vel_z_down = 2.0;
 % Scaled gains:
 % NEW = OLD*g/hover_init;
 K_up = 3.7351; % MPC_XY_VEL_P_ACC
+K_up = 3.74; % MPC_XY_VEL_P_ACC
 K_ui = 0.8300;
 K_ud = 0.4150;
  

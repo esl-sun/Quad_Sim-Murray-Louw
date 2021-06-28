@@ -67,8 +67,14 @@ if use_sitl_data
 else
     % Extract data from .mat file saved from Simulink run
 %     simulation_data_file = 'PID_x_payload_mp0.2_l0.5_smooth'
-    data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
-    load(data_file) % Load simulation data
+%     data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
+%     load(data_file) % Load simulation data
+    
+    if reload_data
+        start_folder = [pwd, '/system_id/Simulink/*.mat'];
+        [file_name,parent_dir] = uigetfile(start_folder, '[extract_data.m] Choose data file')
+        load(data_file)
+    end
     
     time_offset = 0; % Time offset for where train and test time lies on data
     
@@ -79,7 +85,7 @@ else
 end
     
 % Training data
-train_time = time_offset+(0:Ts:200)';
+train_time = time_offset+(0:Ts:300)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 t_train = y_train.Time';

@@ -17,7 +17,8 @@
 % load('data/MPC_test_2.mat')
 
 % Extract data
-dtheta_data = out.dtheta.Data'; % payload angular velocity is an unmeasured state
+% dtheta_data = out.dtheta.Data'; % payload angular velocity is an unmeasured state
+dtheta_data = out.mo.Data(:,3)' % Replace with theta for now
 mo_data   = out.mo.Data';
 ov_data = [dtheta_data; mo_data]; % Output Variables [UO; MO]
 mv_data   = out.mv.Data';
@@ -39,7 +40,7 @@ for k = 1:N % every timestep k
     ym = mo_data(:, k);
     r = ref_data(:, k);
     [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
-    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)
+    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)close
         for state = y_rows
             figure(state)
             ylabel(state)
@@ -53,13 +54,13 @@ for k = 1:N % every timestep k
             hold off;
         end
         
-%         figure(2*state + 1)
-%         plot(info.Topt + t(k), info.Uopt)
-%         hold on;
-%         plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
-%         hold off;
-%         legend('optimised', 'actual')
-%         title('Input given')
+        figure(state + 1)
+        plot(info.Topt + t(k), info.Uopt)
+        hold on;
+        plot(info.Topt + t(k), mv_data(:,(0:ph)+k)', ':', 'LineWidth', 2) % Actual input given
+        hold off;
+        legend('optimised', 'actual')
+        title('Input given')
         
         pause
         

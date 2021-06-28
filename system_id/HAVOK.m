@@ -14,17 +14,17 @@ reload_data = 0; % Re-choose csv data file for SITL data
 extract_data;
 
 % Other testing data
-test_time = -50+(200:Ts:260)';
-y_test = resample(y_data, test_time );  
-u_test = resample(u_data, test_time );  
-t_test = y_test.Time';
-N_test = length(t_test); % Num of data samples for testing
-
-y_test = y_test.Data';
-u_test = u_test.Data';
+% test_time = -50+(200:Ts:260)';
+% y_test = resample(y_data, test_time );  
+% u_test = resample(u_data, test_time );  
+% t_test = y_test.Time';
+% N_test = length(t_test); % Num of data samples for testing
+% 
+% y_test = y_test.Data';
+% u_test = u_test.Data';
 
 % Remove offset / Centre input around zero
-u_test = u_test - u_bar;
+% u_test = u_test - u_bar;
 
 try
     load(results_file);
@@ -45,18 +45,18 @@ try
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
         '---------------------------------------------- Chosen q --------------------------------------------------------'
-        q = 19;
+        q = 20;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
         p = double(best_results.p);
     end
     
-    override = 1;
+    override = 0;
     if override
         '---------------------------------------------- Override --------------------------------------------------------'
-        q = 19
-        p = 18
+        q = 28
+        p = 25
         
     end
     % % Override parameters:
@@ -133,7 +133,7 @@ A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*the
 
 %% Save model
 model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu')
+save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu', 'u_bar')
 disp('model saved')
 
 %% Run with HAVOK (A_havok, B_havok and x)
