@@ -28,7 +28,7 @@ q_int_lim = 0.3;
 % Roll Rate
 K_pp = K_qp;
 K_pi = K_qi;
-K_pd = K_qdpitch;
+K_pd = K_qd;
 
 % Roll rate limit
 p_max = 220 * pi/180; %rad

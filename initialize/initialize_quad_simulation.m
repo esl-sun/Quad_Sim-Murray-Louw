@@ -5,9 +5,9 @@
 sim_time = 15;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 5; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.02; % [s] Position control sample time (Ts = 1/freq)
-Ts_pub_setpoint = Ts_pos_control; % [s] Publishing rate of setpoint
-step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
+Ts_pos_control = 0.01; % [s] Subcribing sample time Position control sample time (Ts = 1/freq)
+Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
+step_size_ros = 0.008; % [s] Step size for solver of simulink ROS nodes
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
@@ -204,7 +204,7 @@ else
         5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*4.5;
+    waypoints_time = ones(size(waypoints,1),1)*5;
     
     waypoints
 end
