@@ -52,11 +52,11 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '---------------------------------------------- Override --------------------------------------------------------'
-        q = 28
-        p = 25
+        q = 48
+        p = 38
         
     end
     % % Override parameters:

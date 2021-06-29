@@ -83,10 +83,10 @@ mpc_vel = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
 x_mpc = mpcstate(mpc_vel); % Initial state
-% covariance = zeros(size(x_mpc.Covariance));
-% % covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state                                               pos   vel    theta
-% covariance(1:ny+num_axis, 1:ny+num_axis) = diag([1e2, 1e-4, 1e-4]); % Uncertainty of each measured state
-% x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
+covariance = zeros(size(x_mpc.Covariance));
+% covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state                                               pos   vel    theta
+covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
+x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
 Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
 Tu = 5; % Control period, desired control settling time
