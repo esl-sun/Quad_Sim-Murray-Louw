@@ -10,7 +10,7 @@ if use_sitl_data
     
     simulation_data_file = file_name;
     
-    time_offset = 100; % Time offset for where train and test time lies on data
+    time_offset = 0; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
@@ -26,17 +26,23 @@ if use_sitl_data
     angle_x = data(:,8); % Payload angle about x axis in local NED
     angle_y = data(:,9);
     
+    pos_sp_x = data(:,10);
+    pos_sp_y = data(:,11);
+    pos_sp_z = data(:,12);
+    
     % Gather data  
     %% ??? For some reason, angle_x works with x. in x direction. Should it not be angle about y axis?
     
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel_x, angle_x]; % Data still noisy
+            y_data_noise = [vel_x, angle_y]; % Data still noisy
             u_data_noise = [acc_sp_x];
+            pos_sp_data = [pos_sp_x];
 %             p_data_noise = [pos_x]; % position data not in y
         case 'xy'
             y_data_noise = [vel_x, vel_y, angle_x, angle_y];
             u_data_noise = [acc_sp_x, acc_sp_y];
+            pos_sp_data = [pos_sp_x, pos_sp_z];
 %             p_data_noise = [pos_x, pos_y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
@@ -46,6 +52,7 @@ if use_sitl_data
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
     u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
 %     p_data_smooth = smoothdata(u_data_noise, 'loess', 20); % Smooth u differently because of non-differentialable spikes
+    % Dont need to smooth pos_sp
     
     %% Plot    
 %     figure(5)
@@ -61,7 +68,8 @@ if use_sitl_data
     
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
-    u_data = timeseries(u_data_smooth, time);    
+    u_data = timeseries(u_data_smooth, time);
+    pos_sp_data = timeseries(pos_sp_data, time);
 %     p_data = timeseries(p_data_smooth, time);    
     
 else
@@ -73,6 +81,7 @@ else
     if reload_data
         start_folder = [pwd, '/system_id/Simulink/*.mat'];
         [file_name,parent_dir] = uigetfile(start_folder, '[extract_data.m] Choose data file')
+        data_file = [parent_dir, '/', file_name];
         load(data_file)
     end
     
@@ -81,6 +90,7 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
+    pos_sp_data = out.pos_sp;
 %     p_data = out.pos; % position data not in y
 end
     
@@ -88,11 +98,14 @@ end
 train_time = time_offset+(0:Ts:300)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
+pos_sp_train = resample(pos_sp_data, train_time );  
+
 t_train = y_train.Time';
 N_train = length(t_train);
 
 y_train = y_train.Data';
 u_train = u_train.Data';
+pos_sp_train = pos_sp_train.Data';
 
 % Testing data
 test_time = time_offset+(200:Ts:260)';
