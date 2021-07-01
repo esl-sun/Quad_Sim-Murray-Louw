@@ -3,6 +3,7 @@
 % Saves all the results for different parameter combinations
 
 reload_data = 1; % Re-choose csv data file for SITL data
+plot_results = 1;
 
 Ts = 0.03; % Desired sample time
 Ts_havok = Ts;
@@ -170,7 +171,6 @@ best_results_overall = results((results.MAE_mean == min(results.MAE_mean)),:)
 % hold off
 
 %% Plot results
-plot_results = 1;
 if plot_results
     figure
     semilogy(results.q, results.MAE_mean, '.')

@@ -10,7 +10,7 @@ if choose_model
     else
         start_folder = [pwd, '/system_id/Simulink/*.mat'];
     end
-    [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc.m] Choose .mat file with model to use for mpc')
+    [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc.m] Choose MODEL .mat file to use for mpc')
     model_file = (strcat(model_parent_dir, '/', model_file_name));
     load(model_file) % Load plant model from saved data
 end

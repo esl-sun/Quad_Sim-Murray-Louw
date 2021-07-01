@@ -22,7 +22,8 @@ enable_smoother = 0 % Smooth PID pos control output with exponentional moving av
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
 use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
-choose_model = 1 % Manually choose model file for MPC
+choose_model = 0 % Manually choose model file for MPC
+file_name_comment = '_only_x_steps' % Comment added to simulation_data_file name
 
 %% Other setting variables
 if enable_payload
@@ -119,7 +120,8 @@ else
     smoother = '';
 end
 
-simulation_data_file = ['PID_', control_vel_axis,'_payload', '_mp', num2str(mp), '_l', num2str(l), smoother]
+simulation_data_file = ['PID_', control_vel_axis,'_payload', '_mp', num2str(mp), '_l', num2str(l), smoother, file_name_comment]
+
 %% MPC
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
 pid_states = setdiff([1 2 3], mpc_states); % States controlled by PID if MPC active 
@@ -143,7 +145,7 @@ num_waypoints = 100; % Number of waypoints
 waypoint_max = [15, 15, 20]; % Max values in waypoint [x,y,z]
 waypoint_min = [-15, -15, 10]; % Min values in waypoint [x,y,z]
 
-step_max = [5, 2, 2]; % Max step/change in waypoint [x,y,z]
+step_max = [5, 0, 0]; % Max step/change in waypoint [x,y,z]
 step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
 time_max = 20; % Max time between waypoints (s)
@@ -210,7 +212,7 @@ else
         5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*5;
+    waypoints_time = ones(size(waypoints,1),1)*6.05;
     
     waypoints
 end

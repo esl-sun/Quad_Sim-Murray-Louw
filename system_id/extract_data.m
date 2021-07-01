@@ -1,48 +1,60 @@
 %% Get data in a form for HAVOK or DMD to be performed
-close all
+% close all
 
 if use_sitl_data    
     % Load data from csv into matrix (csv file created with payload_angle.py)
     if reload_data
-        [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose csv file with SITL log data (from payload_angle.y)')
-        data = readmatrix(strcat(parent_dir, '/', file_name));
+        [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose SITL log DATA csv file (from logger.y)')
+        data_path = strcat(parent_dir, file_name);
+        data = readmatrix(data_path);
     end
-    
-    simulation_data_file = file_name;
     
     time_offset = 0; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
     
-    vel_x = data(:,2); % Local NED x velocity
-    vel_y = data(:,3);
-    vel_z = data(:,4);
+    pos.x = data(:,2); % Local NED x position
+    pos.y = data(:,3);
+    pos.z = data(:,4);
     
-    acc_sp_x = data(:,5); % Local NED x acceleration setpoint
-    acc_sp_y = data(:,6);
-    acc_sp_z = data(:,7);
+    vel.x = data(:,5); % Local NED x velocity
+    vel.y = data(:,6);
+    vel.z = data(:,7);    
+        
+    pos_sp.x = data(:,8); % Local NED x position setpoint
+    pos_sp.y = data(:,9);
+    pos_sp.z = data(:,10);    
+        
+    vel_sp.x = data(:,11); % Local NED x velocity setpoint
+    vel_sp.y = data(:,12);
+    vel_sp.z = data(:,13);
     
-    angle_x = data(:,8); % Payload angle about x axis in local NED
-    angle_y = data(:,9);
+    acc_sp.x = data(:,14); % Local NED x acceleration setpoint
+    acc_sp.y = data(:,15);
+    acc_sp.z = data(:,16);
     
-    pos_sp_x = data(:,10);
-    pos_sp_y = data(:,11);
-    pos_sp_z = data(:,12);
+    angle.x = data(:,17); % Payload angle about x axis in local NED
+    angle.y = data(:,18);
+    angle.z = data(:,19);
+    
+    angle_rate.x = data(:,20); % Payload angle about x axis in local NED
+    angle_rate.y = data(:,21);
+    angle_rate.z = data(:,22);
     
     % Gather data  
-    %% ??? For some reason, angle_x works with x. in x direction. Should it not be angle about y axis?
+    %% ??? For some reason, angle.x works with x. in x direction. Should it not be angle about y axis?
     
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel_x, angle_y]; % Data still noisy
-            u_data_noise = [acc_sp_x];
-            pos_sp_data = [pos_sp_x];
+            y_data_noise = [vel.x, angle.y]; % Data still noisy
+            u_data_noise = [acc_sp.x];
+            pos_sp_data = [pos_sp.x];
 %             p_data_noise = [pos_x]; % position data not in y
         case 'xy'
-            y_data_noise = [vel_x, vel_y, angle_x, angle_y];
-            u_data_noise = [acc_sp_x, acc_sp_y];
-            pos_sp_data = [pos_sp_x, pos_sp_z];
+            y_data_noise = [vel.x, vel.y, angle.x, angle.y];
+            u_data_noise = [acc_sp.x, acc_sp.y];
+            pos_sp_data = [pos_sp.x, pos_sp.z];
 %             p_data_noise = [pos_x, pos_y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
@@ -81,8 +93,8 @@ else
     if reload_data
         start_folder = [pwd, '/system_id/Simulink/*.mat'];
         [file_name,parent_dir] = uigetfile(start_folder, '[extract_data.m] Choose data file')
-        data_file = [parent_dir, '/', file_name];
-        load(data_file)
+        data_path = [parent_dir, file_name];
+        load(data_path)
     end
     
     time_offset = 0; % Time offset for where train and test time lies on data
@@ -90,22 +102,25 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
-    pos_sp_data = out.pos_sp;
+%     pos_sp_data = out.pos_sp;
 %     p_data = out.pos; % position data not in y
 end
+
+% Get simulation_data_file name
+simulation_data_file = file_name;
     
 % Training data
 train_time = time_offset+(0:Ts:300)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
-pos_sp_train = resample(pos_sp_data, train_time );  
+% pos_sp.x = resample(pos_sp_data, train_time );  
 
 t_train = y_train.Time';
 N_train = length(t_train);
 
 y_train = y_train.Data';
 u_train = u_train.Data';
-pos_sp_train = pos_sp_train.Data';
+% pos_sp.x = pos_sp.x.Data';
 
 % Testing data
 test_time = time_offset+(200:Ts:260)';

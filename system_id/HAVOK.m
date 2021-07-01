@@ -10,7 +10,8 @@
 % toc
 
 % Extract data
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
+save_model = 1; % 1 = Save this model , 0 = dont save
 extract_data;
 
 % Other testing data
@@ -38,13 +39,13 @@ try
     
     iterate_p = 0;
     if iterate_p
-        '--------------------------------------------- Iterate p -------------------------------------------------------'
+        'Iterate p -------------------------------------------------------'
         p = try_p;
     end
     
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
-        '---------------------------------------------- Chosen q --------------------------------------------------------'
+        'Chosen q --------------------------------------------------------'
         q = 20;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
@@ -52,9 +53,9 @@ try
         p = double(best_results.p);
     end
     
-    override = 1;
+    override = 0;
     if override
-        '---------------------------------------------- Override --------------------------------------------------------'
+        'Override --------------------------------------------------------'
         q = 48
         p = 38
         
