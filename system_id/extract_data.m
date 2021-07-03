@@ -42,12 +42,18 @@ if use_sitl_data
     angle_rate.y = data(:,21);
     angle_rate.z = data(:,22);
     
+    %%
+    
+%     figure
+%     plot(time, angle_rate.x)
+
+    %%
     % Gather data  
     %% ??? For some reason, angle.x works with x. in x direction. Should it not be angle about y axis?
     
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel.x, angle.y]; % Data still noisy
+            y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
             u_data_noise = [acc_sp.x];
             pos_sp_data = [pos_sp.x];
 %             p_data_noise = [pos_x]; % position data not in y
@@ -62,11 +68,11 @@ if use_sitl_data
     
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
-    u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
+    u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
 %     p_data_smooth = smoothdata(u_data_noise, 'loess', 20); % Smooth u differently because of non-differentialable spikes
     % Dont need to smooth pos_sp
     
-    %% Plot    
+    % Plot    
 %     figure(5)
 %     plot(time, y_data_smooth)
 %     hold on
@@ -123,7 +129,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = time_offset+(200:Ts:260)';
+test_time = train_time(end)+(200:Ts:220)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
@@ -143,7 +149,11 @@ u_test = u_test.Data';
 % u_bar = mean(u_hover.Data);
 u_bar = mean(u_train, 2);
 u_train = u_train - u_bar;
-u_test = u_test - u_bar;
+% u_test = u_test - u_bar;
+
+% Re-calculate u_bar for test data, because acc_sp offset drifts
+u_bar_test = mean(u_test, 2);
+u_test = u_test - u_bar_test;
 
 % Dimentions
 ny = size(y_train,1);

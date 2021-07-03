@@ -10,22 +10,9 @@
 % toc
 
 % Extract data
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 save_model = 1; % 1 = Save this model , 0 = dont save
 extract_data;
-
-% Other testing data
-% test_time = -50+(200:Ts:260)';
-% y_test = resample(y_data, test_time );  
-% u_test = resample(u_data, test_time );  
-% t_test = y_test.Time';
-% N_test = length(t_test); % Num of data samples for testing
-% 
-% y_test = y_test.Data';
-% u_test = u_test.Data';
-
-% Remove offset / Centre input around zero
-% u_test = u_test - u_bar;
 
 try
     load(results_file);
@@ -53,11 +40,11 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         'Override --------------------------------------------------------'
-        q = 48
-        p = 38
+        q = 16
+        p = 7
         
     end
     % % Override parameters:
@@ -108,7 +95,7 @@ AB_havok = (U_tilde*S_tilde)*AB_tilde*pinv(U_tilde*S_tilde);
 % System matrixes from HAVOK
 A_havok = AB_havok(1:q*ny, 1:q*ny);
 B_havok = AB_havok(1:q*ny, q*ny+1:end);
-% A_havok = stabilise(A_havok,10);
+A_havok = stabilise(A_havok,10);
 
 % Make matrix sparse
 A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
@@ -140,7 +127,11 @@ if save_model
 end
 %% Run with HAVOK (A_havok, B_havok and x)
 % figure;
-% plot(V1(:,1:5))
+% for i = 1:q*p-1
+%     plot(V1(:,i))
+%     pause
+% end
+% 
 % title('First 5 modes of SVD')
 
 %% Compare to testing data
@@ -203,18 +194,19 @@ for i = 1:ny
     plot(t_test, y_test(i,:), 'b');
     hold on;
     plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
+    plot(t_test, u_test, 'k');
     hold off;
-    legend('actual', 'predicted')
+    legend('actual', 'predicted', 'input')
     title(['HAVOK - Test y', num2str(i), ' - ', simulation_data_file]);
 end
 
 %% Plot angle and angular velocity
-figure, hold on
-plot(t_test, y_test(2,:))
-plot(t_test, y_hat_bar(1,:))
-legend('angle_x', 'angle_x velocity')
-title('angle and angular velocity')
-hold off
+% figure, hold on
+% plot(t_test, y_test(2,:))
+% plot(t_test, y_hat_bar(1,:))
+% legend('angle_x', 'angle_x velocity')
+% title('angle and angular velocity')
+% hold off
 
 
 function A = stabilise(A_unstable,max_iterations)
@@ -230,6 +222,7 @@ function A = stabilise(A_unstable,max_iterations)
         A = real(A);
         count = count+1;
         if(count > max_iterations)
+            'break'
             break
         end
     end

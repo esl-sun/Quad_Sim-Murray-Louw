@@ -2,7 +2,7 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
