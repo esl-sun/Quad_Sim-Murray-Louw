@@ -71,22 +71,22 @@ mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-pos_weight = 2; % Position tracking weight
+pos_weight = 1; % Position tracking weight
 vel_weight = 0; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
 dtheta_weight = 1; % Derivative of Payload swing angle
 
-mv_weight = 1e-5; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 10e-1; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
+mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
 x_mpc = mpcstate(mpc_vel); % Initial state
-covariance = zeros(size(x_mpc.Covariance));
+% covariance = zeros(size(x_mpc.Covariance));
 % covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state                                               pos   vel    theta
-covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
-x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
+% covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
+% x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
 Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
 Tu = 5; % Control period, desired control settling time

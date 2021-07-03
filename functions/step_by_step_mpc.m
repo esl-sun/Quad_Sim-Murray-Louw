@@ -35,12 +35,12 @@ y_rows = 1:4
 
 %% Plot step for step
 
-for k = 1:N % every timestep k
+for k = 166:N % every timestep k
     k*Ts_mpc
     ym = mo_data(:, k);
     r = ref_data(:, k);
     [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
-    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)close
+    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)
         for state = y_rows
             figure(state)
             ylabel(state)

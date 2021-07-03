@@ -148,12 +148,11 @@ u_test = u_test.Data';
 % u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
 % u_bar = mean(u_hover.Data);
 u_bar = mean(u_train, 2);
-% u_train = u_train - u_bar;
-% u_test = u_test - u_bar;
+u_train = u_train - u_bar;
 
 % Re-calculate u_bar for test data, because acc_sp offset drifts
 u_bar_test = mean(u_test, 2);
-% u_test = u_test - u_bar_test;
+u_test = u_test - u_bar_test;
 
 % Dimentions
 ny = size(y_train,1);
