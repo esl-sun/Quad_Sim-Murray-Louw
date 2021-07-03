@@ -74,7 +74,7 @@ mo_weight = 1; % Scale all MV
 pos_weight = 1; % Position tracking weight
 vel_weight = 0; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 1; % Derivative of Payload swing angle
+dtheta_weight = 2; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
@@ -88,8 +88,8 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 5; % Control period, desired control settling time
+Ty = 8; % Prediction period, For guidance, minimum desired settling time (s)
+Tu = Ty; % Control period, desired control settling time
 mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 
@@ -114,4 +114,6 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 % setindist(mpc_vel, 'model', getindist(mpc_vel)*alpha);
 
 % disp('RUNNING SIM FROM init_mpc.')
+% tic
 % out = sim('quad_simulation_with_payload.slx')
+% toc

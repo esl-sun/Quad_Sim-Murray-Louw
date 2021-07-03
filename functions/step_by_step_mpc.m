@@ -18,7 +18,7 @@
 
 % Extract data
 % dtheta_data = out.dtheta.Data'; % payload angular velocity is an unmeasured state
-dtheta_data = out.mo.Data(:,3)' % Replace with theta for now
+dtheta_data = out.angle_rate.Data';
 mo_data   = out.mo.Data';
 ov_data = [dtheta_data; mo_data]; % Output Variables [UO; MO]
 mv_data   = out.mv.Data';
@@ -34,13 +34,15 @@ v = []; % No measured distrubances
 y_rows = 1:4
 
 %% Plot step for step
+start_pausing_time = 1.5; % Set time where it should start pausing and plotting. Press Enter to continue
+pause_interval = 0.1; % Size of time gap between pauses
 
-for k = 166:N % every timestep k
+for k = 1:N % every timestep k
     k*Ts_mpc
     ym = mo_data(:, k);
     r = ref_data(:, k);
     [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
-    if mod(k, 0.1/Ts_mpc) == 0 && (k*Ts_mpc > 4.5)
+    if mod(k, pause_interval/Ts_mpc) == 0 && (k*Ts_mpc > start_pausing_time)
         for state = y_rows
             figure(state)
             ylabel(state)
@@ -49,7 +51,17 @@ for k = 166:N % every timestep k
             plot(info.Topt + t(k), ref_data(state,(0:ph)+k)')
             plot(info.Topt + t(k), ov_data(state,(0:ph)+k)', ':', 'LineWidth', 2)
             legend('prediction', 'ref', 'actual')
-            title(state)
+            switch state
+                case 1
+                    title('angle.E RATE')
+                case 2
+                    title('x position')
+                case 3
+                    title('x velocity')
+                case 4
+                    title('angle.E')
+            end
+                
             ylim([-2.5, 7])
             hold off;
         end

@@ -129,7 +129,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = train_time(end)+(200:Ts:220)';
+test_time = time_offset+(200:Ts:220)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';

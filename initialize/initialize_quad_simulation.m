@@ -2,9 +2,9 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 25;
+sim_time = 30;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
-mpc_start_time = 2; % Time in secods that switch happens from velocity PID to MPC
+mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
 Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample time (Ts = 1/freq)
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
@@ -22,7 +22,7 @@ enable_smoother = 0 % Smooth PID pos control output with exponentional moving av
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
 use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
-choose_model = 1 % Manually choose model file for MPC
+choose_model = 0 % Manually choose model file for MPC
 file_name_comment = '_only_x_steps' % Comment added to simulation_data_file name
 
 u_bar_sitl = 0.2887;
@@ -212,9 +212,15 @@ else
         5, 0, 2.5;
         5, 0, 2.5;
         5, 0, 2.5;
+        5, 0, 2.5;
+        5, 0, 2.5;
+        5, 0, 2.5;
+        5, 0, 2.5;
+        5, 0, 2.5;
+        5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*6.05;
+    waypoints_time = ones(size(waypoints,1),1)*2;
     
     waypoints
 end
