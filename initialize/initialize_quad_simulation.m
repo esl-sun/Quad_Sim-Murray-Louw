@@ -2,7 +2,7 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 30;
+sim_time = 20;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
 Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample time (Ts = 1/freq)
@@ -220,7 +220,7 @@ else
         5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*2;
+    waypoints_time = ones(size(waypoints,1),1)*3.68; % equal waypoints time for each
     
     waypoints
 end

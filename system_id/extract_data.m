@@ -56,12 +56,12 @@ if use_sitl_data
             y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
             u_data_noise = [acc_sp.x];
             pos_sp_data = [pos_sp.x];
-%             p_data_noise = [pos_x]; % position data not in y
+            pos_data_noise = [pos_x]; % position data not in y
         case 'xy'
             y_data_noise = [vel.x, vel.y, angle.x, angle.y];
             u_data_noise = [acc_sp.x, acc_sp.y];
             pos_sp_data = [pos_sp.x, pos_sp.z];
-%             p_data_noise = [pos_x, pos_y]; % position data not in y
+            pos_data_noise = [pos_x, pos_y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
     end
@@ -69,7 +69,7 @@ if use_sitl_data
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
     u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
-%     p_data_smooth = smoothdata(u_data_noise, 'loess', 20); % Smooth u differently because of non-differentialable spikes
+    pos_data_smooth = smoothdata(u_data_noise, 'loess', 20);
     % Dont need to smooth pos_sp
     
     % Plot    
@@ -88,7 +88,7 @@ if use_sitl_data
     y_data = timeseries(y_data_smooth, time);
     u_data = timeseries(u_data_smooth, time);
     pos_sp_data = timeseries(pos_sp_data, time);
-%     p_data = timeseries(p_data_smooth, time);    
+    pos_data = timeseries(pos_data_smooth, time);    
     
 else
     % Extract data from .mat file saved from Simulink run
