@@ -158,6 +158,13 @@ u_test = u_test - u_bar_test;
 ny = size(y_train,1);
 nu = size(u_train,1);
 
+% Save u_bar differently for SITL and Simulink
+if use_sitl_data
+    u_bar_sitl = u_bar
+else
+    u_bar_simulink = u_bar
+end
+
 %% Plot 
 % figure
 % plot(t_train, y_train)
