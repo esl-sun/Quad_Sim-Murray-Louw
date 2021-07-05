@@ -13,10 +13,10 @@ pos_control_latency = 0;
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 1
+enable_payload = 0
 enable_noise = 0
-enable_mpc = 1 % Set to 1 to uncomment MPC block
-use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+enable_mpc = 0 % Set to 1 to uncomment MPC block
+use_mpc_control = 0 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
@@ -25,7 +25,7 @@ use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 file_name_comment = '_only_x_steps' % Comment added to simulation_data_file name
 
-u_bar_sitl = 0.2887;
+u_bar_sitl = 0.2886
 
 %% Other setting variables
 if enable_payload

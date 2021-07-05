@@ -56,12 +56,12 @@ if use_sitl_data
             y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
             u_data_noise = [acc_sp.x];
             pos_sp_data = [pos_sp.x];
-            pos_data_noise = [pos_x]; % position data not in y
+            pos_data_noise = [pos.x]; % position data not in y
         case 'xy'
             y_data_noise = [vel.x, vel.y, angle.x, angle.y];
             u_data_noise = [acc_sp.x, acc_sp.y];
             pos_sp_data = [pos_sp.x, pos_sp.z];
-            pos_data_noise = [pos_x, pos_y]; % position data not in y
+            pos_data_noise = [pos_x, pos.y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
     end
@@ -129,7 +129,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = time_offset+(200:Ts:220)';
+test_time = time_offset+(200:Ts:280)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
@@ -151,7 +151,7 @@ u_bar = mean(u_train, 2);
 u_train = u_train - u_bar;
 
 % Re-calculate u_bar for test data, because acc_sp offset drifts
-u_bar_test = mean(u_test, 2);
+u_bar_test = mean(u_test, 2)
 u_test = u_test - u_bar_test;
 
 % Dimentions
@@ -166,12 +166,13 @@ else
 end
 
 %% Plot 
-% figure
-% plot(t_train, y_train)
-% hold on
-% plot(t_train, u_train)
-% hold off
-% title('Training data')
+figure
+plot(t_train, y_train)
+hold on
+plot(t_train, u_train)
+hold off
+title('Training data')
+legend('vel x', 'angle E', 'acc sp x')
 
 
 

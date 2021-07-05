@@ -40,11 +40,11 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         'Override --------------------------------------------------------'
-        q = 16
-        p = 7
+        q = 20
+        p = 9
         
     end
     % % Override parameters:
@@ -155,7 +155,7 @@ end
 y_hat_0 = [dtheta_0; y_hat_0];
 
 % Run model
-figure
+% figure
 Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
 Y_hat(:,q) = y_hat_0; % Initial condition
 for k = q:N_test-1
@@ -190,7 +190,7 @@ end
 
 %% Plot preditions
 for i = 1:ny
-    figure(i+1);
+    figure;
     plot(t_test, y_test(i,:), 'b');
     hold on;
     plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
