@@ -9,7 +9,7 @@ if use_sitl_data
         data = readmatrix(data_path);
     end
     
-    time_offset = 0; % Time offset for where train and test time lies on data
+    time_offset = 50; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
@@ -53,7 +53,7 @@ if use_sitl_data
     
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
+            y_data_noise = [vel.x, angle.y]; % Data still noisy
             u_data_noise = [acc_sp.x];
             pos_sp_data = [pos_sp.x];
             pos_data_noise = [pos.x]; % position data not in y
@@ -73,8 +73,8 @@ if use_sitl_data
     % Dont need to smooth pos_sp
     
     % Plot    
-%     figure(5)
-%     plot(time, y_data_smooth)
+    figure(5)
+    plot(time, y_data_smooth)
 %     hold on
 %     plot(time, y_data_noise)
 %     plot(time, u_data_smooth)
@@ -108,7 +108,7 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
-%     pos_sp_data = out.pos_sp;
+    pos_sp_data = out.pos_sp;
 %     p_data = out.pos; % position data not in y
 end
 

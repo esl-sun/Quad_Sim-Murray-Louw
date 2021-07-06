@@ -11,7 +11,7 @@ reload_data = 1;
 extract_data
 simulink.y_train = y_train;
 simulink.u_train = u_train;  
-simulink.pos_sp_train = pos_sp_train;  
+simulink.pos_sp_data = pos_sp_data;  
 simulink.t_train = t_train;
 
 % figure
@@ -24,7 +24,7 @@ reload_data = 1;
 extract_data
 sitl.y_train = y_train;
 sitl.u_train = u_train;  
-sitl.pos_sp_train = pos_sp_train;  
+sitl.pos_sp_data = pos_sp_data;  
 sitl.t_train = t_train;
 
 % figure
@@ -35,13 +35,13 @@ use_sitl_data = init_use_sitl_data; % Reset value to before
 
 %% Shift Allign SITl and MATLAB plots
 
-compare_index = 1:2000;
+compare_index = 1:1000;
 
 figure
-plot(simulink.t_train(:,compare_index), simulink.pos_sp_train(:,compare_index));
+plot(simulink.t_train(:,compare_index), simulink.pos_sp_data(:,compare_index));
 hold on
 grid on
-plot(sitl.t_train(:,compare_index),     sitl.pos_sp_train(:,compare_index));
+plot(sitl.t_train(:,compare_index),     sitl.pos_sp_data(:,compare_index));
 title('To allign x axis, click on Simulink then SITL plots on one x-grid-line')
 legend('Simulink', 'SITL')
 hold off
@@ -84,7 +84,7 @@ plot(simulink.t_train, simulink.pos_sp_train);
 hold on
 grid on
 plot(sitl.t_train, sitl.pos_sp_train);
-title('training waypoints')
+title('pos-sp training waypoints')
 legend('Simulink', 'SITL')
 hold off
 
