@@ -71,13 +71,13 @@ mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-pos_weight = 1; % Position tracking weight
+pos_weight = 1.5; % Position tracking weight
 vel_weight = 0; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 0; % Derivative of Payload swing angle
+dtheta_weight = 1; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mvrate_weight = 20; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
@@ -110,10 +110,10 @@ mpc_vel.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
 mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
 
 % Constraints
-mpc_vel.OV(2).Max = 5.2;
+% mpc_vel.OV(2).Max = 5.2;
 
-% mpc_vel.MV(1).RateMin = -4;
-% mpc_vel.MV(1).RateMax = 4;
+mpc_vel.MV(1).RateMin = -6;
+mpc_vel.MV(1).RateMax = 6;
 
 % adjust input disturbance model gains
 % alpha = 0.302;
