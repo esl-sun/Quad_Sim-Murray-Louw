@@ -21,8 +21,9 @@ enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
-choose_model = 0 % Manually choose model file for MPC
+use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
+choose_model = 1 % Manually choose model file for MPC
+enable_jerk_limited_mpc = 1; % Enable jerk limited S trajectory reference for MPC
 file_name_comment = '_only_x_steps' % Comment added to simulation_data_file name
 
 %% Other setting variables
@@ -46,6 +47,10 @@ payload_variant = Simulink.Variant('enable_payload == 1');
 %% Enable noise
 no_noise_variant = Simulink.Variant('enable_noise == 0'); % Variant subsytem block to uncomment payload if needed
 noise_variant = Simulink.Variant('enable_noise == 1');
+
+%% Enable MPC jerk limited trajectory
+jerk_limited_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 1'); % Variant subsytem block to uncomment payload if needed
+step_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 0'); % Variant subsytem block to uncomment payload if needed
 
 %% Simulation constants
 

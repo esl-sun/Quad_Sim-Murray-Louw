@@ -71,10 +71,10 @@ mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-pos_weight = 1.5; % Position tracking weight
+pos_weight = 1; % Position tracking weight
 vel_weight = 0; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 1; % Derivative of Payload swing angle
+dtheta_weight = 4; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 20; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
@@ -124,7 +124,7 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 step_size = 5; % Pos step size for trajectory generation
 max_vel = 20; % Max x acceleration allowed
 max_acc = 20; % Max x velocity allowed
-jerk_time = 4; % Jerk time allowed (time to deccelleration on s-trajectory)
+jerk_time = 3; % Jerk time allowed (time to deccelleration on s-trajectory)
 num_refs = size(A_mpc,1); % Number of reference rows required. 2 extras references (dtheta, pos) for each controlled axis
 
 [traj_Y,traj_T] = GenTraj(max_acc, max_vel, step_size, jerk_time, Ts_mpc); % pre-generate new traj, becuase not supported by code generation
