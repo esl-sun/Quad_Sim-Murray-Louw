@@ -125,7 +125,7 @@ step_size = 5; % Pos step size for trajectory generation
 max_vel = 20; % Max x acceleration allowed
 max_acc = 20; % Max x velocity allowed
 jerk_time = 4; % Jerk time allowed (time to deccelleration on s-trajectory)
-num_refs = size(A_mpc,1) + 2*num_axis; % Number of reference rows required. 2 extras references (dtheta, pos) for each controlled axis
+num_refs = size(A_mpc,1); % Number of reference rows required. 2 extras references (dtheta, pos) for each controlled axis
 
 [traj_Y,traj_T] = GenTraj(max_acc, max_vel, step_size, jerk_time, Ts_mpc); % pre-generate new traj, becuase not supported by code generation
 pos_traj = traj_Y(3,2:end); % Remove first entry because setpoint starts from future time step  

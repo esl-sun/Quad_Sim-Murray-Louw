@@ -29,7 +29,7 @@ function setup(block)
     block.InputPort(1).Dimensions        = 1;
     block.InputPort(1).DirectFeedthrough = true;
 
-    block.OutputPort(1).Dimensions       = [num_refs, PH];
+    block.OutputPort(1).Dimensions       = [PH, num_refs];
 
     %% Set block sample time to same as MPC
     block.SampleTimes = [Ts_mpc 0];
@@ -55,6 +55,7 @@ function DoPostPropSetup(block)
     pre_generated_traj  = block.DialogPrm(1).Data;
     PH                  = block.DialogPrm(2).Data;
     num_refs            = block.DialogPrm(3).Data;
+    Ts_mpc              = block.DialogPrm(4).Data;
 
     %% Setup Dwork
     block.NumDworks = 2;
@@ -66,7 +67,7 @@ function DoPostPropSetup(block)
     block.Dwork(1).UsedAsDiscState = true;
 
     block.Dwork(2).Name = 'prev_traj'; % Previous trajectory
-    block.Dwork(2).Dimensions      = PH; % Must be column vector
+    block.Dwork(2).Dimensions      = PH;
     block.Dwork(2).DatatypeID      = 0;
     block.Dwork(2).Complexity      = 'Real';
     block.Dwork(2).UsedAsDiscState = true;
@@ -78,6 +79,7 @@ function InitConditions(block)
     pre_generated_traj  = block.DialogPrm(1).Data;
     PH                  = block.DialogPrm(2).Data;
     num_refs            = block.DialogPrm(3).Data;
+    Ts_mpc              = block.DialogPrm(4).Data;
     
     %% Initialize Dwork
     block.Dwork(1).Data = NaN;
@@ -90,6 +92,7 @@ function Output(block)
     pre_generated_traj  = block.DialogPrm(1).Data;
     PH                  = block.DialogPrm(2).Data;
     num_refs            = block.DialogPrm(3).Data;
+    Ts_mpc              = block.DialogPrm(4).Data;
     
     %% Get Dwork memory
     prev_pos_sp = block.Dwork(1).Data;
@@ -109,17 +112,17 @@ function Output(block)
 
     if abs(P) > 1e-2 % Step occured if threshold breached    
         % Pre generated trajectory for a single step size only
-        pos_traj = prev_pos_sp + pre_generated_traj; % previous position + step trajectory sp. Remove first entry because setpoint starts from future time step
+        pos_traj = prev_pos_sp + pre_generated_traj'; % previous position + step trajectory sp. Remove first entry because setpoint starts from future time step
 
     else % Complete current trajectory
-        pos_traj = [prev_traj(2:PH)', prev_traj(PH)']; % delete timestep that passed. (prev_traj is column vecotr)
+        pos_traj = [prev_traj(2:PH); prev_traj(PH)]; % delete timestep that passed. (prev_traj is column vecotr)
     end
 
     % Add zeros for references/setpoints of other states and fill rows of MPC
     % matrix signal
     % ref(:,1) = [dtheta_sp(k+1), pos_sp(k+1), vel_sp(k+1), theta_sp(k+1), delay states...]
-    ref = zeros(num_refs, PH); % Matrix signal always same size
-    ref(2,:) = pos_traj; % Assign pos row to traj
+    ref = zeros(PH, num_refs); % Matrix signal always same size
+    ref(:,2) = pos_traj; % Assign pos row to traj
 
     %% Output
     block.OutputPort(1).Data = ref;
