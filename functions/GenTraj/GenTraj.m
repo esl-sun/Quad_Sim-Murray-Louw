@@ -1,4 +1,4 @@
-function [Y,T]=GenTraj(A,V,P,Tj,Ts)
+function [Y,T] = GenTraj(A,V,P,Tj,Ts)
 %GenTraj Trajectory generation for point to point motion with velocity,
 % acceleration, jerk and snap (second time derivative of acceleration)
 % constraints
@@ -33,7 +33,11 @@ elseif nargin==5
    type=2;
 end
 
-Te=1e-4; % interpolation time
+% Te=1e-4; % interpolation time
+Te=0.03; % interpolation time
+
+% force Tj to multiple of Te
+Tj = floor(Tj/Te)*Te;
 
 % Verification of the acceleration and velocity constraints  
 Ta=V/A; % Acceleration time
@@ -76,10 +80,10 @@ end
 end
 
 %%%%%%%%%%%%%%%
-figure;
-sp(1)=subplot(3,1,1);plot(T,Y(3,:))
-sp(2)=subplot(3,1,2);plot(T,Y(2,:))
-sp(3)=subplot(3,1,3);plot(T,Y(1,:))
-linkaxes(sp,'x');
-ylabel(sp(1),'Position [m]');ylabel(sp(2),'Velocity [m/s]');ylabel(sp(3),'Acceleration [m/s^2]');xlabel(sp(3),'Time [s]')
+% figure;
+% sp(1)=subplot(3,1,1);plot(T,Y(3,:))
+% sp(2)=subplot(3,1,2);plot(T,Y(2,:))
+% sp(3)=subplot(3,1,3);plot(T,Y(1,:))
+% linkaxes(sp,'x');
+% ylabel(sp(1),'Position [m]');ylabel(sp(2),'Velocity [m/s]');ylabel(sp(3),'Acceleration [m/s^2]');xlabel(sp(3),'Time [s]')
 
