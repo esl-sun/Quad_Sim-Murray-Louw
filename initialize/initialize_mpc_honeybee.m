@@ -56,6 +56,9 @@ switch control_vel_axis
         not_controlled_sp = zeros(1,4); % 2 x Velocity  and  2 x Payload angle setpoint (which are not controlled) to add to reference vector for MPC
 end
 
+% Number of reference rows required 
+num_refs = size(A_mpc,1) + 2*num_axis; % 2 extras references (dtheta, pos) for each controlled axis
+
 % MPC object
 old_status = mpcverbosity('off'); % No display messages
 
