@@ -1,4 +1,4 @@
-function [Y,T] = GenTraj(A,V,P,Tj,Ts)
+function [Y,T] = GenTraj(A,V,P,Tj,Ts_mpc)
 %GenTraj Trajectory generation for point to point motion with velocity,
 % acceleration, jerk and snap (second time derivative of acceleration)
 % constraints
@@ -19,25 +19,14 @@ function [Y,T] = GenTraj(A,V,P,Tj,Ts)
 
 %--------------------------------------------------------------------------
 
-if nargin<3
-   error('At Least Three Input Arguments are Required.')
-end
-if nargin==3
-   type=0;
-   Tj=0;
-   Ts=0;
-elseif nargin==4
-   type=1;
-   Ts=0;
-elseif nargin==5
-   type=2;
+if nargin ~= 5
+   error('Missing input parameters');
 end
 
-% Te=1e-4; % interpolation time
-Te=0.03; % interpolation time
+% Ts_mpc = interpolation time / Sample time
 
-% force Tj to multiple of Te
-Tj = floor(Tj/Te)*Te;
+% force Tj to multiple of Ts_mpc
+Tj = floor(Tj/Ts_mpc)*Ts_mpc;
 
 % Verification of the acceleration and velocity constraints  
 Ta=V/A; % Acceleration time
@@ -45,39 +34,39 @@ Tv=(P-A*Ta^2)/(V); % Constant velocity time
 if P<=Ta*V % Triangular velocity profile
     Tv=0;Ta=sqrt(P/A);
 end
-Tf=2*Ta+Tv+Tj+Ts; % Mouvement time
+Tf=2*Ta+Tv+Tj; % Mouvement time
 
 % Elaboration of the limited acceleration profile 
-T=0:Te:Tf;
-t(1)=0;t(2)=Ta;t(3)=Ta+Tv;t(4)=2*Ta+Tv;
-s(1)=1;s(2)=-1;s(3)=-1;s(4)=1;
-P=zeros(3,length(T));
+T=0:Ts_mpc:Tf;
+
+% Pre-allocate memory
+t = zeros(1,4); 
+s = zeros(1,4);
+law = zeros(4,length(T));
+Y = zeros(3,length(T));
+
+t(1)=0; t(2)=Ta; t(3)=Ta+Tv; t(4)=2*Ta+Tv;
+s(1)=1; s(2)=-1; s(3)=-1; s(4)=1;
+
+% P=zeros(3,length(T));
 % Ech=zeros(4);
 for k=1:3
-    u=zeros(1,k+1);u(1,1)=1;
-for i=1:4
-    Ech = tf(1, u,'inputdelay',t(i));
-    law(i,:)=impulse(s(i)*A*(Ech),T);
-end
-Y(k,:)=sum(law);
+    u = zeros(1,k+1);
+    u(1,1) = 1;
+    for i=1:4
+        Ech = tf(1, u,'inputdelay',t(i));
+        law(i,:)=impulse(s(i)*A*(Ech),T);
+    end
+    Y(k,:)=sum(law);
 end
 
-if (type==1 || type==2)
 % Average Filter for Jerk limitation
 a = 1;      % Filter coefficients
-b = (1/(Tj/Te))*ones(1,(Tj/Te)); % Filter duration equal to jerk time
+b = (1/(Tj/Ts_mpc))*ones(1,(Tj/Ts_mpc)); % Filter duration equal to jerk time
 Y(3,:)= filter(b,a,Y(3,:));
-Y(2,1:length(T)-1)=diff(Y(3,:),1)/Te;
-Y(1,1:length(T)-1)=diff(Y(2,:),1)/Te;
-if type==2
-% Average Filter for snap limitation
-a = 1;      % Filter coefficients
-b = (1/(Ts/Te))*ones(1,(Ts/Te)); % Filter duration equal to snap time
-Y(3,:)= filter(b,a,Y(3,:));
-Y(2,1:length(T)-1)=diff(Y(3,:),1)/Te;
-Y(1,1:length(T)-1)=diff(Y(2,:),1)/Te;
-end
-end
+Y(2,1:length(T)-1)=diff(Y(3,:),1)/Ts_mpc;
+Y(1,1:length(T)-1)=diff(Y(2,:),1)/Ts_mpc;
+
 
 %%%%%%%%%%%%%%%
 % figure;

@@ -56,9 +56,6 @@ switch control_vel_axis
         not_controlled_sp = zeros(1,4); % 2 x Velocity  and  2 x Payload angle setpoint (which are not controlled) to add to reference vector for MPC
 end
 
-% Number of reference rows required 
-num_refs = size(A_mpc,1) + 2*num_axis; % 2 extras references (dtheta, pos) for each controlled axis
-
 % MPC object
 old_status = mpcverbosity('off'); % No display messages
 
@@ -93,6 +90,7 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 
 Ty = 8; % Prediction period, For guidance, minimum desired settling time (s)
 Tu = Ty; % Control period, desired control settling time
+PH = floor(Ty/Ts_mpc); % Prediction horizon
 mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
 
@@ -121,6 +119,22 @@ mpc_vel.MV(1).RateMax = 6;
 % adjust input disturbance model gains
 % alpha = 0.302;
 % setindist(mpc_vel, 'model', getindist(mpc_vel)*alpha);
+
+% Trajectory generation variables
+step_size = 5; % Pos step size for trajectory generation
+max_vel = 20; % Max x acceleration allowed
+max_acc = 20; % Max x velocity allowed
+jerk_time = 3; % Jerk time allowed (time to deccelleration on s-trajectory)
+num_refs = size(A_mpc,1) + 2*num_axis; % Number of reference rows required. 2 extras references (dtheta, pos) for each controlled axis
+
+[traj_Y,traj_T] = GenTraj(max_acc, max_vel, step_size, jerk_time, Ts_mpc); % pre-generate new traj, becuase not supported by code generation
+pos_traj = traj_Y(3,2:end); % Remove first entry because setpoint starts from future time step  
+% Fill or cut trajectory to have constant length
+if length(pos_traj) < PH % Append entries
+    fill_traj = pos_traj(:,end)*ones(1, PH - length(pos_traj)); % Fill length of traj with last value
+    pos_traj = [pos_traj, fill_traj]; % Add end of traj
+end
+pre_generated_traj = pos_traj; % Generate pos x trajectory for single step size
 
 % disp('RUNNING SIM FROM init_mpc.')
 % tic
