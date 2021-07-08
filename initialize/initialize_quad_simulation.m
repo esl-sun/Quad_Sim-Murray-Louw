@@ -9,7 +9,7 @@ Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample t
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
-pos_control_latency = 0;
+pos_control_latency = 0.07;
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
@@ -18,13 +18,13 @@ enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
-enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
+enable_smoother = 1 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
 use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 1; % Enable jerk limited S trajectory reference for MPC
-file_name_comment = '_only_x_steps' % Comment added to simulation_data_file name
+file_name_comment = '_simulink_controls_SITL' % Comment added to simulation_data_file name
 
 %% Other setting variables
 if enable_payload
@@ -223,7 +223,7 @@ else
         5, 0, 2.5;
         ];
 
-    waypoints_time = ones(size(waypoints,1),1)*2.96; % equal waypoints time for each
+    waypoints_time = ones(size(waypoints,1),1)*2.05; % equal waypoints time for each
     
     waypoints
 end

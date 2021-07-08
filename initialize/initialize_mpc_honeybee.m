@@ -77,7 +77,7 @@ theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = mo
 dtheta_weight = 4; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 20; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 

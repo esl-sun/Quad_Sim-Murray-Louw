@@ -40,7 +40,7 @@ try
         p = double(best_results.p);
     end
     
-    override = 1;
+    override = 0;
     if override
         'Override --------------------------------------------------------'
         q = 19

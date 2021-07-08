@@ -9,7 +9,7 @@ if use_sitl_data
         data = readmatrix(data_path);
     end
     
-    time_offset = 50; % Time offset for where train and test time lies on data
+    time_offset = 15; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
@@ -129,7 +129,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = time_offset+(200:Ts:280)';
+test_time = -200+time_offset+(200:Ts:280)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
