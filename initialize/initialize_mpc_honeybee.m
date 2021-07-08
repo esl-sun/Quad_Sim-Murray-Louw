@@ -122,7 +122,7 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 
 % Trajectory generation variables
 step_size = 5; % Pos step size for trajectory generation
-step_time = 5; % Time to zero velocity in step response
+step_time = 4; % Time to zero velocity in step response
 % max_vel = 20; % Max x acceleration allowed
 % max_acc = 20; % Max x velocity allowed
 % jerk_time = 3; % Jerk time allowed (time to deccelleration on s-trajectory)
