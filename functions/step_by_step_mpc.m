@@ -40,6 +40,8 @@ y_rows = 1:4
 start_pausing_time = 1.5; % Set time where it should start pausing and plotting. Press Enter to continue
 pause_interval = 0.1; % Size of time gap between pauses
 
+figure(1)
+
 for k = 1:N % every timestep k
     k*Ts_mpc
     ym = mo_data(:, k);
@@ -51,8 +53,9 @@ for k = 1:N % every timestep k
     
     [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
     if mod(k, pause_interval/Ts_mpc) == 0 && (k*Ts_mpc > start_pausing_time)
+        figure(1)
         for state = y_rows
-            figure(state)
+            subplot(5,1,state)
             plot(info.Topt + t(k), info.Yopt(:,state));
             hold on;
                 if enable_jerk_limited_mpc
@@ -76,13 +79,27 @@ for k = 1:N % every timestep k
             end
         end
         
-        figure(state + 1)
+        subplot(5,1,state + 1)
         plot(info.Topt + t(k), info.Uopt)
         hold on;
         plot(info.Topt + t(k), mv_data(:,(0:PH)+k)', ':', 'LineWidth', 2) % Actual input given
         hold off;
         legend('optimised', 'actual')
         title('Input given')
+        
+        %% plot position
+        figure(2)
+        state = 2; % position
+        plot(info.Topt + t(k), info.Yopt(:,state));
+        hold on;
+            if enable_jerk_limited_mpc
+                plot(info.Topt(2:end) + t(k), ref_data(:,state,k))
+            else
+                plot(info.Topt + t(k), ref_data(state,(0:PH)+k)')
+            end
+        plot(info.Topt + t(k), ov_data(state,(0:PH)+k)', ':', 'LineWidth', 2)
+        legend('prediction', 'ref', 'actual')
+        hold off;
         
         pause
         

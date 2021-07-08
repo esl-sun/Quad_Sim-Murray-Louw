@@ -114,7 +114,12 @@ end
 
 % Get simulation_data_file name
 simulation_data_file = file_name;
-    
+
+% Add latency to training data
+if add_training_latency
+    u_data.Time = u_data.Time - pos_control_latency;
+end
+
 % Training data
 train_time = time_offset+(0:Ts:300)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  

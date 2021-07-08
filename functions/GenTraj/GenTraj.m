@@ -20,7 +20,7 @@ function [Y,T] = GenTraj(A,V,P,Tj,Ts_mpc)
 %--------------------------------------------------------------------------
 
 if nargin ~= 5
-   error('Missing input parameters');
+   error('Mismatch number of input parameters');
 end
 
 % Ts_mpc = interpolation time / Sample time
@@ -29,8 +29,8 @@ end
 Tj = floor(Tj/Ts_mpc)*Ts_mpc;
 
 % Verification of the acceleration and velocity constraints  
-Ta=V/A; % Acceleration time
-Tv=(P-A*Ta^2)/(V); % Constant velocity time
+Ta = V/A; % Acceleration time
+Tv = (P-A*Ta^2)/(V); % Constant velocity time
 if P<=Ta*V % Triangular velocity profile
     Tv=0;Ta=sqrt(P/A);
 end
@@ -69,10 +69,10 @@ Y(1,1:length(T)-1)=diff(Y(2,:),1)/Ts_mpc;
 
 
 %%%%%%%%%%%%%%%
-% figure;
-% sp(1)=subplot(3,1,1);plot(T,Y(3,:))
-% sp(2)=subplot(3,1,2);plot(T,Y(2,:))
-% sp(3)=subplot(3,1,3);plot(T,Y(1,:))
-% linkaxes(sp,'x');
-% ylabel(sp(1),'Position [m]');ylabel(sp(2),'Velocity [m/s]');ylabel(sp(3),'Acceleration [m/s^2]');xlabel(sp(3),'Time [s]')
+figure;
+sp(1)=subplot(3,1,1);plot(T,Y(3,:))
+sp(2)=subplot(3,1,2);plot(T,Y(2,:))
+sp(3)=subplot(3,1,3);plot(T,Y(1,:))
+linkaxes(sp,'x');
+ylabel(sp(1),'Position [m]');ylabel(sp(2),'Velocity [m/s]');ylabel(sp(3),'Acceleration [m/s^2]');xlabel(sp(3),'Time [s]')
 

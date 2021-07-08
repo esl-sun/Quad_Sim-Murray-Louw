@@ -9,7 +9,8 @@ Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample t
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
-pos_control_latency = 0.07;
+pos_control_latency = 0.05; % Transport delay added to acc_sp to match Simulink and SITL results
+add_training_latency = 1; % Add latency to training data for system identification
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
