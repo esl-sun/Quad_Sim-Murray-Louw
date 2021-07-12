@@ -122,7 +122,7 @@ mpc_vel.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_w
 
 % Trajectory generation variables
 step_size = 5; % Pos step size for trajectory generation
-step_time = 4; % Time to zero velocity in step response
+traj_stop_time = 4; % Time to zero velocity in step response
 % max_vel = 20; % Max x acceleration allowed
 % max_acc = 20; % Max x velocity allowed
 % jerk_time = 3; % Jerk time allowed (time to deccelleration on s-trajectory)
@@ -131,7 +131,7 @@ num_refs = size(A_mpc,1); % Number of reference rows required. 2 extras referenc
 % [traj_Y,traj_T] = GenTraj(max_acc, max_vel, step_size, jerk_time, Ts_mpc); % pre-generate new traj, becuase not supported by code generation
 % pos_traj = traj_Y(3,2:end); % Remove first entry because setpoint starts from future time step  
 
-pos_traj_time = 0:Ts_mpc:step_time;
+pos_traj_time = 0:Ts_mpc:traj_stop_time;
 pos_traj_xyz = min_jerk(0, step_size, pos_traj_time); % Outputs minimum jerk trajectory for x,y,z as columns
 pos_traj = pos_traj_xyz(:,1)'; % Only x step trajectory
 

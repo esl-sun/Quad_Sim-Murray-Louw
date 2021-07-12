@@ -1,3 +1,9 @@
+% Velocity step input
+vel_step_time = 2; % Start of step input for velocity
+vel_step_N = 1; % Size of step input for North velocity
+vel_step_E = 0;
+vel_step_D = 0;
+
 % Obtain setpoints
 time_sp = [sim_time];
 
