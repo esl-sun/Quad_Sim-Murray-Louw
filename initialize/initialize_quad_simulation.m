@@ -9,7 +9,7 @@ Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample t
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
-pos_control_latency = 0; %0.05; % Transport delay added to acc_sp to match Simulink and SITL results
+pos_control_latency = 0.05; % Transport delay added to acc_sp to match Simulink and SITL results
 add_training_latency = 1; % Add latency to training data for system identification
 
 uav_name = 'honeybee'
@@ -139,7 +139,6 @@ no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block t
 mpc_variant = Simulink.Variant('enable_mpc == 1');
 if enable_mpc
     initialize_mpc_honeybee; % Initialise mpc position controller (ensure havok or dmd models have been loaded)
-    initialize_mpc_vel_honeybee; % Initialise mpc velocity controller
 end
 
 %% notch filter
