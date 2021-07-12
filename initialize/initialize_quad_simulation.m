@@ -16,16 +16,20 @@ uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 1
 enable_noise = 0
-enable_mpc = 1 % Set to 1 to uncomment MPC block
-use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+
+control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
+use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
+
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 1 % Ignore position controller, use single velocity step input
 enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
+
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
 use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
-choose_model = 0 % Manually choose model file for MPC
+choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 0; % Enable jerk limited S trajectory reference for MPC
 file_name_comment = '_velocity_steps' % Comment added to simulation_data_file name
 
@@ -137,11 +141,16 @@ simulation_data_file = ['PID_', control_vel_axis,'_payload', '_mp', num2str(mp),
 %% MPC
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y
 pid_states = setdiff([1 2 3], mpc_states); % States controlled by PID if MPC active 
-
-no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
-mpc_variant = Simulink.Variant('enable_mpc == 1');
-if enable_mpc
+mpc_variant = Simulink.Variant('control_option == 1'); % Variant subsytem block to uncomment MPC if needed
+ 
+if control_option == 1
     initialize_mpc_honeybee; % Initialise mpc position controller (ensure havok or dmd models have been loaded)
+end
+
+%% LQR
+lqr_variant = Simulink.Variant('control_option == 2'); % Variant subsytem block to uncomment LQR if needed
+if control_option == 2
+    initialize_lqr_honeybee; % Initialise LQR position controller
 end
 
 %% Simulation inputs
