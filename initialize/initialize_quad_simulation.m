@@ -18,6 +18,7 @@ enable_payload = 1
 enable_noise = 0
 enable_mpc = 1 % Set to 1 to uncomment MPC block
 use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+mpc_control_option = 0 % 0 = position control, 1 = velocity control
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 0 % Ignore position controller, use velocity step input
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
@@ -27,6 +28,7 @@ use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 1; % Enable jerk limited S trajectory reference for MPC
 file_name_comment = '_simulink_controls_SITL' % Comment added to simulation_data_file name
+
 
 %% Other setting variables
 if enable_payload
@@ -136,7 +138,8 @@ pid_states = setdiff([1 2 3], mpc_states); % States controlled by PID if MPC act
 no_mpc_variant = Simulink.Variant('enable_mpc == 0'); % Variant subsytem block to uncomment MPC if needed
 mpc_variant = Simulink.Variant('enable_mpc == 1');
 if enable_mpc
-    initialize_mpc_honeybee; % Initialise mpc controller (ensure havok or dmd models have been loaded)
+    initialize_mpc_honeybee; % Initialise mpc position controller (ensure havok or dmd models have been loaded)
+    initialize_mpc_vel_honeybee; % Initialise mpc velocity controller
 end
 
 %% notch filter
