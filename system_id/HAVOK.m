@@ -43,8 +43,8 @@ try
     override = 0;
     if override
         'Override --------------------------------------------------------'
-        q = 19
-        p = 8
+        q = 29
+        p = 10
         
     end
     % % Override parameters:
@@ -58,48 +58,16 @@ catch
     disp('No saved results file')  
 end
 
-w = N_train - q + 1; % num columns of Hankel matrix
-D = (q-1)*Ts; % Delay duration (Dynamics in delay embedding)
+HAVOK_part_1
 
-% Create Hankel matrix with measurements
-Y = zeros((q)*ny,w); % Augmented state Y[k] at top
-for row = 0:q-1 % Add delay coordinates
-    Y((end - ny*(row+1) + 1):(end - ny*row), :) = y_train(:, row + (1:w));
-end
-
-Upsilon = u_train(:, q:end); % Leave out last time step to match V_til_1
-YU_bar = [Y; Upsilon];
-
-% SVD of the Hankel matrix
-[U1,S1,V1] = svd(YU_bar, 'econ');
 figure(1), semilogy(diag(S1), 'x'), hold on;
 title('Singular values of Omega, showing p truncation')
 plot(p, S1(p,p), 'ro'), hold off;
 
-% Truncate SVD matrixes
-U_tilde = U1(:, 1:p); 
-S_tilde = S1(1:p, 1:p);
-V_tilde = V1(:, 1:p);
+HAVOK_part_2
 
-% Setup V2 one timestep into future from V1
-V_til_2 = V_tilde(2:end  , :)'; % Turnd on side (wide short matrix)
-V_til_1 = V_tilde(1:end-1, :)';
-
-% DMD on V
-AB_tilde = V_til_2*pinv(V_til_1); % combined A and B matrix, side by side
-AB_tilde = stabilise(AB_tilde,3);
-
-% Convert to x coordinates
-AB_havok = (U_tilde*S_tilde)*AB_tilde*pinv(U_tilde*S_tilde);
-
-% System matrixes from HAVOK
-A_havok = AB_havok(1:q*ny, 1:q*ny);
-B_havok = AB_havok(1:q*ny, q*ny+1:end);
-A_havok = stabilise(A_havok,3);
-
-% Make matrix sparse
-A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
-B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
+A_havok = A;
+B_havok = B;
 
 %% Add payload angular velocity for MPC tracking position
 A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros

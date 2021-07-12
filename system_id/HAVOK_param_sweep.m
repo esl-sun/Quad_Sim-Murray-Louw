@@ -2,7 +2,7 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
@@ -13,7 +13,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 q_min = 2; % Min value of q in grid search
-q_max = 20; % Max value of q in grid search
+q_max = 30; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -81,45 +81,12 @@ for q = q_search
             if q_is_new % Do this only when q is seen first time
                 q_is_new = 0; % q is no longer new
             
-                w = N_train - q + 1; % num columns of Hankel matrix
-                D = (q-1)*Ts; % Delay duration (Dynamics in delay embedding)
-
-                % Create Hankel matrix with measurements
-                Y = zeros((q)*ny,w); % Augmented state Y[k] at top
-                for row = 0:q-1 % Add delay coordinates
-                    Y((end - ny*(row+1) + 1):(end - ny*row), :) = y_train(:, row + (1:w));
-                end
-                
-                Upsilon = u_train(:, q:end); % Leave out last time step to match V_til_1
-                YU_bar = [Y; Upsilon];
-
-                % SVD of the Hankel matrix
-                [U1,S1,V1] = svd(YU_bar, 'econ');
+                HAVOK_part_1
 
             end
             
-            % Truncate SVD matrixes
-            U_tilde = U1(:, 1:p); 
-            S_tilde = S1(1:p, 1:p);
-            V_tilde = V1(:, 1:p);
-
-            % Setup V2 one timestep into future from V1
-            V_til_2 = V_tilde(2:end  , :)'; % Turnd on side (wide short matrix)
-            V_til_1 = V_tilde(1:end-1, :)';
-
-            % DMD on V
-            AB_tilde = V_til_2*pinv(V_til_1); % combined A and B matrix, side by side
-            AB_tilde = stabilise(AB_tilde,3);
+            HAVOK_part_2
             
-            % convert to x coordinates
-            AB = (U_tilde*S_tilde)*AB_tilde*pinv(U_tilde*S_tilde);
-            A = AB(1:q*ny, 1:q*ny);
-            B = AB(1:q*ny, q*ny+1:end);            
-
-            % Make matrix sparse
-            A(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
-            B(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
-
             % Compare to testing data
             % Initial condition (last entries of training data)
             y_hat_0 = zeros(q*ny,1); % Y[k] at top
@@ -183,20 +150,4 @@ if plot_results
     title(['HAVOK, best q = ', num2str(best_results_overall.q)])
 end
 
-function A = stabilise(A_unstable,max_iterations)
-    % If some eigenvalues are unstable due to machine tolerance,
-    % Scale them to be stable
-    A = A_unstable;
-    count = 0;
-    while (sum(abs(eig(A)) > 1) ~= 0)       
-        [Ve,De] = eig(A);
-        unstable = abs(De)>1; % indexes of unstable eigenvalues
-        De(unstable) = De(unstable)./abs(De(unstable)) - 10^(-14 + count*2); % Normalize all unstable eigenvalues (set abs(eig) = 1)
-        A = Ve*De/(Ve); % New A with margininally stable eigenvalues
-        A = real(A);
-        count = count+1;
-        if(count > max_iterations)
-            break
-        end
-    end
-end
+

@@ -16,11 +16,11 @@ uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 1
 enable_noise = 0
-enable_mpc = 0 % Set to 1 to uncomment MPC block
-use_mpc_control = 0 % Set to 1 to use MPC control signals. Set to 0 to only use PID
+enable_mpc = 1 % Set to 1 to uncomment MPC block
+use_mpc_control = 1 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
+enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
@@ -40,6 +40,10 @@ switch control_vel_axis
         num_axis = 1; % Number of controlled axis
     case 'xy' % [dx, dy, angle_x, angle_y]
         num_axis = 2; % Number of controlled axis
+end
+
+if enable_velocity_step
+    sim_time = 20
 end
 
 %% Input smoothing

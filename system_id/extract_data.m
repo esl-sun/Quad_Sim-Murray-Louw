@@ -108,7 +108,7 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
-    pos_sp_data = out.pos_sp;
+%     pos_sp_data = out.pos_sp;
 %     p_data = out.pos; % position data not in y
 end
 
@@ -121,7 +121,7 @@ if add_training_latency
 end
 
 % Training data
-train_time = time_offset+(10:Ts_mpc:290)';
+train_time = time_offset+(10:Ts:290)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
@@ -134,7 +134,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = time_offset+(200:Ts_mpc:280)';
+test_time = time_offset+(200:Ts:280)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
@@ -153,10 +153,12 @@ u_test = u_test.Data';
 % u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
 % u_bar = mean(u_hover.Data);
 u_bar = mean(u_train, 2);
+u_bar=0
 u_train = u_train - u_bar;
 
 % Re-calculate u_bar for test data, because acc_sp offset drifts
 u_bar_test = mean(u_test, 2)
+u_bar_test = u_bar;
 u_test = u_test - u_bar_test;
 
 % Dimentions
