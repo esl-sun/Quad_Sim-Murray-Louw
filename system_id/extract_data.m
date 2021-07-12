@@ -121,7 +121,7 @@ if add_training_latency
 end
 
 % Training data
-train_time = time_offset+(0:Ts:300)';
+train_time = time_offset+(10:Ts_mpc:290)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
@@ -134,7 +134,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = -200+time_offset+(200:Ts:280)';
+test_time = time_offset+(200:Ts_mpc:280)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
@@ -179,6 +179,13 @@ hold off
 title('Training data')
 legend('vel x', 'angle E', 'acc sp x')
 
+figure
+plot(t_test, y_test)
+hold on
+plot(t_test, u_test)
+hold off
+title('Testing data')
+legend('vel x', 'angle E', 'acc sp x')
 
 
 

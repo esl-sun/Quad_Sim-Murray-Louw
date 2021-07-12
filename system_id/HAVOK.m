@@ -11,7 +11,7 @@
 
 % Extract data
 reload_data = 1; % Re-choose csv data file for SITL data
-save_model = 0; % 1 = Save this model , 0 = dont save
+save_model = 1; % 1 = Save this model , 0 = dont save
 extract_data;
 
 try
@@ -95,20 +95,11 @@ AB_havok = (U_tilde*S_tilde)*AB_tilde*pinv(U_tilde*S_tilde);
 % System matrixes from HAVOK
 A_havok = AB_havok(1:q*ny, 1:q*ny);
 B_havok = AB_havok(1:q*ny, q*ny+1:end);
-A_havok = stabilise(A_havok,10);
+A_havok = stabilise(A_havok,3);
 
 % Make matrix sparse
 A_havok(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
 B_havok(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
-
-%% Add position state (with integration) for MPC tracking position
-A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
-A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
-B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
-
-% Numeric integration: pos(k+1) = pos(k) + Ts*vel(k)
-A_havok(1:num_axis, 1:num_axis)            =    eye(num_axis); % 1*pos(k)
-A_havok(1:num_axis, num_axis+(1:num_axis)) = Ts*eye(num_axis); % Ts*vel(k)
 
 %% Add payload angular velocity for MPC tracking position
 A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
@@ -116,8 +107,8 @@ A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
 B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
 
 % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-A_havok(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-A_havok(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+A_havok(1, 3) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+A_havok(1, 5) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
 %% Save model
 if save_model
@@ -141,10 +132,6 @@ for row = 0:q-1 % First column of spaced Hankel matrix
     y_hat_0(row*ny+1:(row+1)*ny, 1) = y_test(:,q-row);
 end
 
-% Add initial position to top
-% y_hat_0 = [p_test(:,q); y_hat_0];
-y_hat_0 = [0; y_hat_0]; % Add placeholder
-
 % Add initial angular velocity to top
 switch num_axis
     case 1 % y_test = [vx; angle_x ... delays]
@@ -165,12 +152,12 @@ for k = q:N_test-1
 %     pause
 end
 
-y_hat_bar = Y_hat(1:(ny+2*num_axis), :); % Extract only non-delay time series and position
+y_hat_bar = Y_hat(1:(ny+num_axis), :); % Extract only non-delay time series and position
 
 % Vector of Mean Absolute Error on testing data
 switch num_axis
     case 1
-        MAE = sum(abs(y_hat_bar(3:end,:) - y_test), 2)./N_test % For each measured state
+        MAE = sum(abs(y_hat_bar(2:end,:) - y_test), 2)./N_test % For each measured state
     case 2
         MAE = sum(abs(y_hat_bar(5:end,:) - y_test), 2)./N_test % For each measured state
 end
@@ -193,7 +180,7 @@ for i = 1:ny
     figure;
     plot(t_test, y_test(i,:), 'b');
     hold on;
-    plot(t_test, y_hat_bar(i+2*num_axis,:), 'r--', 'LineWidth', 1);
+    plot(t_test, y_hat_bar(i+num_axis,:), 'r--', 'LineWidth', 1);
     plot(t_test, u_test, 'k');
     hold off;
     legend('actual', 'predicted', 'input')

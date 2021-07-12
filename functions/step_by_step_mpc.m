@@ -1,4 +1,4 @@
-% Simulated mpc predictions with for loop following simulation data
+ % Simulated mpc predictions with for loop following simulation data
 % Always run .slx simulation first
 % Used to analyse prediction of mpc when designing
 
@@ -34,7 +34,7 @@ PH = mpc_vel.PredictionHorizon; % Prediction Horizon
 x_mpc = mpcstate(mpc_vel); % Current state of mpc
 v = []; % No measured distrubances
 
-y_rows = 1:4
+y_rows = 1:3
 
 %% Plot step for step
 start_pausing_time = 1.5; % Set time where it should start pausing and plotting. Press Enter to continue
@@ -55,7 +55,7 @@ for k = 1:N % every timestep k
     if mod(k, pause_interval/Ts_mpc) == 0 && (k*Ts_mpc > start_pausing_time)
         figure(1)
         for state = y_rows
-            subplot(5,1,state)
+            subplot(4,1,state)
             plot(info.Topt + t(k), info.Yopt(:,state));
             hold on;
                 if enable_jerk_limited_mpc
@@ -71,15 +71,13 @@ for k = 1:N % every timestep k
                 case 1
                     title('angle.E RATE')
                 case 2
-                    title('x position')
-                case 3
                     title('x velocity')
-                case 4
+                case 3
                     title('angle.E')
             end
         end
         
-        subplot(5,1,state + 1)
+        subplot(4,1,state + 1)
         plot(info.Topt + t(k), info.Uopt)
         hold on;
         plot(info.Topt + t(k), mv_data(:,(0:PH)+k)', ':', 'LineWidth', 2) % Actual input given

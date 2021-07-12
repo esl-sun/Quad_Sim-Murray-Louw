@@ -119,7 +119,7 @@ for q = q_search
             % Make matrix sparse
             A(ny+1:end, :) = [eye((q-1)*ny), zeros((q-1)*ny, ny)]; % Add Identity matrix to carry delays over to x(k+1)
             B(ny+1:end, :) = zeros((q-1)*ny, nu); % Input has no effect on delays
-            
+
             % Compare to testing data
             % Initial condition (last entries of training data)
             y_hat_0 = zeros(q*ny,1); % Y[k] at top
