@@ -2,7 +2,7 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
-sim_time = 20;
+sim_time = 400;
 sim_freq = 500; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
 Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample time (Ts = 1/freq)
@@ -20,7 +20,7 @@ enable_mpc = 0 % Set to 1 to uncomment MPC block
 use_mpc_control = 0 % Set to 1 to use MPC control signals. Set to 0 to only use PID
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
@@ -144,7 +144,7 @@ end
 %% Simulation inputs
 % initialize state inputs
 initialize_inputs;
-initialize_velocity_input; % Inputs directly into velocity control
+initialize_controller_inputs; % Scheduled waypoints and velocity setpoints
 
 %% Step response
 initialize_step 
