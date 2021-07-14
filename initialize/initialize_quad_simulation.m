@@ -13,13 +13,19 @@ Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
 pos_control_latency = 0 ;%0.05; % Transport delay added to acc_sp to match Simulink and SITL results
 add_training_latency = 1; % Add latency to training data for system identification
+enable_noise = 0
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
-enable_payload = 1
-enable_noise = 0
+payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D swinging payload
 
-control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+if payload_type ~= 1
+    enable_payload = 1;
+else
+    enable_payload = 0;
+end
+
+control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
 use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
 if control_option == 0
     use_new_control = 0 % Set to 0 to only use PID
@@ -28,7 +34,7 @@ new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
 
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
+enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
@@ -58,7 +64,8 @@ end
 moving_ave_exp = 0.97;
 
 %% Enable payload
-payload_variant = Simulink.Variant('enable_payload == 1');
+payload_variant = Simulink.Variant('payload_type == 1');
+payload_2D_variant = Simulink.Variant('payload_type == 2');
 
 %% Enable noise
 no_noise_variant = Simulink.Variant('enable_noise == 0'); % Variant subsytem block to uncomment payload if needed
