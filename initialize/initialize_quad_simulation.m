@@ -19,7 +19,7 @@ enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 1
 enable_noise = 0
 
-control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
 use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
 if control_option == 0
     use_new_control = 0 % Set to 0 to only use PID

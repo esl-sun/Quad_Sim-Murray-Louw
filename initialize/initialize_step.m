@@ -6,11 +6,14 @@ time_sp = 1:sim_time;
 sim_size = size(time_sp);
 
 % Set step by changing 'zeros' to 'ones'
-pitch_rate_input = timeseries(ones(sim_size), time_sp);
+% e.g.
+% pitch_rate_input = timeseries(ones(sim_size), time_sp);
+
+pitch_rate_input = timeseries(zeros(sim_size), time_sp);
 roll_rate_input = timeseries(zeros(sim_size), time_sp);
 yaw_rate_input = timeseries(zeros(sim_size), time_sp);
 
-quat_input = timeseries(zeros(sim_size(1), 4), sim_time);
+quat_input = timeseries(zeros(4, sim_size(2)), time_sp);
 pitch_input = timeseries(zeros(sim_size), time_sp);
 roll_input = timeseries(zeros(sim_size), time_sp);
 yaw_input = timeseries(zeros(sim_size), time_sp);

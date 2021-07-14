@@ -63,14 +63,15 @@ max_tilt = 45; %deg
 % *************************************************************************
 
 % Pitch Angle Controller
-K_theta = 2.2;
+% K_theta = 2.2;
+K_theta = 10;
 
 % *************************************************************************
 % Roll
 % *************************************************************************
 
 % Roll Angle Controller
-K_phi = 2.2;
+K_phi = K_theta;
 
 % *************************************************************************
 % Yaw
@@ -87,13 +88,17 @@ thr_min = 0.02;
 
 %% Velocity
 
-vel_dterm_cutoff = 5; %Hz
+% vel_dterm_cutoff = 5; %Hz
+vel_dterm_cutoff = 40; %Hz
 
 [vel_filt_num, vel_filt_denom] = filter(vel_dterm_cutoff, sim_freq);
 
-max_vel_xy = 8.0;
-max_vel_z_up = 8.0;
-max_vel_z_down = 2.0;
+% max_vel_xy = 8.0;
+% max_vel_z_up = 8.0;
+% max_vel_z_down = 2.0;
+max_vel_xy = 10;
+max_vel_z_up = 10;
+max_vel_z_down = 10;
 
 % *************************************************************************
 % X
@@ -105,12 +110,17 @@ max_vel_z_down = 2.0;
 % K_ui = 0.02;
 % K_ud = 0.01;
 
+
 % Scaled gains:
 % NEW = OLD*g/hover_init;
-K_up = 3.7351; % MPC_XY_VEL_P_ACC
-K_up = 3.74; % MPC_XY_VEL_P_ACC
-K_ui = 0.8300;
-K_ud = 0.4150;
+% K_up = 3.7351; % MPC_XY_VEL_P_ACC
+% K_ui = 0.8300;
+% K_ud = 0.4150;
+
+% From Reg's controller_gains.m
+K_up = 0.05*g/hover_init;
+K_ui = 0.025*g/hover_init;
+K_ud = 0.01*g/hover_init;
  
 if enable_payload
     % 2kg
@@ -157,30 +167,27 @@ K_wd = 0;
 % *************************************************************************
 
 % Longitudinal Position Controller
-K_np = 0.95;
+% K_np = 0.95;
+K_np = 0.18;
 
 if enable_payload
 %    K_np = 0.25;
 end
-
 
 % *************************************************************************
 % Y
 % *************************************************************************
 
 % Lateral Position Controller
-K_ep = 0.95;
-
-if enable_payload
-%    K_ep = 0.25;
-end
+K_ep = K_np;
 
 % *************************************************************************
 % Z
 % *************************************************************************
 
 % Vertical Position Controller
-K_dp = 1.0;
+% K_dp = 1.0;
+K_dp = 0.5;
 
 % Low Pass Filter to decrease jump of position step input
 % vel_ref_LPF = ;
