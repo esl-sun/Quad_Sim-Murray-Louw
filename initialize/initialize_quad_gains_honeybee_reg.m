@@ -7,7 +7,7 @@ Ts_angle_control = 1/250; % Hz
 
 body_rates_dterm_cutoff = 40; %Hz
 
-[body_rates_filter_num, body_rates_filter_denom] = filter(body_rates_dterm_cutoff, sim_freq);
+[body_rates_filter_num, body_rates_filter_denom] = discrete_lpf_filter(body_rates_dterm_cutoff, sim_freq);
 
 % *************************************************************************
 % Pitch
@@ -91,7 +91,7 @@ thr_min = 0.02;
 % vel_dterm_cutoff = 5; %Hz
 vel_dterm_cutoff = 40; %Hz
 
-[vel_filt_num, vel_filt_denom] = filter(vel_dterm_cutoff, sim_freq);
+[vel_filt_num, vel_filt_denom] = discrete_lpf_filter(vel_dterm_cutoff, sim_freq);
 
 % max_vel_xy = 8.0;
 % max_vel_z_up = 8.0;
@@ -206,7 +206,7 @@ function [p, i, d] = pi_control(k, z)
 end
 
 %% Discrete-Time Filter
-function [num, denom] = filter(cutoff_freq, sim_freq)
+function [num, denom] = discrete_lpf_filter(cutoff_freq, sim_freq)
     C = tan(pi*cutoff_freq/sim_freq);
     D = 1 + sqrt(2)*C + C^2;
     b0 = (C^2)/D;
