@@ -7,7 +7,7 @@ format compact
 sim_time = 400;
 sim_freq = 1000; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.01; % [s]4.4 Subcribing sample time Position control sample time (Ts = 1/freq)
+Ts_pos_control = 0.01; % [s] Subcribing sample time Position control sample time (Ts = 1/freq)
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
@@ -19,7 +19,7 @@ enable_aerodynamics = 0 % 1 = add effect of air
 enable_payload = 1
 enable_noise = 0
 
-control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
+control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
 use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
 if control_option == 0
     use_new_control = 0 % Set to 0 to only use PID
@@ -28,7 +28,7 @@ new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
 
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
 enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script

@@ -167,8 +167,8 @@ K_wd = 0;
 % *************************************************************************
 
 % Longitudinal Position Controller
-% K_np = 0.95;
-K_np = 0.18;
+K_np = 0.95;
+% K_np = 0.18;
 
 if enable_payload
 %    K_np = 0.25;
@@ -186,8 +186,8 @@ K_ep = K_np;
 % *************************************************************************
 
 % Vertical Position Controller
-% K_dp = 1.0;
-K_dp = 0.5;
+K_dp = 1.0;
+% K_dp = 0.5;
 
 % Low Pass Filter to decrease jump of position step input
 % vel_ref_LPF = ;
