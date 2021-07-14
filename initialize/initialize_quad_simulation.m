@@ -50,7 +50,7 @@ switch control_vel_axis
         num_axis = 2; % Number of controlled axis
 end
 
-if enable_velocity_step
+if enable_velocity_step && ~enable_vel_training_input
     sim_time = 20
 end
 
