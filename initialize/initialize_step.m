@@ -1,16 +1,16 @@
 
 % Obtain setpoints
-time_sp = [sim_time];
+time_sp = 1:sim_time;
 
 % Set all inputs to 0 as default
-sim_time = time_sp(numel(time_sp));
 sim_size = size(time_sp);
 
-pitch_rate_input = timeseries(zeros(sim_size), time_sp);
+% Set step by changing 'zeros' to 'ones'
+pitch_rate_input = timeseries(ones(sim_size), time_sp);
 roll_rate_input = timeseries(zeros(sim_size), time_sp);
 yaw_rate_input = timeseries(zeros(sim_size), time_sp);
 
-quat_input = timeseries(zeros(sim_size(1), 4), time_sp);
+quat_input = timeseries(zeros(sim_size(1), 4), sim_time);
 pitch_input = timeseries(zeros(sim_size), time_sp);
 roll_input = timeseries(zeros(sim_size), time_sp);
 yaw_input = timeseries(zeros(sim_size), time_sp);

@@ -1,8 +1,11 @@
 %% GRIFFIN Control Gains
 
 %% Body Rates
+Ts_angular_rate_control = 1/1000; % Hz
+Ts_angle_control = 1/250; % Hz
 
-body_rates_dterm_cutoff = 0; %Hz
+
+body_rates_dterm_cutoff = 40; %Hz
 
 [body_rates_filter_num, body_rates_filter_denom] = filter(body_rates_dterm_cutoff, sim_freq);
 
