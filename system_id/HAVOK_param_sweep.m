@@ -33,7 +33,7 @@ nu = size(u_train,1); % number of inputs
 % Weighting of error of each state when calculating mean
 switch control_vel_axis
     case 'x' % [dx angle_y]
-        MAE_weight = [1; 0]; % Pendulum states are not controlled, therefore not important for tracking
+        MAE_weight = [0; 1]; % Pendulum states are not controlled, therefore not important for tracking
     case 'xy' % [dx, dy, angle_x, angle_y]
         MAE_weight = [1; 1;  0; 0];
 end
@@ -144,7 +144,7 @@ if plot_results
     grid on
     ylabel('MAE of prediction');
     xlabel('Number of delays in model, q');
-    y_limits = [1e-2, 1e0];
+    y_limits = [1e-3, 1e-1];
     ylim(y_limits)
 %     xlim([18 50])
     title(['HAVOK, best q = ', num2str(best_results_overall.q)])

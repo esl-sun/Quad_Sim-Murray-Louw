@@ -11,7 +11,7 @@
 
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
-save_model = 0; % 1 = Save this model , 0 = dont save
+save_model = 1; % 1 = Save this model , 0 = dont save
 extract_data;
 
 try
