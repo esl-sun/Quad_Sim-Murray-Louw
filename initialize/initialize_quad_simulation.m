@@ -19,13 +19,13 @@ uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
 payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D swinging payload
 
-if payload_type ~= 1
-    enable_payload = 1;
-else
+if payload_type == 0
     enable_payload = 0;
+else
+    enable_payload = 1;
 end
 
-control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
+control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
 use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
 if control_option == 0
     use_new_control = 0 % Set to 0 to only use PID
@@ -57,7 +57,7 @@ switch control_vel_axis
 end
 
 if enable_velocity_step && ~enable_vel_training_input
-    sim_time = 20
+    sim_time = 15
 end
 
 %% Input smoothing
