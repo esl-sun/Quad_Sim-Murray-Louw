@@ -103,6 +103,8 @@ else
         load(data_path)
     end
     
+    load(data_path)
+    
     time_offset = 0; % Time offset for where train and test time lies on data
     
     % Get data used for HAVOK
@@ -134,7 +136,7 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = time_offset+(200:Ts:280)';
+test_time = train_time(end) + (0:Ts:100)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';

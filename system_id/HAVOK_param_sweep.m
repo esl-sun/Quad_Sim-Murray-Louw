@@ -6,7 +6,7 @@ reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
-Ts_dmd = Ts;
+Ts_havok = Ts;
 
 % close all;
 total_timer = tic; % Start timer for this script
