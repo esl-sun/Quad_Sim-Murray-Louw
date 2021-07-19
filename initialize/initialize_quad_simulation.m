@@ -19,8 +19,8 @@ uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
 payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
 
-control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
-use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
 new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
 
 enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
@@ -30,7 +30,7 @@ enable_smoother = 0 % Smooth PID pos control output with exponentional moving av
 
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 0; % Enable jerk limited S trajectory reference for MPC
 file_name_comment = 'pos_step_double_pend' % Comment added to simulation_data_file name

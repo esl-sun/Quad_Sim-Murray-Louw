@@ -2,7 +2,7 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
@@ -16,11 +16,11 @@ total_timer = tic; % Start timer for this script
 
 % % Search space
 T_train_min = 20; % [s] Min value of training period in grid search
-T_train_max = 280; % Max value of training period in grid search
-T_train_increment = 20; % Increment value of training period in grid search
+T_train_max = 180; % Max value of training period in grid search
+T_train_increment = 40; % Increment value of training period in grid search
 
-q_min = 2; % Min value of q in grid search
-q_max = 20; % Max value of q in grid search
+q_min = 15; % Min value of q in grid search
+q_max = 30; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -34,12 +34,11 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 
 % Variables for running model prediction tests
 run.number = 10; % Number of runs done for test data
-run.window = 10; % [s] Prediction time window/period used per run  
+run.window = 20; % [s] Prediction time window/period used per run  
 run.N = floor(run.window/Ts); % number of data samples in prediction window
 % Interval between start indexes to fit number of runs into test data
-index_interval = floor((N_test - run.N - q)/run.number); % Space need for delays at start of data (q), and last run still needs space to run to (run.N)
-start_index_list = q + (1:index_interval:run.number*index_interval); % Start indexes for each prediction run
-MAE_weight = [1; 1]./max(abs(y_train),[],2); % Weighting of error of each state when calculating mean
+MAE_weight = [1; 1]./sqrt(max(abs(y_train),[],2)); % Weighting of error of each state when calculating mean
+plot_predictions = 0; % Always set to 0 when looping DMD_run_model.m otherwiee opens many plots
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
@@ -72,6 +71,7 @@ for N_train = N_train_search
     % Starting a max value, cut data to correct length
     y_train = y_train(:, 1:N_train);
     u_train = u_train(:, 1:N_train);
+    t_train = t_train(:, 1:N_train);
     
     for q = q_search
             q_is_new = 1; % 1 = first time using this q this session
@@ -98,7 +98,8 @@ for N_train = N_train_search
                 DMD_run_model;
 
                 % Save results
-                results(emptry_row,:) = [{Ts, N_train, q, p, mean(MAE.*MAE_weight)}, num2cell(MAE')]; % add to table of results
+%                 results(emptry_row,:) = [{Ts, N_train, q, p, mean(MAE.*MAE_weight)}, num2cell(MAE')]; % add to table of results
+                results(emptry_row,:) = [{Ts, N_train, q, p, mean(MAE)}, num2cell(MAE')]; % add to table of results
                 emptry_row = emptry_row + 1; 
 
             end % p

@@ -1,5 +1,10 @@
 %% Implentation of DMD
 % close all;
+
+% Extract data
+reload_data = 0; % Re-choose csv data file for SITL data
+save_model = 0; % 1 = Save this model , 0 = dont save
+extract_data;
 plot_predictions = 0;
 
 try
@@ -11,6 +16,7 @@ try
     best_results = results(best_row,:);
     q = double(best_results.q);
     p = double(best_results.p);
+    N_train = double(best_results.N_train);
     
     only_q_Ts = 0; % Try best result for specific q
     if only_q_Ts
@@ -35,6 +41,11 @@ try
 catch
     disp('No saved results file')  
 end
+
+% Starting a max value, cut data to correct length
+y_train = y_train(:, 1:N_train);
+u_train = u_train(:, 1:N_train);
+
 
 DMD_part_1;
 
