@@ -1,4 +1,3 @@
-
 % Initial condition
 y_hat_0 = y_test(:,q);
 
@@ -22,4 +21,4 @@ for k = 1:N_test-1
 end
 
 % Vector of Mean Absolute Error on testing data
-MAE = sum(abs(y_hat - y_test), 2)./N_test % For each measured state
+MAE = sum(abs(y_hat - y_test), 2)./N_test; % For each measured state

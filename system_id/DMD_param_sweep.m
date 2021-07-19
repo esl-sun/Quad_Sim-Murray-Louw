@@ -88,30 +88,7 @@ for q = q_search
             
             DMD_part_2;
             
-            % Initial condition
-            y_hat_0 = y_test(:,q);
-
-            % Initial delay coordinates
-            y_delays = zeros((q-1)*ny,1);
-            k = q; % index of y_data
-            for i = 1:ny:ny*(q-1) % index of y_delays
-                k = k - 1; % previosu index of y_data
-                y_delays(i:(i+ny-1)) = y_test(:,k);
-            end
-
-            % Run model
-            y_hat = zeros(ny,N_test); % Empty estimated Y
-            y_hat(:,1) = y_hat_0; % Initial condition
-            for k = 1:N_test-1
-                upsilon = [y_delays; u_test(:,k)]; % Concat delays and control for use with B
-                y_hat(:,k+1) = A_dmd*y_hat(:,k) + B_dmd*upsilon;
-                if q ~= 1
-                    y_delays = [y_hat(:,k); y_delays(1:(end-ny),:)]; % Add y(k) to y_delay for next step [y(k); y(k-1); ...]
-                end
-            end
-
-            % Vector of Mean Absolute Error on testing data
-            MAE = sum(abs(y_hat - y_test), 2)./N_test; % For each measured state
+            DMD_run_model;
             
             % Save results
             results(emptry_row,:) = [{Ts, N_train, q, p, mean(MAE.*MAE_weight)}, num2cell(MAE')]; % add to table of results
@@ -128,46 +105,30 @@ format short % back to default/short display
 results(~results.q,:) = []; % remove empty rows
 save(results_file, 'results', 'emptry_row')
 
-best_results = results((results.MAE_mean == min(results.MAE_mean)),:)
+best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
-%% Only for this Ts:
+% %% Only for this Ts:
 % results_Ts = results((results.Ts == Ts),:);
 % best_results_Ts = results_Ts((results_Ts.MAE_mean == min(results_Ts.MAE_mean)),:)
 % 
 % total_time = toc(total_timer); % Display total time taken
 % 
-%% For one q:
-results_q = results((results.q == best_results.q),:);
-figure
-% semilogy(results_q.p, results_q.MAE_1, 'r.')
-% hold on
-semilogy(results_q.p, results_q.MAE_mean, 'k.')
-% hold off
+% %% For one q:
+% results_q = results((results.q == best_mean_results.q),:);
+% figure
+% % semilogy(results_q.p, results_q.MAE_1, 'r.')
+% % hold on
+% semilogy(results_q.p, results_q.MAE_mean, 'k.')
+% % hold off
 
 %% Plot results
-plot_results = 1;
 if plot_results
     figure
     semilogy(results.q, results.MAE_mean, '.')
-    y_limits = [5e-2, 1e0];
+    grid on
+    ylabel('MAE of prediction');
+    xlabel('Number of delays in model, q');
+    y_limits = [1e-2, 1e-1];
     ylim(y_limits)
-    title('DMD')
-end
-
-function A = stabilise(A_unstable,max_iterations)
-    % If some eigenvalues are unstable due to machine tolerance,
-    % Scale them to be stable
-    A = A_unstable;
-    count = 0;
-    while (sum(abs(eig(A)) > 1) ~= 0)       
-        [Ve,De] = eig(A);
-        unstable = abs(De)>1; % indexes of unstable eigenvalues
-        De(unstable) = De(unstable)./abs(De(unstable)) - 10^(-14 + count*2); % Normalize all unstable eigenvalues (set abs(eig) = 1)
-        A = Ve*De/(Ve); % New A with margininally stable eigenvalues
-        A = real(A);
-        count = count+1;
-        if(count > max_iterations)
-            break
-        end
-    end
+    title(['HAVOK, best q = ', num2str(best_mean_results.q)])
 end

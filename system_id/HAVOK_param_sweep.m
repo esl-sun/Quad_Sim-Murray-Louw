@@ -123,7 +123,7 @@ format short % back to default/short display
 results(~results.q,:) = []; % remove empty rows
 save(results_file, 'results', 'emptry_row')
 
-best_results_overall = results((results.MAE_mean == min(results.MAE_mean)),:)
+best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
 % % Only for this Ts:
 % results_Ts = results((results.Ts == Ts),:);
@@ -148,8 +148,5 @@ if plot_results
     xlabel('Number of delays in model, q');
     y_limits = [1e-2, 1e-1];
     ylim(y_limits)
-%     xlim([18 50])
-    title(['HAVOK, best q = ', num2str(best_results_overall.q)])
+    title(['HAVOK, best q = ', num2str(best_mean_results.q)])
 end
-
-
