@@ -73,8 +73,8 @@ if use_sitl_data
     % Dont need to smooth pos_sp
     
     % Plot    
-    figure(5)
-    plot(time, y_data_smooth)
+%     figure(5)
+%     plot(time, y_data_smooth)
 %     hold on
 %     plot(time, y_data_noise)
 %     plot(time, u_data_smooth)
@@ -173,21 +173,21 @@ else
 end
 
 %% Plot 
-figure
-plot(t_train, y_train)
-hold on
-plot(t_train, u_train)
-hold off
-title('Training data')
-legend('vel x', 'angle E', 'acc sp x')
-
-figure
-plot(t_test, y_test)
-hold on
-plot(t_test, u_test)
-hold off
-title('Testing data')
-legend('vel x', 'angle E', 'acc sp x')
+% figure
+% plot(t_train, y_train)
+% hold on
+% plot(t_train, u_train)
+% hold off
+% title('Training data')
+% legend('vel x', 'angle E', 'acc sp x')
+% 
+% figure
+% plot(t_test, y_test)
+% hold on
+% plot(t_test, u_test)
+% hold off
+% title('Testing data')
+% legend('vel x', 'angle E', 'acc sp x')
 
 
 

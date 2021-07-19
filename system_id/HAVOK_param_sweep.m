@@ -2,7 +2,7 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
@@ -33,11 +33,11 @@ nu = size(u_train,1); % number of inputs
 % Weighting of error of each state when calculating mean
 switch control_vel_axis
     case 'x' % [dx angle_y]
-        MAE_weight = [0; 1]; % Pendulum states are not controlled, therefore not important for tracking
+        MAE_weight = [1; 1]./max(abs(y_train),[],2); % Pendulum states are not controlled, therefore not important for tracking
     case 'xy' % [dx, dy, angle_x, angle_y]
         MAE_weight = [1; 1;  0; 0];
 end
-MAE_weight = MAE_weight./sum(MAE_weight);
+% MAE_weight = MAE_weight./sum(MAE_weight);
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
@@ -49,7 +49,9 @@ end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
 
 % Read previous results
-results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
+% results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
+results_file = [uav_folder, '/results/havok_results_', num2str(rand), '.mat'];
+
 try
     load(results_file)
     results(~results.q,:) = []; % remove empty rows
@@ -144,7 +146,7 @@ if plot_results
     grid on
     ylabel('MAE of prediction');
     xlabel('Number of delays in model, q');
-    y_limits = [1e-3, 1e-1];
+    y_limits = [1e-2, 1e-1];
     ylim(y_limits)
 %     xlim([18 50])
     title(['HAVOK, best q = ', num2str(best_results_overall.q)])
