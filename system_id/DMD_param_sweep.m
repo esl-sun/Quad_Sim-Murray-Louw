@@ -2,8 +2,13 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-% close all;
+reload_data = 0; % Re-choose csv data file for SITL data
+plot_results = 1;
 
+Ts = 0.03; % Desired sample time
+Ts_havok = Ts;
+
+% close all;
 total_timer = tic; % Start timer for this script
 
 % % Search space
@@ -18,11 +23,21 @@ p_increment = 1; % Increment value of p in grid search
 q_search = q_min:q_increment:q_max; % List of q parameters to search in
 % % p_search defined before p for loop
 
-% Ts = 0.03;     % Desired sample time
-Ts_dmd = Ts;
-% y_rows = 1:4;
-% MAE_weight = [1; 1; 1; 1]; % Weighting of error of each state when calculating mean
-% output_scale = [1; 1; 1; 1]; % Weighting of error of each state when calculating mean
+% Extract data
+extract_data;
+
+% Data dimentions
+ny = size(y_train,1); % number of states
+nu = size(u_train,1); % number of inputs  
+
+% Weighting of error of each state when calculating mean
+switch control_vel_axis
+    case 'x' % [dx angle_y]
+        MAE_weight = [1; 1]./max(abs(y_train),[],2); % Pendulum states are not controlled, therefore not important for tracking
+    case 'xy' % [dx, dy, angle_x, angle_y]
+        MAE_weight = [1; 1;  0; 0];
+end
+% MAE_weight = MAE_weight./sum(MAE_weight);
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
@@ -34,9 +49,8 @@ end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
 
 % Read previous results
-sigma = 0;
-sig_str = strrep(num2str(sigma),'.','_'); % Convert sigma value to string
-results_file = ['system_id/',uav_name, '/results/dmd_results_', simulation_data_file, comment, '.mat'];
+% results_file = [uav_folder, '/results/havok_results_', simulation_data_file, '.mat'];
+results_file = [uav_folder, '/results/dmd_results_', num2str(rand), '.mat'];
 
 try
     load(results_file);
@@ -69,48 +83,10 @@ for q = q_search
             if q_is_new % Do this only when q is seen first time
                 q_is_new = 0; % q is no longer new
                 
-                w = N_train - q + 1; % num columns of Hankel matrix
-                D = (q-1)*Ts; % Delay duration (Dynamics in delay embedding)
-                
-                % Hankel matrix with delay measurements
-                if q == 1 % Special case if no delay coordinates
-                    Upsilon = u_train(:, q:end);
-                else
-                    Upsilon = zeros((q-1)*ny,w); % Augmented state Y[k] at top
-                    for row = 0:q-2 % Add delay coordinates
-                        Upsilon((end - ny*(row+1) + 1):(end - ny*row), :) = y_train(:, row + (1:w));
-                    end
-
-                    Upsilon = [Upsilon; u_train(:, q:end)]; % Leave out last time step to match V_til_1
-                end
-
-                % Matrix with time series of states
-                Y = y_train(:, q-1 + (1:w));
-
-                % DMD of Y
-                Y2 = Y(:, 2:end  );
-                Y1 = Y(:, 1:end-1);
-
-                YU = [Y1; Upsilon(:,1:end-1)]; % Combined matrix of Y above and U below
-
-                % SVD of the Hankel matrix
-                [U1,S1,V1] = svd(YU, 'econ');
-
+                DMD_part_1;
             end
-
-            % Truncate SVD matrixes
-            U_tilde = U1(:, 1:p); 
-            S_tilde = S1(1:p, 1:p);
-            V_tilde = V1(:, 1:p);
-
-            % YU = \approx U_tilde*S_tilde*V_tilde'
-            AB = Y2*pinv(U_tilde*S_tilde*V_tilde'); % combined A and B matrix, side by side
-            % AB = Y2*pinv(YU); % combined A and B matrix, side by side
-
-            % System matrixes from DMD
-            A_dmd  = AB(:,1:ny); % Extract A matrix
-            B_dmd  = AB(:,(ny+1):end);
-            % A = stabilise(A,1);
+            
+            DMD_part_2;
             
             % Initial condition
             y_hat_0 = y_test(:,q);
