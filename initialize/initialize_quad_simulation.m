@@ -4,7 +4,7 @@
 %% Simulation options
 format compact
 
-sim_time = 400;
+sim_time = 20;
 sim_freq = 1000; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
 Ts_pos_control = 0.01; % [s] Subcribing sample time Position control sample time (Ts = 1/freq)
@@ -33,7 +33,7 @@ control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
 use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 0; % Enable jerk limited S trajectory reference for MPC
-file_name_comment = 'vel_steps_double_pendulum' % Comment added to simulation_data_file name
+file_name_comment = 'pos_step_double_pend' % Comment added to simulation_data_file name
 
 %% Force dependant settings
 
@@ -59,8 +59,8 @@ switch control_vel_axis
         num_axis = 2; % Number of controlled axis
 end
 
-if enable_velocity_step && ~enable_vel_training_input
-    sim_time = 15
+if enable_random_waypoints || enable_vel_training_input
+    sim_time = 400;
 end
 
 %% Input smoothing
@@ -170,7 +170,7 @@ end
 
 %% Simulation inputs
 % initialize state inputs
-initialize_inputs;
+initialize_inputs; % Step inputs for controller testing
 initialize_controller_inputs; % Scheduled waypoints and velocity setpoints
 
 %% Step response

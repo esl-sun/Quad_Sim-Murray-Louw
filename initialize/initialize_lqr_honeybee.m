@@ -1,12 +1,13 @@
 %% Initialise variables for LQR velocity control for honeybee quad
 
 % Fran states = [Int(Vn_sp - Vn), Int(Ve_sp - Ve), Vn, Ve, dphi, phi, dtheta, theta]    
-
 % states = [Int(Vn_sp - Vn), Vn, theta, dtheta]    
 
 % g = positive = 9.81
-    
-K = zeros(1,4);
+
+% Run FFT to calculate pendulum length
+% estimate_pendulum_length
+% l_est = estimated length
 
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
 % Int(Vn_sp - Vn), Vn,      theta,                  dtheta]
@@ -14,7 +15,7 @@ LQR.A= [
             0      -1       0                       0;
             0       0       mp*g/mq                 0;
             0       0       0                       1;
-            0       0       -1*(mp+mq)*g/(mq*l)     0
+            0       0       -1*(mp+mq)*g/(mq*l_est)     0
         ];
 
 
@@ -23,7 +24,7 @@ LQR.B = [
             0; 
             1/mq; 
             0; 
-            -1/(mq*l)
+            -1/(mq*l_est)
         ];
 
 %Q_lqr = diag([50*0.5 50*0.5 50*1 50*1 2/100 3/100 2/100 3/100]); %50 50 /100 /100 /100
