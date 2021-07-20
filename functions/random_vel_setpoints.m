@@ -19,10 +19,10 @@ function [vel_sps, sps_time] = random_vel_setpoints(num_sps, vel_max, time_min, 
         if mod(i,3) == 0 % Only for x
             displacement = sum(vel_sps.*sps_time); % Calculate distance travel so far.
             vel_sps(i,:) = abs(vel_sps(i,:)).*sign(displacement).*(-1); % Opposite direction of velocity as distance travelled
+            
             % Calculate time needed to return to zero, given random
             % velocity magnitude:
             sps_time(i) = abs(displacement(1)./vel_sps(i,1)); % Based on zeroing x vel
-            sps_time(i)
             if(sps_time(i) > time_max) % Ensure that does not cause long time step
                 vel_sps(i,:) = vel_max.*sign(displacement).*(-1); % Set to max vel
                 sps_time(i) = abs(displacement(1)./vel_sps(i,1)); % Based on zeroing x vel

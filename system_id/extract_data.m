@@ -9,7 +9,7 @@ if use_sitl_data
         data = readmatrix(data_path);
     end
     
-    time_offset = 100; % Time offset for where train and test time lies on data
+    time_offset = 10; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds
@@ -41,16 +41,7 @@ if use_sitl_data
     angle_rate.x = data(:,20); % Payload angle about x axis in local NED
     angle_rate.y = data(:,21);
     angle_rate.z = data(:,22);
-    
-    %%
-    
-%     figure
-%     plot(time, angle_rate.x)
-
-    %%
-    % Gather data  
-    %% ??? For some reason, angle.x works with x. in x direction. Should it not be angle about y axis?
-    
+        
     switch control_vel_axis
         case 'x'
             y_data_noise = [vel.x, angle.y]; % Data still noisy
@@ -105,7 +96,7 @@ else
     
     load(data_path)
     
-    time_offset = 0; % Time offset for where train and test time lies on data
+    time_offset = 10; % Time offset for where train and test time lies on data
     
     % Get data used for HAVOK
     y_data = out.y;
@@ -123,8 +114,8 @@ if add_training_latency
 end
 
 % Training data
-% train_time = time_offset+(10:Ts:290)';
-train_time = time_offset+(10:Ts:290)';
+max_train_time = y_data.Time(end)-10; % Set time to which max length of training data is available
+train_time = time_offset+(0:Ts:max_train_time)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
@@ -146,23 +137,12 @@ N_test = length(t_test); % Num of data samples for testing
 y_test = y_test.Data';
 u_test = u_test.Data';
 
-% Position data (not in y)
-% p_test = resample(p_data, test_time );  
-% p_test = p_test.Data';
-
 % Remove offset / Centre input around zero
-
-% hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
-% u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
-% u_bar = mean(u_hover.Data);
 u_bar = mean(u_train, 2)
-% u_bar = 0
-u_bar
 u_train = u_train - u_bar;
 
 % Re-calculate u_bar for test data, because acc_sp offset drifts
-% u_bar_test = mean(u_test, 2)
-u_bar_test = u_bar;
+u_bar_test = mean(u_test, 2)
 u_test = u_test - u_bar_test;
 
 % Dimentions

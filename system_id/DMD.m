@@ -46,12 +46,10 @@ end
 y_train = y_train(:, 1:N_train);
 u_train = u_train(:, 1:N_train);
 
-
 DMD_part_1;
-
 DMD_part_2;
 
-DMD_run_model;
+run_model;
 
 %% Plot training data
 % close all;

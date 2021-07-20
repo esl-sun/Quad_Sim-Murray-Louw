@@ -2,16 +2,10 @@
 % Always run HAVOK_param_swep.m first before running this file.
 % This will set all varaibkles correctly
 % close all;
-% %% Run simulation
-% tic;
-% disp('Start simulation.')
-% sim 'quad_simulation_with_payload.slx'
-% disp('Execution time:')
-% toc
 
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
-save_model = 1; % 1 = Save this model , 0 = dont save
+save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
 
 try
@@ -70,13 +64,13 @@ A_havok = A;
 B_havok = B;
 
 %% Add payload angular velocity for MPC tracking position
-A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
-A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
-B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
-
-% Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-A_havok(1, 3) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-A_havok(1, 5) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+% A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+% A_havok = [zeros( size(A_havok,1), num_axis ), A_havok]; % Add left column zeros
+% B_havok = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+% 
+% % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+% A_havok(1, 3) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+% A_havok(1, 5) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
 %% Save model
 if save_model
