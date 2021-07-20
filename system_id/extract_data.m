@@ -9,7 +9,7 @@ if use_sitl_data
         data = readmatrix(data_path);
     end
     
-    time_offset = 15; % Time offset for where train and test time lies on data
+    time_offset = 100; % Time offset for where train and test time lies on data
     
     time = data(:,1);
     time = (time-time(1)); % Time in seconds

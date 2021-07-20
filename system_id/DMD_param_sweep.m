@@ -130,5 +130,5 @@ if plot_results
     xlabel('Number of delays in model, q');
     y_limits = [1e-2, 1e-1];
     ylim(y_limits)
-    title(['HAVOK, best q = ', num2str(best_mean_results.q)])
+    title(['DMD, best q = ', num2str(best_mean_results.q)])
 end

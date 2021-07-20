@@ -3,7 +3,7 @@ function A = stabilise(A_unstable, max_iterations)
     % Scale them to be stable
     A = A_unstable;
     count = 0;
-    while (sum(abs(eig(A)) > 1) ~= 0)       
+    while (sum(abs( eig(A) ) > 1) ~= 0)       
         [Ve,De] = eig(A);
         unstable = abs(De)>1; % indexes of unstable eigenvalues
         De(unstable) = De(unstable)./abs(De(unstable)) - 10^(-14 + count*2); % Normalize all unstable eigenvalues (set abs(eig) = 1)

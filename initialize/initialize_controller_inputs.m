@@ -9,17 +9,19 @@ threshold = 1e-3; % Threshold to reach waypoint, for threshold mode
 num_vel_setpoints = 100; % Number of waypoints
 
 vel_sp_max = [3, 3, 3]; % Max values in waypoint [x,y,z]
-vel_sp_min = [-3, -3, 3]; % Min values in waypoint [x,y,z]
+vel_sp_min = [-3, -3, -3]; % Min values in waypoint [x,y,z]
 
 vel_step_max = [3, 0, 0]; % Max step/change in waypoint [x,y,z]
 vel_step_min = [0, 0, 0]; % Min step/change in waypoint [x,y,z]
 
-time_max = 20; % Max time between waypoints (s)
+time_max = 15; % Max time between waypoints (s)
 time_min = 5; % Min time between waypoints (s)
 
 % Generate random setpoints
 rng_seed = 0;
 [vel_setpoints, vel_setpoints_time] = random_waypoints(num_vel_setpoints, vel_step_min, vel_step_max, vel_sp_min, vel_sp_max, time_min, time_max, rng_seed);
+
+vel_setpoints(:,3) = zeros(size(vel_setpoints(:,3))); % set z vel to 0
 
 % Manual vel setpoints: [x, y, z] = [N, E, D]   
 % vel_setpoints = [

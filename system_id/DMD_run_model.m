@@ -40,7 +40,8 @@ for start_index = start_index_list
     end
 
     % Vector of Mean Absolute Error on testing data
-    run.MAE_list(:,run_index) = (sum(abs(y_hat - y_run), 2)./run.N).*MAE_weight; % For each measured state
+    cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N).*MAE_weight;
+    run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
     
     % Plot this run prediction
