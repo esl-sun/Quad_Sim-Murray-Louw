@@ -21,12 +21,12 @@ for start_index = start_index_list
     % Initial condition (last entries of training data)
     y_hat_0 = zeros(q*ny,1); % Y[k] at top
     for row = 0:q-1 % First column of spaced Hankel matrix
-        y_hat_0(row*ny+1:(row+1)*ny, 1) = y_test(:,q-row);
+        y_hat_0(row*ny+1:(row+1)*ny, 1) = y_test(:,start_index - row);
     end
 
     % Run model
-    Y_hat = zeros(length(y_hat_0),N_test); % Empty estimated Y
-    Y_hat(:,q) = y_hat_0; % Initial condition
+    Y_hat = zeros(length(y_hat_0),run.N); % Empty estimated Y
+    Y_hat(:,1) = y_hat_0; % Initial condition
     for k = q:N_test-1
         Y_hat(:,k+1) = A*Y_hat(:,k) + B*u_test(:,k);
     end
