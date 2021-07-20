@@ -2,7 +2,7 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time
@@ -15,12 +15,12 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % % Search space
-T_train_min = 20; % [s] Min value of training period in grid search
-T_train_max = 180; % Max value of training period in grid search
-T_train_increment = 40; % Increment value of training period in grid search
+T_train_min = 10; % [s] Min value of training period in grid search
+T_train_max = 60; % Max value of training period in grid search
+T_train_increment = 10; % Increment value of training period in grid search
 
 q_min = 15; % Min value of q in grid search
-q_max = 30; % Max value of q in grid search
+q_max = 20; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -34,7 +34,7 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 
 % Variables for running model prediction tests
 run.number = 10; % Number of runs done for test data
-run.window = 20; % [s] Prediction time window/period used per run  
+run.window = 16; % [s] Prediction time window/period used per run  
 run.N = floor(run.window/Ts); % number of data samples in prediction window
 % Interval between start indexes to fit number of runs into test data
 MAE_weight = [1; 1]./sqrt(max(abs(y_train),[],2)); % Weighting of error of each state when calculating mean
@@ -169,3 +169,24 @@ xlabel('N_train');
 y_limits = [1e-2, 1e-1];
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
+
+%% plot p
+figure
+semilogy(results.p, results.MAE_mean, '.')
+grid on
+ylabel('MAE_mean');
+xlabel('p');
+y_limits = [1e-2, 1e-1];
+ylim(y_limits)
+title(['Checkout effect of P'])
+
+%% plot q
+figure
+semilogy(results.q, results.MAE_mean, '.')
+grid on
+ylabel('MAE_mean');
+xlabel('p');
+y_limits = [1e-2, 1e-1];
+ylim(y_limits)
+title(['Checkout effect of Q'])
+

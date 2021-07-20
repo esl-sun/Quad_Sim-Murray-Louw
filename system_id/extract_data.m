@@ -124,7 +124,7 @@ end
 
 % Training data
 % train_time = time_offset+(10:Ts:290)';
-train_time = time_offset+(10:Ts:280)';
+train_time = time_offset+(10:Ts:400)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
