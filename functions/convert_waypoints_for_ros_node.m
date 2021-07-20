@@ -14,15 +14,15 @@ end
 disp(']')
 
 %%
-disp('vel_setpoints = [')
+disp('    vel_setpoints = [')
 for i = 1:size(vel_setpoints,1)
-    disp(['                [', num2str(vel_setpoints(i,1)), ', ', num2str(vel_setpoints(i,2)), ', ', num2str(vel_setpoints(i,3)), '],'])
+    disp(['            [', num2str(vel_setpoints(i,1)), ', ', num2str(vel_setpoints(i,2)), ', ', num2str(vel_setpoints(i,3)), '],'])
 end
-disp('            ]')
+disp('        ]')
 disp('')
-disp('waypoints_time = [')
+disp('    vel_setpoints_time = [')
 for i = 1:size(vel_setpoints_time,1)
-    disp(['                ', num2str(vel_setpoints_time(i)), ','])
+    disp(['            ', num2str(vel_setpoints_time(i)), ','])
 end
-disp(']')
+disp('        ]')
 

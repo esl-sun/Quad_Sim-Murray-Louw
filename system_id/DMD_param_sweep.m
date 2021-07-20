@@ -2,8 +2,9 @@
 % Grid search of parameters
 % Saves all the results for different parameter combinations
 
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 1;
+plot_predictions = 0;
 
 Ts = 0.03; % Desired sample time
 Ts_havok = Ts;
@@ -12,7 +13,7 @@ Ts_havok = Ts;
 total_timer = tic; % Start timer for this script
 
 % % Search space
-q_min = 2; % Min value of q in grid search
+q_min = 10; % Min value of q in grid search
 q_max = 20; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 

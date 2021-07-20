@@ -124,7 +124,7 @@ end
 
 % Training data
 % train_time = time_offset+(10:Ts:290)';
-train_time = time_offset+(10:Ts:400)';
+train_time = time_offset+(10:Ts:290)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
@@ -155,12 +155,13 @@ u_test = u_test.Data';
 % hover_time = (0:Ts:50)+10; % Time in which uav is just hovering
 % u_hover = resample(u_data, hover_time); % Data where uav is at standstill hovering
 % u_bar = mean(u_hover.Data);
-u_bar = mean(u_train, 2);
-u_bar = 0
+u_bar = mean(u_train, 2)
+% u_bar = 0
+u_bar
 u_train = u_train - u_bar;
 
 % Re-calculate u_bar for test data, because acc_sp offset drifts
-u_bar_test = mean(u_test, 2)
+% u_bar_test = mean(u_test, 2)
 u_bar_test = u_bar;
 u_test = u_test - u_bar_test;
 
