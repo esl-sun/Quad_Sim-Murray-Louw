@@ -9,7 +9,7 @@ rng_seed = 0;
 num_sps = 100; % Number of setpoints to produce
 vel_max = [3, 0, 0];  % Maximum velocity [vx, vy, vz]
 time_max = 15; % Max time between setpoints (s)
-time_min = 5; % Min time between setpoints (s)
+time_min = 10; % Min time between setpoints (s)
 rng_seed = 0; % Random seed for reproducability
     
 [vel_setpoints, vel_setpoints_time] = random_vel_setpoints(num_sps, vel_max, time_min, time_max, rng_seed);

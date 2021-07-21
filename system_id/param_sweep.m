@@ -5,6 +5,8 @@
 % Grid search
 format compact % display more compact
 for N_train = N_train_search
+    disp('-------------------------------')
+    N_train*Ts
     
     % Starting at max value, cut data to correct length
     y_train = y_train(:, 1:N_train);
@@ -64,40 +66,40 @@ save(results_file, 'results', 'emptry_row')
 best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
 %% Plot results
+
+y_limits = [1e-2, 1e0];
+
 figure
 semilogy(results.q, results.MAE_mean, '.')
 grid on
 ylabel('MAE of prediction');
 xlabel('Number of delays in model, q');
-y_limits = [1e-2, 1e-1];
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
 %%
-y_limits = [1e-2, 1e0];
-
 figure
 subplot(1,3,1)
-semilogy(results.N_train, results.MAE_mean, '.')
+semilogy(results.N_train.*Ts, results.MAE_mean, '.')
 grid on
 ylabel('MAE_mean');
-xlabel('N_train');
+xlabel('T_train');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
 subplot(1,3,2)
-semilogy(results.N_train, results.MAE_1, '.')
+semilogy(results.N_train.*Ts, results.MAE_1, '.')
 grid on
 ylabel('MAE 1');
-xlabel('N_train');
+xlabel('T_train');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
 subplot(1,3,3)
-semilogy(results.N_train, results.MAE_2, '.')
+semilogy(results.N_train.*Ts, results.MAE_2, '.')
 grid on
 ylabel('MAE 2');
-xlabel('N_train');
+xlabel('T_train');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
@@ -107,7 +109,6 @@ semilogy(results.p, results.MAE_mean, '.')
 grid on
 ylabel('MAE_mean');
 xlabel('p');
-y_limits = [1e-2, 1e-1];
 ylim(y_limits)
 title(['Checkout effect of P'])
 
@@ -117,7 +118,6 @@ semilogy(results.q, results.MAE_mean, '.')
 grid on
 ylabel('MAE_mean');
 xlabel('p');
-y_limits = [1e-2, 1e-1];
 ylim(y_limits)
 title(['Checkout effect of Q'])
 

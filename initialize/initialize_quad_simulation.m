@@ -30,10 +30,22 @@ enable_smoother = 0 % Smooth PID pos control output with exponentional moving av
 
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
+use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
-enable_jerk_limited_mpc = 0; % Enable jerk limited S trajectory reference for MPC
+enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference for MPC
 file_name_comment = 'pos_step_double_pend' % Comment added to simulation_data_file name
+
+%% Pre-set settings:
+pre_set_options = 1
+switch pre_set_options
+    case 1 % Vel steps training
+        use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
+        file_name_comment = '_vel_steps_train';
+end
 
 %% Force dependant settings
 
@@ -60,7 +72,7 @@ switch control_vel_axis
 end
 
 if enable_random_waypoints || enable_vel_training_input
-    sim_time = 400;
+    sim_time = 600;
 end
 
 %% Input smoothing

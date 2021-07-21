@@ -55,6 +55,8 @@ for start_index = start_index_list
     end
 
     % Vector of Mean Absolute Error on testing data
+%     baseline_MAE = sum(abs(y_run(:,1) - y_run), 2)./run.N; % Error if model = initial condition
+%     cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N)./baseline_MAE;
     cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N).*MAE_weight;
     run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
@@ -69,12 +71,12 @@ for start_index = start_index_list
             plot(t_run, y_hat(i,:), 'r--', 'LineWidth', 1);
             hold off;
             legend('actual', 'predicted')
-            title(['DMD - run: ', num2str(run_index)]);
+            title(['MAE 1: ', num2str(cur_MAE(1)), ' MAE 2: ', num2str(cur_MAE(2)), ' run index: ', num2str(run_index)]);
         end
     end
 end
 
-MAE = max(run.MAE_list,[],2); % Take mean MAE of all test runs
+MAE = mean(run.MAE_list,2); % Take worst MAE of all test runs
 
 %% Plot error vs start condition
 if plot_predictions

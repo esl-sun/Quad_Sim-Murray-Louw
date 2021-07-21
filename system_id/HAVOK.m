@@ -14,9 +14,10 @@ try
     
     % Parameters
     best_row = find(results.MAE_mean == min(results.MAE_mean));
-    best_results = results(best_row,:);
+    best_results = results(best_row,:)
     q = double(best_results.q);
     p = double(best_results.p);
+    N_train = double(best_results.N_train);
     
     iterate_p = 0;
     if iterate_p
@@ -37,8 +38,8 @@ try
     override = 0;
     if override
         'Override --------------------------------------------------------'
-        q = 29
-        p = 10
+        q = 23
+        p = 30
         
     end
     % % Override parameters:
@@ -47,6 +48,11 @@ try
    
     q
     p
+    N_train
+    
+    % Starting a max value, cut data to correct length
+    y_train = y_train(:, 1:N_train);
+    u_train = u_train(:, 1:N_train);
     
 catch
     disp('No saved results file')  
@@ -62,6 +68,10 @@ HAVOK_part_2
 
 A_havok = A;
 B_havok = B;
+
+plot_predictions = 1;
+run_model;
+MAE
 
 %% Add payload angular velocity for MPC tracking position
 % A_havok = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros

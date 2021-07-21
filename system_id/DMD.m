@@ -37,14 +37,15 @@ try
    
     q
     p
+    N_train
+    
+    % Starting a max value, cut data to correct length
+    y_train = y_train(:, 1:N_train);
+    u_train = u_train(:, 1:N_train);
     
 catch
     disp('No saved results file')  
 end
-
-% Starting a max value, cut data to correct length
-y_train = y_train(:, 1:N_train);
-u_train = u_train(:, 1:N_train);
 
 DMD_part_1;
 DMD_part_2;

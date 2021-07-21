@@ -113,13 +113,17 @@ if add_training_latency
     u_data.Time = u_data.Time - pos_control_latency;
 end
 
+% Test/Train split
+T_test = 100; % [s] Time length of training data
+test_time = time_offset + (0:Ts:T_test)';
+
+data_end_time = y_data.Time(end) - 20; % Max length of data available. clip last bit.
+train_time = (test_time(end):Ts:data_end_time)';
+
 % Training data
-max_train_time = y_data.Time(end)-10; % Set time to which max length of training data is available
-train_time = time_offset+(0:Ts:max_train_time)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 % pos_sp.x = resample(pos_sp_data, train_time );  
-
 t_train = y_train.Time';
 N_train = length(t_train);
 
@@ -128,7 +132,6 @@ u_train = u_train.Data';
 % pos_sp.x = pos_sp.x.Data';
 
 % Testing data
-test_time = (200:Ts:280)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
@@ -157,21 +160,21 @@ else
 end
 
 %% Plot 
-% figure
-% plot(t_train, y_train)
-% hold on
-% plot(t_train, u_train)
-% hold off
-% title('Training data')
-% legend('vel x', 'angle E', 'acc sp x')
-% 
-% figure
-% plot(t_test, y_test)
-% hold on
-% plot(t_test, u_test)
-% hold off
-% title('Testing data')
-% legend('vel x', 'angle E', 'acc sp x')
+figure
+plot(t_train, y_train)
+hold on
+plot(t_train, u_train)
+hold off
+title('Training data')
+legend('vel x', 'angle E', 'acc sp x')
+
+figure
+plot(t_test, y_test)
+hold on
+plot(t_test, u_test)
+hold off
+title('Testing data')
+legend('vel x', 'angle E', 'acc sp x')
 
 
 
