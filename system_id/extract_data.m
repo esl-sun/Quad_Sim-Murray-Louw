@@ -44,7 +44,11 @@ if use_sitl_data
         
     switch control_vel_axis
         case 'x'
-            y_data_noise = [vel.x, angle.y]; % Data still noisy
+            if use_anglular_rate % Use payload angular rate instead of angle
+                y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
+            else
+                y_data_noise = [vel.x, angle.y]; % Data still noisy
+            end
             u_data_noise = [acc_sp.x];
             vel_sp_data = [vel_sp.x];
             pos_sp_data = [pos_sp.x];
@@ -58,6 +62,8 @@ if use_sitl_data
         otherwise
             error('Only supports control_vel_axis = x or xy')
     end
+    
+        
     
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
@@ -84,6 +90,12 @@ if use_sitl_data
     pos_sp_data = timeseries(pos_sp_data, time);
     pos_data = timeseries(pos_data_smooth, time);    
     
+%     if use_anglular_rate % Use payload angular rate instead of angle
+%         y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
+%     else
+%         y_data_noise = [vel.x, angle.y]; % Data still noisy
+%     end
+    
 else
     % Extract data from .mat file saved from Simulink run
 %     simulation_data_file = 'PID_x_payload_mp0.2_l0.5_smooth'
@@ -105,8 +117,6 @@ else
     y_data = out.y;
     u_data = out.u;
     vel_sp_data = out.vel_sp;
-%     pos_sp_data = out.pos_sp;
-%     p_data = out.pos; % position data not in y
 end
 
 % Get simulation_data_file name
@@ -128,13 +138,12 @@ train_time = (test_time(end):Ts:data_end_time)';
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
 vel_sp_train = resample(vel_sp_data, train_time );  % For us in SITL_vs_Simulink_training.m
-% pos_sp.x = resample(pos_sp_data, train_time );  
 t_train = y_train.Time';
 N_train = length(t_train);
 
 y_train = y_train.Data';
 u_train = u_train.Data';
-% pos_sp.x = pos_sp.x.Data';
+vel_sp_train = vel_sp_train.Data(:,1)';
 
 % Testing data
 y_test = resample(y_data, test_time );  

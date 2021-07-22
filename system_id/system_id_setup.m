@@ -1,9 +1,11 @@
 % Choose script to run param sweep
-algorithm = 'dmd'; % 'dmd' or 'havok'
+algorithm = 'havok'; % 'dmd' or 'havok'
 % algorithm = 'havok';
 
 reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 1;
+use_anglular_rate = 1;
+use_sitl_data = 1;
 
 Ts = 0.03; % Desired sample time
 
@@ -58,6 +60,13 @@ catch
     
     results = table('Size',Size,'VariableTypes',VariableTypes,'VariableNames',VariableNames);
     emptry_row = 1; % Keep track of next empty row to insert results 
+end
+
+% String for saved model filename
+if use_angular_rate
+    payload_angle_str = '_anglular_rate'
+else
+    payload_angle_str = '_angle';
 end
 
 % Run parameter sweep script:

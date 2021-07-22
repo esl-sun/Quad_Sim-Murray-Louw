@@ -118,7 +118,7 @@ max_vel_z_down = 10;
 % K_ud = 0.4150;
 
 % From Reg's controller_gains.m
-K_up = 0.05*g/hover_init;
+K_up = 0.05*g/hover_init; % MPC_XY_VEL_P_ACC
 K_ui = 0.025*g/hover_init;
 K_ud = 0.01*g/hover_init;
  

@@ -36,7 +36,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 1
+pre_set_options = 0
 switch pre_set_options
     case 1 % Vel steps training
         use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
@@ -172,7 +172,22 @@ switch payload_type
         payload_str = ['double_pend', '_m1', num2str(m1), '_m2', num2str(m2), '_l1', num2str(l1), '_l2', num2str(l2)],
 end
 
-simulation_data_file = [payload_str, file_name_comment]
+if enable_velocity_step || enable_vel_training_input
+    setpoint_str = '_vel_steps';
+else
+    setpoint_str = '_pos_steps';
+end
+
+switch control_option
+    case 0
+        control_str = '_PID'
+    case 1
+        control_str = '_MPC'
+    case 2
+        control_str = '_LQR'
+end
+
+simulation_data_file = [payload_str, control_str, setpoint_str, file_name_comment]
 
 %% MPC
 mpc_states = [1]; % Indexes of states selected for MPC to control. i.e. [1, 2] to control x and y

@@ -5,7 +5,7 @@
 reload_data = 0; % Re-choose csv data file for SITL data
 save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
-plot_predictions = 0;
+plot_predictions = 1;
 
 try
     load(results_file);
@@ -51,6 +51,13 @@ DMD_part_1;
 DMD_part_2;
 
 run_model;
+
+%% Save model
+if save_model
+    model_file = [uav_folder, '/models/dmd_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, '.mat'];
+    save(model_file, 'A_dmd', 'B_dmd', 'Ts_dmd', 'q', 'p', 'ny', 'nu', 'u_bar')
+    disp('model saved')
+end
 
 %% Plot training data
 % close all;
