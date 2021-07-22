@@ -35,13 +35,13 @@ use_sitl_data = init_use_sitl_data; % Reset value to before
 
 %% Shift Allign SITl and MATLAB plots
 
-compare_index = 1:500;
+compare_index = 1:2000;
 
 figure
-plot(simulink.t_train(compare_index), simulink.pos_sp_data(compare_index));
+plot(simulink.t_train(compare_index), simulink.vel_sp_train(compare_index));
 hold on
 grid on
-plot(sitl.t_train(compare_index),     sitl.pos_sp_data(compare_index));
+plot(sitl.t_train(compare_index),     sitl.vel_sp_train(compare_index));
 title('To allign x axis, click on Simulink then SITL plots on one x-grid-line')
 legend('Simulink', 'SITL')
 hold off

@@ -49,8 +49,15 @@ xlim(x_limits)
 ylim(y_limits)
 
 %% write to csv
-csv_filename = ['plots/', algorithm, '_MAE_vs_Ntrain.csv'];
-writematrix(A,csv_filename)
+csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', sim_type, '_MAE_vs_Ntrain_', simulation_data_file, '_', algorithm, '.csv'];
+csv_filename
+
+VariableTypes = {'double',  'double',   'double', 'double'};
+VariableNames = {'T_train', 'MAE_mean', 'MAE_1',  'MAE_2'};
+csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
+csv_table(:,:) = array2table(csv_matrix);
+
+writetable(csv_table,csv_filename)
 
 
 

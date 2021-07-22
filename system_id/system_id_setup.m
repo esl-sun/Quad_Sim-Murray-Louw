@@ -1,8 +1,8 @@
 % Choose script to run param sweep
-algorithm = 'havok';
+algorithm = 'dmd'; % 'dmd' or 'havok'
 % algorithm = 'havok';
 
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 1;
 
 Ts = 0.03; % Desired sample time

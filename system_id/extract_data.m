@@ -46,11 +46,13 @@ if use_sitl_data
         case 'x'
             y_data_noise = [vel.x, angle.y]; % Data still noisy
             u_data_noise = [acc_sp.x];
+            vel_sp_data = [vel_sp.x];
             pos_sp_data = [pos_sp.x];
             pos_data_noise = [pos.x]; % position data not in y
         case 'xy'
             y_data_noise = [vel.x, vel.y, angle.x, angle.y];
             u_data_noise = [acc_sp.x, acc_sp.y];
+            vel_sp_data = [vel_sp.x, vel_sp.y];
             pos_sp_data = [pos_sp.x, pos_sp.z];
             pos_data_noise = [pos_x, pos.y]; % position data not in y
         otherwise
@@ -63,7 +65,7 @@ if use_sitl_data
     pos_data_smooth = smoothdata(u_data_noise, 'loess', 20);
     % Dont need to smooth pos_sp
     
-    % Plot    
+    %% Plot    
 %     figure(5)
 %     plot(time, y_data_smooth)
 %     hold on
@@ -74,10 +76,11 @@ if use_sitl_data
 %     title('Data noisy vs smooth')
 %     xlim([321.6674  328.8901])
 %     ylim([-4.4410    6.5628])
-    
+%     
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
     u_data = timeseries(u_data_smooth, time);
+    vel_sp_data = timeseries(vel_sp_data, time);
     pos_sp_data = timeseries(pos_sp_data, time);
     pos_data = timeseries(pos_data_smooth, time);    
     
@@ -101,6 +104,7 @@ else
     % Get data used for HAVOK
     y_data = out.y;
     u_data = out.u;
+    vel_sp_data = out.vel_sp;
 %     pos_sp_data = out.pos_sp;
 %     p_data = out.pos; % position data not in y
 end
@@ -123,6 +127,7 @@ train_time = (test_time(end):Ts:data_end_time)';
 % Training data
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
 u_train = resample(u_data, train_time );  
+vel_sp_train = resample(vel_sp_data, train_time );  % For us in SITL_vs_Simulink_training.m
 % pos_sp.x = resample(pos_sp_data, train_time );  
 t_train = y_train.Time';
 N_train = length(t_train);
@@ -160,21 +165,21 @@ else
 end
 
 %% Plot 
-figure
-plot(t_train, y_train)
-hold on
-plot(t_train, u_train)
-hold off
-title('Training data')
-legend('vel x', 'angle E', 'acc sp x')
-
-figure
-plot(t_test, y_test)
-hold on
-plot(t_test, u_test)
-hold off
-title('Testing data')
-legend('vel x', 'angle E', 'acc sp x')
+% figure
+% plot(t_train, y_train)
+% hold on
+% plot(t_train, u_train)
+% hold off
+% title('Training data')
+% legend('vel x', 'angle E', 'acc sp x')
+% 
+% figure
+% plot(t_test, y_test)
+% hold on
+% plot(t_test, u_test)
+% hold off
+% title('Testing data')
+% legend('vel x', 'angle E', 'acc sp x')
 
 
 
