@@ -46,7 +46,8 @@ switch pre_set_options
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
-
+        file_name_comment = 'longer_times'
+        
     case 2 % PID vel step
         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR

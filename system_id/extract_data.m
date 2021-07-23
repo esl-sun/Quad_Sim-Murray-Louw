@@ -113,10 +113,19 @@ else
     
     time_offset = 10; % Time offset for where train and test time lies on data
     
-    % Get data used for HAVOK
-    y_data = out.y;
-    u_data = out.u;
-    vel_sp_data = out.vel_sp;
+    % Get data used for system id
+    time = out.vel.Time;
+    
+    if use_angular_rate % Use payload angular rate instead of angle
+        y_data = timeseries([out.vel.Data(:,1), out.theta_vel.Data], out.vel.Time); % Only y vel
+    else
+        y_data = timeseries([out.vel.Data(:,1), out.theta.Data], out.vel.Time);
+    end
+    u_data = timeseries(out.acc_sp_pid.Data(:,1), out.acc_sp_pid.Time);
+    
+    vel_sp_data = timeseries(out.vel_sp.Data(:,1), out.vel_sp.Time);
+    pos_sp_data = timeseries(out.pos_sp.Data(:,1), out.pos_sp.Time);
+    pos_data = timeseries(out.pos.Data(:,1), out.pos.Time);
 end
 
 % Get simulation_data_file name

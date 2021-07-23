@@ -1,11 +1,11 @@
 % Choose script to run param sweep
-algorithm = 'havok'; % 'dmd' or 'havok'
-% algorithm = 'havok';
+% use_sitl_data = 0;
+reload_data = 1; % Re-choose csv data file for SITL data
+% plot_results = 0;
+write_csv = 0; % Output results to csv for thesis
 
-reload_data = 0; % Re-choose csv data file for SITL data
-plot_results = 1;
-use_angular_rate = 1;
-use_sitl_data = 0;
+use_angular_rate = 0;
+algorithm = 'havok'; % 'dmd' or 'havok'
 
 Ts = 0.03; % Desired sample time
 
@@ -16,8 +16,8 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 10; % [s] Min value of training period in grid search
-T_train_max = 60; % Max value of training period in grid search
+T_train_min = 4; % [s] Min value of training period in grid search
+T_train_max = 4; % Max value of training period in grid search
 T_train_increment = 10; % Increment value of training period in grid search
 
 q_min = 5; % Min value of q in grid search
@@ -34,14 +34,15 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 
 % Variables for running model prediction tests
 run.number = 10; % Number of runs done for test data
-run.window = 10; % [s] Prediction time window/period used per run  
+run.window = 20; % [s] Prediction time window/period used per run  
 run.N = floor(run.window/Ts); % number of data samples in prediction window
-MAE_weight = [1; 1]./sqrt(max(abs(y_train),[],2)); % Weighting of error of each state when calculating mean
+MAE_weight      = 1./sqrt(max(abs(     y_train     ),[],2)); % Weighting of error of each state when calculating mean
+MAE_diff_weight = 1./sqrt(max(abs(diff(y_train,1,2)),[],2)); % Weighting of error of derivative each state when calculating mean
 plot_predictions = 0; % Always set to 0 when looping DMD_run_model.m otherwiee opens many plots
 
 % String for saved model filename
 if use_angular_rate
-    payload_angle_str = '_anglular_rate';
+    payload_angle_str = '_angular_rate';
 else
     payload_angle_str = '_angle';
 end
@@ -69,8 +70,10 @@ catch
     emptry_row = 1; % Keep track of next empty row to insert results 
 end
 
-
-
 % Run parameter sweep script:
-param_sweep        
+param_sweep;
 
+% Create csv file of results;
+if write_csv
+    MAE_vs_Ntrain;
+end

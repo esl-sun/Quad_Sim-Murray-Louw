@@ -67,7 +67,7 @@ best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
 %% Plot results
 
-y_limits = [1e-2, 1e0];
+y_limits = [2e-3, 1e0];
 
 figure
 semilogy(results.q, results.MAE_mean, '.')
@@ -77,7 +77,7 @@ xlabel('Number of delays in model, q');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
-%%
+
 figure
 subplot(1,3,1)
 semilogy(results.N_train.*Ts, results.MAE_mean, '.')

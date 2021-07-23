@@ -20,7 +20,7 @@ end
 figure
 
 x_limits = [0,    250];
-y_limits = [0.01, 0.2];
+y_limits = [0.005, 0.2];
 
 subplot(1,3,1)
 % plot(csv_matrix(:,1), csv_matrix(:,2), 'k.', 'MarkerSize', 10)
@@ -33,8 +33,8 @@ ylim(y_limits)
 subplot(1,3,2)
 plot(csv_matrix(:,1), csv_matrix(:,3))
 
-hold on
-plot(t_train-t_train(1), y_train(1,:) .* ( y_limits(2) - y_limits(1) ) ./ ( max(y_train(1,:)) - min(y_train(1,:)) ) + mean(y_limits) );
+% hold on
+% plot(t_train-t_train(1), y_train(1,:) .* ( y_limits(2) - y_limits(1) ) ./ ( max(y_train(1,:)) - min(y_train(1,:)) ) + mean(y_limits) );
 
 ylabel('MAE_1')
 xlabel('T_train [s]')
@@ -47,6 +47,8 @@ ylabel('MAE_mean')
 xlabel('T_train [s]')
 xlim(x_limits)
 ylim(y_limits)
+
+title([algorithm, payload_angle_str])
 
 %% write to csv
 csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'MAE_vs_Ntrain_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];

@@ -57,7 +57,9 @@ for start_index = start_index_list
     % Vector of Mean Absolute Error on testing data
 %     baseline_MAE = sum(abs(y_run(:,1) - y_run), 2)./run.N; % Error if model = initial condition
 %     cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N)./baseline_MAE;
-    cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N).*MAE_weight;
+    cur_MAE      = (sum(abs(     y_hat      -      y_run     ), 2) ./  run.N   ).*MAE_weight;
+    cur_MAE_diff = (sum(abs(diff(y_hat,1,2) - diff(y_run,1,2)), 2) ./ (run.N-1)).*MAE_diff_weight;
+    cur_MAE = (cur_MAE + cur_MAE_diff)./2;
     run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
     
