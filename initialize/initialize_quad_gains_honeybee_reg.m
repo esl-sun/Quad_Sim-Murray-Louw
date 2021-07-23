@@ -121,7 +121,13 @@ max_vel_z_down = 10;
 K_up = 0.05*g/hover_init; % MPC_XY_VEL_P_ACC
 K_ui = 0.025*g/hover_init;
 K_ud = 0.01*g/hover_init;
- 
+
+% Scale them to slow down response
+tune_scale = 0.7;
+K_up = K_up*tune_scale;
+K_ui = K_ui*tune_scale;
+K_ud = K_ud*tune_scale;
+
 if enable_payload
     % 2kg
 %     K_up = 0.04;

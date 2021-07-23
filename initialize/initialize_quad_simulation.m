@@ -7,7 +7,7 @@ format compact
 sim_time = 20;
 sim_freq = 1000; % Used for sample time of blocks and fixed step size of models
 mpc_start_time = 1; % Time in secods that switch happens from velocity PID to MPC
-Ts_pos_control = 0.01; % [s] Subcribing sample time Position control sample time (Ts = 1/freq)
+Ts_pos_control = 0.002; % [s] Subcribing sample time Position control sample time (Ts = 1/freq)
 Ts_sub = 1/100; % [s] Subscribing sample time
 Ts_pub_setpoint = 0.02; % [s] Publishing rate of setpoint
 step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
@@ -36,7 +36,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 0
+pre_set_options = 1
 switch pre_set_options
     case 1 % Vel steps training
         use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
@@ -44,7 +44,14 @@ switch pre_set_options
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
-        file_name_comment = '';
+        file_name_comment = ['_tune_scale_', num2str(tune_scale)];
+    case 2 % PID vel step
+        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+        enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+        file_name_comment = '_single_step';
 end
 
 %% Force dependant settings
@@ -72,7 +79,7 @@ switch control_vel_axis
 end
 
 if enable_random_waypoints || enable_vel_training_input
-    sim_time = 600;
+    sim_time = 400;
 end
 
 %% Input smoothing

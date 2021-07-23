@@ -14,11 +14,11 @@ simulink.u_train = u_train;
 simulink.vel_sp_train = vel_sp_train;  
 simulink.t_train = t_train;
 
-figure
-plot(simulink.t_train, simulink.y_train);
-hold on
-plot(simulink.t_train, simulink.vel_sp_train);
-title('Simulink')
+% figure
+% plot(simulink.t_train, simulink.y_train);
+% hold on
+% plot(simulink.t_train, simulink.vel_sp_train);
+% title('Simulink')
 
 % SITL data
 use_sitl_data = 1;
@@ -29,17 +29,17 @@ sitl.u_train = u_train;
 sitl.vel_sp_train = vel_sp_train;  
 sitl.t_train = t_train;
 
-figure
-plot(sitl.t_train, sitl.y_train);
-hold on
-plot(sitl.t_train, sitl.vel_sp_train);
-title('SITL')
+% figure
+% plot(sitl.t_train, sitl.y_train);
+% hold on
+% plot(sitl.t_train, sitl.vel_sp_train);
+% title('SITL')
 
 use_sitl_data = init_use_sitl_data; % Reset value to before
 
 %% Shift Allign SITl and MATLAB plots
 
-compare_index = 1:500;
+compare_index = 1:1000;
 
 figure
 plot(simulink.t_train(compare_index), simulink.vel_sp_train(compare_index));

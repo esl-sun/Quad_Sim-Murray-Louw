@@ -56,7 +56,7 @@ drift_tau    = 4;
 %% Payload model
 mp = 0.2;
 l = 0.5;
-c = 0.003; % From Willem simulations for match prac to sim 
+c = 0.000; % From Willem simulations for match prac to sim 
 k = 0;
 
 %% Double pendulum model

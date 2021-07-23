@@ -19,8 +19,8 @@ end
 %% Plot
 figure
 
-x_limits = [0,      250];
-y_limits = [0.01, 0.05];
+x_limits = [0,    250];
+y_limits = [0.01, 0.2];
 
 subplot(1,3,1)
 % plot(csv_matrix(:,1), csv_matrix(:,2), 'k.', 'MarkerSize', 10)
@@ -49,7 +49,7 @@ xlim(x_limits)
 ylim(y_limits)
 
 %% write to csv
-csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', sim_type, '_MAE_vs_Ntrain_', simulation_data_file, '_', algorithm, '.csv'];
+csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'MAE_vs_Ntrain_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
 csv_filename
 
 VariableTypes = {'double',  'double',   'double', 'double'};
