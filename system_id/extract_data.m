@@ -44,7 +44,7 @@ if use_sitl_data
         
     switch control_vel_axis
         case 'x'
-            if use_anglular_rate % Use payload angular rate instead of angle
+            if use_angular_rate % Use payload angular rate instead of angle
                 y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
             else
                 y_data_noise = [vel.x, angle.y]; % Data still noisy
@@ -90,7 +90,7 @@ if use_sitl_data
     pos_sp_data = timeseries(pos_sp_data, time);
     pos_data = timeseries(pos_data_smooth, time);    
     
-%     if use_anglular_rate % Use payload angular rate instead of angle
+%     if use_angular_rate % Use payload angular rate instead of angle
 %         y_data_noise = [vel.x, angle_rate.y]; % Data still noisy
 %     else
 %         y_data_noise = [vel.x, angle.y]; % Data still noisy

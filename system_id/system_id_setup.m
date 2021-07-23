@@ -2,10 +2,10 @@
 algorithm = 'havok'; % 'dmd' or 'havok'
 % algorithm = 'havok';
 
-reload_data = 1; % Re-choose csv data file for SITL data
-plot_results = 0;
-use_anglular_rate = 0;
-use_sitl_data = 1;
+reload_data = 0; % Re-choose csv data file for SITL data
+plot_results = 1;
+use_angular_rate = 1;
+use_sitl_data = 0;
 
 Ts = 0.03; % Desired sample time
 
@@ -17,7 +17,7 @@ total_timer = tic; % Start timer for this script
 
 % Search space
 T_train_min = 10; % [s] Min value of training period in grid search
-T_train_max = 120; % Max value of training period in grid search
+T_train_max = 60; % Max value of training period in grid search
 T_train_increment = 10; % Increment value of training period in grid search
 
 q_min = 5; % Min value of q in grid search

@@ -123,7 +123,8 @@ K_ui = 0.025*g/hover_init;
 K_ud = 0.01*g/hover_init;
 
 % Scale them to slow down response
-tune_scale = 0.7;
+tune_scale = 0.7; % Scale PID values
+file_name_comment = ['_tune_scale_', num2str(tune_scale), file_name_comment];
 K_up = K_up*tune_scale;
 K_ui = K_ui*tune_scale;
 K_ud = K_ud*tune_scale;
