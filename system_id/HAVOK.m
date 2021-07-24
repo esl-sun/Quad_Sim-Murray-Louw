@@ -40,6 +40,7 @@ try
         'Override --------------------------------------------------------'
         q = 23
         p = 30
+        N_train = 130
         
     end
     % % Override parameters:

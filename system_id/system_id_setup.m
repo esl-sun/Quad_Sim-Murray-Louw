@@ -1,8 +1,9 @@
 % Choose script to run param sweep
-% use_sitl_data = 0;
+use_sitl_data = 1;
 reload_data = 1; % Re-choose csv data file for SITL data
-% plot_results = 0;
-write_csv = 0; % Output results to csv for thesis
+plot_results = 0;
+write_csv = 1; % Output results to csv for thesis
+use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 
 use_angular_rate = 0;
 algorithm = 'havok'; % 'dmd' or 'havok'
@@ -16,8 +17,8 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 4; % [s] Min value of training period in grid search
-T_train_max = 4; % Max value of training period in grid search
+T_train_min = 100; % [s] Min value of training period in grid search
+T_train_max = 120; % Max value of training period in grid search
 T_train_increment = 10; % Increment value of training period in grid search
 
 q_min = 5; % Min value of q in grid search

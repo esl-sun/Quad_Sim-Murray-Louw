@@ -57,9 +57,16 @@ for start_index = start_index_list
     % Vector of Mean Absolute Error on testing data
 %     baseline_MAE = sum(abs(y_run(:,1) - y_run), 2)./run.N; % Error if model = initial condition
 %     cur_MAE = (sum(abs(y_hat - y_run), 2)./run.N)./baseline_MAE;
-    cur_MAE      = (sum(abs(     y_hat      -      y_run     ), 2) ./  run.N   ).*MAE_weight;
-    cur_MAE_diff = (sum(abs(diff(y_hat,1,2) - diff(y_run,1,2)), 2) ./ (run.N-1)).*MAE_diff_weight;
-    cur_MAE = (cur_MAE + cur_MAE_diff)./2;
+    
+    if use_MAE_diff
+        cur_MAE = (sum(abs(diff(y_hat,1,2) - diff(y_run,1,2)), 2) ./ (run.N-1)).*MAE_diff_weight;
+        % cur_MAE = (cur_MAE + cur_MAE_diff)./2;
+        % cur_MAE_diff2 = (sum(abs(diff(y_hat,2,2) - diff(y_run,2,2)), 2) ./ (run.N-2));
+        % cur_MAE = cur_MAE_diff2;
+    else
+        cur_MAE      = (sum(abs(     y_hat      -      y_run     ), 2) ./  run.N   ).*MAE_weight;
+    end
+    
     run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
     
@@ -68,10 +75,18 @@ for start_index = start_index_list
         figure;
         for i = 1:ny
             subplot(2,1,i)
-            plot(t_run, y_run(i,:), 'b');
-            hold on;
-            plot(t_run, y_hat(i,:), 'r--', 'LineWidth', 1);
-            hold off;
+            if use_MAE_diff % Use MAE metric of diff of predicition
+                plot(t_run(3:end), diff(y_run(i,:),2,2), 'b');
+                hold on;
+                plot(t_run(3:end), diff(y_hat(i,:),2,2), 'r--', 'LineWidth', 1);
+                hold off;
+            else
+                plot(t_run, y_run(i,:), 'b');
+                hold on;
+                plot(t_run, y_hat(i,:), 'r--', 'LineWidth', 1);
+                hold off;
+            end
+            
             legend('actual', 'predicted')
             title(['MAE 1: ', num2str(cur_MAE(1)), ' MAE 2: ', num2str(cur_MAE(2)), ' run index: ', num2str(run_index)]);
         end
