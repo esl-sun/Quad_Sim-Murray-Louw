@@ -17,15 +17,15 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 100; % [s] Min value of training period in grid search
-T_train_max = 120; % Max value of training period in grid search
-T_train_increment = 10; % Increment value of training period in grid search
+T_train_min = 60; % [s] Min value of training period in grid search
+T_train_max = 60; % Max value of training period in grid search
+T_train_increment = 5; % Increment value of training period in grid search
 
-q_min = 5; % Min value of q in grid search
-q_max = 30; % Max value of q in grid search
-q_increment = 2; % Increment value of q in grid search
+q_min = 2; % Min value of q in grid search
+q_max = 50; % Max value of q in grid search
+q_increment = 1; % Increment value of q in grid search
 
-p_min = 10; % Min value of p in grid search
+p_min = 1; % Min value of p in grid search
 p_max = q_max*4; % Max value of p in grid search
 p_increment = 1; % Increment value of p in grid search
 
@@ -56,6 +56,14 @@ for i = 1:ny % Mae column for each measured state
     VariableTypes = [VariableTypes, 'double'];
 end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
+
+% Simulator type
+if use_sitl_data
+    sim_type = 'SITL'; % Choose source of data: SITL or Simulink
+else
+    sim_type = 'Simulink'; % Choose source of data: SITL or Simulink
+end
+uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
 % Read previous results
 results_file = [uav_folder, '/results/', simulation_data_file, '_', algorithm, payload_angle_str, '.mat'];

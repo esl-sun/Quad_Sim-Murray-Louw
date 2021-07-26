@@ -6,6 +6,8 @@
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
 save_model = 0; % 1 = Save this model , 0 = dont save
+use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
+
 extract_data;
 
 try
