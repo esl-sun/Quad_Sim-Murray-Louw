@@ -52,6 +52,16 @@ for start_index = start_index_list
             end
 
             y_hat = Y_hat(1:ny, :); % Extract only non-delay time series
+        case 'white'
+            dtheta_run = dtheta_test(:, start_index + (1:run.N) - 1);
+    
+            % dx = A*x + B*u;
+            % x = [integral, vn, theta, dtheta]
+            x0 = [0; y_run(:,1); dtheta_run(:,1)];
+            t_span = t_run - t_run(1); % Start at zero]
+            [t,X_hat] = ode45( @(t,x) LQR.A*x + LQR.B*( u_run(:,floor(t/Ts)+1) ), t_span, x0);
+            plot(t, X_hat)
+            y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
     end
 
     % Vector of Mean Absolute Error on testing data

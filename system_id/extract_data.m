@@ -50,6 +50,8 @@ if use_sitl_data
                 y_data_noise = [vel.x, angle.y]; % Data still noisy
             end
             u_data_noise = [acc_sp.x];
+            
+            dtheta_data_noise = angle_rate.y;
             vel_sp_data = [vel_sp.x];
             pos_sp_data = [pos_sp.x];
             pos_data_noise = [pos.x]; % position data not in y
@@ -66,10 +68,17 @@ if use_sitl_data
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
     u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
+    
     pos_data_smooth = smoothdata(u_data_noise, 'loess', 20);
+    dtheta_data_smooth = smoothdata(dtheta_data_noise, 'loess', 20);
     % Dont need to smooth pos_sp
     
-    %% Plot    
+    %% Plot 
+%     figure
+%     plot(time, dtheta_data_noise)
+%     hold on
+%     plot(time, dtheta_data_smooth)
+
 %     figure(5)
 %     plot(time, y_data_smooth)
 %     hold on
@@ -84,6 +93,8 @@ if use_sitl_data
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
     u_data = timeseries(u_data_smooth, time);
+    
+    dtheta_data = timeseries(dtheta_data_smooth, time);
     vel_sp_data = timeseries(vel_sp_data, time);
     pos_sp_data = timeseries(pos_sp_data, time);
     pos_data = timeseries(pos_data_smooth, time);    
@@ -156,10 +167,12 @@ vel_sp_train = vel_sp_train.Data(:,1)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
+dtheta_test = resample(dtheta_data, test_time );
 N_test = length(t_test); % Num of data samples for testing
 
 y_test = y_test.Data';
 u_test = u_test.Data';
+dtheta_test = dtheta_test.Data';
 
 % Remove offset / Centre input around zero
 u_bar = mean(u_train, 2)
@@ -181,21 +194,21 @@ else
 end
 
 %% Plot 
-figure
-plot(t_train, y_train)
-hold on
-plot(t_train, u_train)
-hold off
-title('Training data')
-legend('vel x', 'angle E', 'acc sp x')
-
-figure
-plot(t_test, y_test)
-hold on
-plot(t_test, u_test)
-hold off
-title('Testing data')
-legend('vel x', 'angle E', 'acc sp x')
+% figure
+% plot(t_train, y_train)
+% hold on
+% plot(t_train, u_train)
+% hold off
+% title('Training data')
+% legend('vel x', 'angle E', 'acc sp x')
+% 
+% figure
+% plot(t_test, y_test)
+% hold on
+% plot(t_test, u_test)
+% hold off
+% title('Testing data')
+% legend('vel x', 'angle E', 'acc sp x')
 
 
 
