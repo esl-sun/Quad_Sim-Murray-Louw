@@ -9,9 +9,10 @@ plot_results = 0;
 use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 
 use_angular_rate = 0;
-algorithm = 'havok'; % 'dmd' or 'havok'
+algorithm = 'dmd'; % 'dmd' or 'havok'
 
 % Extract data
+Ts = 0.03; % dummy unused Ts
 extract_data;
 reload_data = 0;
 
@@ -19,9 +20,9 @@ reload_data = 0;
 total_timer = tic; % Start timer for this script
 
 % Max Min settings
-Ts_max = 0.07;
+Ts_max = 0.05;
 Ts_min = 0.005;
-Ts_increment = 0.0025;
+Ts_increment = 0.005;
 
 N_train_min = 1500; % [s] Min value of training period in grid search
 N_train_max = 4000; % Max value of training period in grid search
@@ -31,9 +32,9 @@ q_min = 6; % Min value of q in grid search
 q_max = 26; % Max value of q in grid search
 q_increment = 2; % Increment value of q in grid search
 
-p_min = 1; % Min value of p in grid search
+p_min = 2; % Min value of p in grid search
 p_max = q_max*4; % Max value of p in grid search
-p_increment = 1; % Increment value of p in grid search
+p_increment = 2; % Increment value of p in grid search
 
 % Search space
 Ts_search = Ts_min:Ts_increment:Ts_max;

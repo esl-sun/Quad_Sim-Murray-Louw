@@ -61,9 +61,7 @@ if use_sitl_data
             pos_data_noise = [pos_x, pos.y]; % position data not in y
         otherwise
             error('Only supports control_vel_axis = x or xy')
-    end
-    
-        
+    end 
     
     % Smooth data (Tune window size till data still represented well)
     y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
@@ -183,21 +181,21 @@ else
 end
 
 %% Plot 
-% figure
-% plot(t_train, y_train)
-% hold on
-% plot(t_train, u_train)
-% hold off
-% title('Training data')
-% legend('vel x', 'angle E', 'acc sp x')
-% 
-% figure
-% plot(t_test, y_test)
-% hold on
-% plot(t_test, u_test)
-% hold off
-% title('Testing data')
-% legend('vel x', 'angle E', 'acc sp x')
+figure
+plot(t_train, y_train)
+hold on
+plot(t_train, u_train)
+hold off
+title('Training data')
+legend('vel x', 'angle E', 'acc sp x')
+
+figure
+plot(t_test, y_test)
+hold on
+plot(t_test, u_test)
+hold off
+title('Testing data')
+legend('vel x', 'angle E', 'acc sp x')
 
 
 

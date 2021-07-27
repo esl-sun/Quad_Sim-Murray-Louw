@@ -1,12 +1,12 @@
 % Choose script to run param sweep
-use_sitl_data = 1;
-reload_data = 1; % Re-choose csv data file for SITL data
-plot_results = 0;
-write_csv = 1; % Output results to csv for thesis
-use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
-
-use_angular_rate = 0;
-algorithm = 'havok'; % 'dmd' or 'havok'
+% use_sitl_data = 1;
+% reload_data = 1; % Re-choose csv data file for SITL data
+% plot_results = 0;
+% write_csv = 1; % Output results to csv for thesis
+% use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
+% 
+% use_angular_rate = 0;
+% algorithm = 'havok'; % 'dmd' or 'havok'
 
 Ts = 0.03; % Desired sample time
 
@@ -17,15 +17,15 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 60; % [s] Min value of training period in grid search
-T_train_max = 60; % Max value of training period in grid search
+T_train_min = 5; % [s] Min value of training period in grid search
+T_train_max = 120; % Max value of training period in grid search
 T_train_increment = 5; % Increment value of training period in grid search
 
-q_min = 2; % Min value of q in grid search
-q_max = 50; % Max value of q in grid search
+q_min = 6; % Min value of q in grid search
+q_max = 40; % Max value of q in grid search
 q_increment = 1; % Increment value of q in grid search
 
-p_min = 1; % Min value of p in grid search
+p_min = 6; % Min value of p in grid search
 p_max = q_max*4; % Max value of p in grid search
 p_increment = 1; % Increment value of p in grid search
 

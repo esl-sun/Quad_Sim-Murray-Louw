@@ -54,25 +54,30 @@ drift_factor = 200;
 drift_tau    = 4;
 
 %% Payload model
-mp = 0.2;
+% mp = 0.2;
+% l = 0.5;
+% c = 0.000; % From Willem simulations for match prac to sim 
+% k = 0;
+
+mp = 0.025;
 l = 0.5;
 c = 0.000; % From Willem simulations for match prac to sim 
 k = 0;
 
 %% Double pendulum model
-mp1 = 0.13
-mp2 = mp - mp1 % Choose mp2 so that total payload maas same as single payload mass
-if mp2 < 0
-    error('mp2 must be positive')
-end
-
-l2 = 0.5
-l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
-
-l_eff = (l1*mp1 + (l1 + l2)*mp2)/(mp1 + mp2) % Effective single pendulum length
-m_total = mp1 + mp2
-
-c1 = 0.003;
-c2 = 0.003;
+% mp1 = 0.13
+% mp2 = mp - mp1 % Choose mp2 so that total payload maas same as single payload mass
+% if mp2 < 0
+%     error('mp2 must be positive')
+% end
+% 
+% l2 = 0.5
+% l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
+% 
+% l_eff = (l1*mp1 + (l1 + l2)*mp2)/(mp1 + mp2) % Effective single pendulum length
+% m_total = mp1 + mp2
+% 
+% c1 = 0.003;
+% c2 = 0.003;
 
 
