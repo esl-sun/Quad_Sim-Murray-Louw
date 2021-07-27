@@ -60,8 +60,19 @@ for start_index = start_index_list
             x0 = [0; y_run(:,1); dtheta_run(:,1)];
             t_span = t_run - t_run(1); % Start at zero]
             [t,X_hat] = ode45( @(t,x) LQR.A*x + LQR.B*( u_run(:,floor(t/Ts)+1) ), t_span, x0);
-            plot(t, X_hat)
             y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
+
+            % Use finer resolution in ode
+%             x0 = [0; y_run(:,1); dtheta_run(:,1)];
+%             Ts_ode = 0.001;
+%             t_span = 0:Ts_ode:(t_run(end)-t_run(1)+Ts_ode);
+%             [t,X_hat] = ode45( @(t,x) LQR.A*x + LQR.B*( u_run(:,floor(t/Ts)+1) ), t_span, x0);
+% %             plot(t, X_hat)
+%             X_hat_ts = timeseries(X_hat, t+t_run(1));
+%             X_hat_ts = resample(X_hat_ts, t_run);
+%             X_hat = X_hat_ts.Data;
+%             y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
+    
     end
 
     % Vector of Mean Absolute Error on testing data
@@ -76,7 +87,7 @@ for start_index = start_index_list
     else
         cur_MAE      = (sum(abs(     y_hat      -      y_run     ), 2) ./  run.N   ).*MAE_weight;
     end
-    
+    cur_MAE
     run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
     
