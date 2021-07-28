@@ -6,8 +6,8 @@ L = 1;
 g = -9.81;
 d = 5;
 
-s = -1; % pendulum up (s=1)
-
+s = -1; % pendulum up => s=1
+% x = [x; dx; theta; dtheta]
 A = [0 1 0 0;
     0 -d/M -m*g/M 0;
     0 0 0 1;

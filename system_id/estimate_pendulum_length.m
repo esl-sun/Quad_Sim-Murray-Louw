@@ -5,13 +5,16 @@ disp('--------------------------------')
 
 % Actual natural frequency
 wn = sqrt(g/l*(mq+mp)/mq) % rad/s
+mq
+mp
 
 % Estimate cable length with FFT
 reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 0;
 
 % Extract data
-% extract_data;
+% extract_data; % Run once uncommented. get error. then comment this and
+% run again. only need y_data to load, not train and test
 close all
 
 % Signal
@@ -19,13 +22,13 @@ signal = timeseries(y_data.Data(:,2), y_data.Time);
 signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
 plot(signal)
 
-window_start = 10;
-window_stop = window_start + 20;
-max_length = 10;
-min_length = 0.1;
+window_start = 5;
+window_stop = window_start + 10;
+max_length = 0.5;
+min_length = 0.25;
 
-start = find(abs(signal.Time - window_start) < 0.01)
-stop = find(abs(signal.Time - window_stop) < 0.01)
+start = find(abs(signal.Time - window_start) < 0.05)
+stop = find(abs(signal.Time - window_stop) < 0.05)
 start = start(1);
 stop = stop(1);
 

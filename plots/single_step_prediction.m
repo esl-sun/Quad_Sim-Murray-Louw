@@ -1,7 +1,7 @@
 
 reload_data = 0;
 write_csv = 1;
-algorithm = 'dmd'; % or 'white' for lqr white-box model
+algorithm = 'white'; % or 'white' for lqr white-box model
 Ts = 0.03;
 
 if reload_data
@@ -144,9 +144,10 @@ plot(t_run, y_hat, 'k--')
 
 %% write to csv
 if write_csv
+    t_run = t_run - t_run(1); % Start at t=0s
     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
 
-    csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'single_step_predictions_', sim_type, '_', simulation_data_file, '.csv'];
+    csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
     csv_filename
 
     VariableTypes = {'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double'};
