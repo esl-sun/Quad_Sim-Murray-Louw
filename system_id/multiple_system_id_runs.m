@@ -7,12 +7,14 @@ use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 use_angular_rate = 0;
 algorithm = 'havok'; % 'dmd' or 'havok'
 system_id_setup;
+MAE_vs_q
 
 reload_data = 0; % Re-choose csv data file for SITL data
 
-% use_angular_rate = 0;
-% algorithm = 'dmd'; % 'dmd' or 'havok'
-% system_id_setup;
+use_angular_rate = 0;
+algorithm = 'dmd'; % 'dmd' or 'havok'
+system_id_setup;
+MAE_vs_q
 
 % use_angular_rate = 1;
 % algorithm = 'havok'; % 'dmd' or 'havok'

@@ -11,22 +11,26 @@ reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 0;
 
 % Extract data
-extract_data;
+% extract_data;
 close all
 
 % Signal
 signal = timeseries(y_data.Data(:,2), y_data.Time);
+signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
+plot(signal)
 
-window_start = 6;
-window_stop = window_start + 10;
+window_start = 10;
+window_stop = window_start + 20;
 max_length = 10;
 min_length = 0.1;
 
-start = find(signal.Time == window_start);
-stop = find(signal.Time == window_stop);
+start = find(abs(signal.Time - window_start) < 0.01)
+stop = find(abs(signal.Time - window_stop) < 0.01)
+start = start(1);
+stop = stop(1);
 
 % Sampling period
-T = signal.Time(2) - signal.Time(1);
+T = signal.Time(window_start+1) - signal.Time(window_start);
 % Sampling frequency
 Fs = 1/T;
 % Frequency resolution
@@ -39,7 +43,7 @@ title('Data used by FFT')
 ylabel('payload swing angle [rad]')
 
 % FFT
-Y = fft(S, Fs/f_res);
+Y = fft(S, floor(Fs/f_res));
 L = numel(Y); % Length of signal
 P2 = abs(Y/L);
 P1 = P2(1:round(L/2)+1);
@@ -53,8 +57,8 @@ decimals = find(decimals==round(decimals),1);
 min_freq = round(sqrt(g/max_length)/(2*pi), decimals);
 max_freq = round(sqrt(g/min_length)/(2*pi), decimals);
 
-freq_start = find(f == min_freq);
-freq_stop = find(f == max_freq);
+freq_start = find(abs(f - min_freq) < 0.001);
+freq_stop = find(abs(f - max_freq) < 0.001);
 
 f = f(freq_start(1):freq_stop(1));
 P1 = P1(freq_start(1):freq_stop(1));

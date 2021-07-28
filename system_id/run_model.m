@@ -87,7 +87,7 @@ for start_index = start_index_list
     else
         cur_MAE      = (sum(abs(     y_hat      -      y_run     ), 2) ./  run.N   ).*MAE_weight;
     end
-    cur_MAE
+
     run.MAE_list(:,run_index) = cur_MAE; % For each measured state
     run_index = run_index+1;
     
