@@ -22,10 +22,10 @@ signal = timeseries(y_data.Data(:,2), y_data.Time);
 signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
 plot(signal)
 
-window_start = 5;
-window_stop = window_start + 10;
-max_length = 0.5;
-min_length = 0.25;
+window_start = 17;
+window_stop = window_start + 5;
+max_length = 2;
+min_length = 0.5;
 
 start = find(abs(signal.Time - window_start) < 0.05)
 stop = find(abs(signal.Time - window_stop) < 0.05)
@@ -106,7 +106,7 @@ else
 end
 
 % Measured oscillation frequency
-wn_measured = (pend_freq(1) * 2*pi) % rad/s
+wn_measured = pend_freq(1)% rad/s
 
 % Estimated length (m)
 l_est

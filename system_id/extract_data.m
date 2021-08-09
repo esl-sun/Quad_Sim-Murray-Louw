@@ -135,6 +135,7 @@ else
     vel_sp_data = timeseries(out.vel_sp.Data(:,1), out.vel_sp.Time);
     pos_sp_data = timeseries(out.pos_sp.Data(:,1), out.pos_sp.Time);
     pos_data = timeseries(out.pos.Data(:,1), out.pos.Time);
+    dtheta_data = out.theta_vel.Data;
 end
 
 % Get simulation_data_file name
@@ -167,12 +168,14 @@ vel_sp_train = vel_sp_train.Data(:,1)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
-dtheta_test = resample(dtheta_data, test_time );
+if use_sitl_data
+    dtheta_test = resample(dtheta_data, test_time );
+    dtheta_test = dtheta_test.Data';
+end
 N_test = length(t_test); % Num of data samples for testing
 
 y_test = y_test.Data';
 u_test = u_test.Data';
-dtheta_test = dtheta_test.Data';
 
 % Remove offset / Centre input around zero
 u_bar = mean(u_train, 2)

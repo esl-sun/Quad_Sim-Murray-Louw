@@ -1,7 +1,7 @@
 %% Honeybee Model
 
 % Mass and Inertia
-mq = 0.66;
+mq = 0.784;
 Ixx = 9.305e-4;
 Iyy = 1.326e-3;
 Izz = 1.95e-3;
@@ -59,8 +59,10 @@ drift_tau    = 4;
 % c = 0.000; % From Willem simulations for match prac to sim 
 % k = 0;
 
-mp = 0.025;
-l = 0.5;
+% Connector = 0.0165 kg
+
+mp = 0.0165 + 0.1;
+l = 1;
 c = 0.000; % From Willem simulations for match prac to sim 
 k = 0;
 

@@ -5,7 +5,7 @@ plot(f,P1)
 csv_matrix = [f', P1];
 
 %% write to csv
-csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'FFT_', sim_type, '_', simulation_data_file, '.csv'];
+csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'FFT_pos_step_', sim_type, '_', simulation_data_file, '.csv'];
 csv_filename
 
 VariableTypes = {'double',  'double'};
