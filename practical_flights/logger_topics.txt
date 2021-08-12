@@ -1,0 +1,6 @@
+adc_report
+vehicle_attitude
+vehicle_local_position
+vehicle_local_position_setpoint
+wind_estimate
+hover_thrust_estimate

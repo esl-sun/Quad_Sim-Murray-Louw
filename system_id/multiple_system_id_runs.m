@@ -5,7 +5,7 @@ write_csv = 0; % Output results to csv for thesis
 use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 
 use_angular_rate = 0;
-algorithm = 'havok'; % 'dmd' or 'havok'
+algorithm = 'dmd'; % 'dmd' or 'havok'
 system_id_setup;
 
 % % Create csv file of results;

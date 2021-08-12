@@ -74,21 +74,21 @@ if use_sitl_data
     % Dont need to smooth pos_sp
     
     %% Plot 
-%     figure
-%     plot(time, dtheta_data_noise)
-%     hold on
-%     plot(time, dtheta_data_smooth)
+    figure
+    plot(time, dtheta_data_noise)
+    hold on
+    plot(time, dtheta_data_smooth)
 
-%     figure(5)
-%     plot(time, y_data_smooth)
-%     hold on
-%     plot(time, y_data_noise)
-%     plot(time, u_data_smooth)
-%     plot(time, u_data_noise)    
-%     hold off
-%     title('Data noisy vs smooth')
-%     xlim([321.6674  328.8901])
-%     ylim([-4.4410    6.5628])
+    figure(5)
+    plot(time, y_data_smooth)
+    hold on
+    plot(time, y_data_noise)
+    plot(time, u_data_smooth)
+    plot(time, u_data_noise)    
+    hold off
+    title('Data noisy vs smooth')
+    xlim([321.6674  328.8901])
+    ylim([-4.4410    6.5628])
 %     
     %% Create timeseries
     y_data = timeseries(y_data_smooth, time);
