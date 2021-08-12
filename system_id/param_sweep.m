@@ -63,16 +63,16 @@ format short % back to default/short display
 results(~results.q,:) = []; % remove empty rows
 save(results_file, 'results', 'emptry_row')
 
-best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
+best_mean_results = results((results.MAE_1 == min(results.MAE_1)),:)
 
 %% Plot results
 
 y_limits = [2e-3, 1e0];
 
 figure
-semilogy(results.q, results.MAE_mean, '.')
+semilogy(results.q, results.MAE_1, '.')
 grid on
-ylabel('MAE of prediction');
+ylabel('MAE_1 of prediction');
 xlabel('Number of delays in model, q');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
@@ -80,9 +80,9 @@ title(['DMD, best q = ', num2str(best_mean_results.q)])
 
 figure
 subplot(1,3,1)
-semilogy(results.N_train.*Ts, results.MAE_mean, '.')
+semilogy(results.N_train.*Ts, results.MAE_1, '.')
 grid on
-ylabel('MAE_mean');
+ylabel('MAE_1');
 xlabel('T_train');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
@@ -105,25 +105,25 @@ title(['DMD, best q = ', num2str(best_mean_results.q)])
 
 %% plot p
 figure
-semilogy(results.p, results.MAE_mean, '.')
+semilogy(results.p, results.MAE_1, '.')
 grid on
-ylabel('MAE_mean');
+ylabel('MAE_1');
 xlabel('p');
 ylim(y_limits)
 title(['Checkout effect of P'])
 
 %% plot q
 figure
-semilogy(results.q, results.MAE_mean, '.')
+semilogy(results.q, results.MAE_1, '.')
 grid on
-ylabel('MAE_mean');
+ylabel('MAE_1');
 xlabel('p');
 ylim(y_limits)
 title(['Checkout effect of Q'])
 
 % %% Only for this Ts:
 % results_Ts = results((results.Ts == Ts),:);
-% best_results_Ts = results_Ts((results_Ts.MAE_mean == min(results_Ts.MAE_mean)),:)
+% best_results_Ts = results_Ts((results_Ts.MAE_1 == min(results_Ts.MAE_1)),:)
 % 
 % total_time = toc(total_timer); % Display total time taken
 % 
@@ -132,5 +132,5 @@ title(['Checkout effect of Q'])
 % figure
 % % semilogy(results_q.p, results_q.MAE_1, 'r.')
 % % hold on
-% semilogy(results_q.p, results_q.MAE_mean, 'k.')
+% semilogy(results_q.p, results_q.MAE_1, 'k.')
 % % hold off

@@ -140,11 +140,77 @@ switch sim_type
         
     case 'Prac'
         if reload_data
-            [file_name,parent_dir] = uigetfile([pwd, '/system_id/Prac/honeybee_payload/data*.csv'], '[extract_data.m] Choose Prac DATA csv file (after running extract_flight_data.m)')
+            [file_name,parent_dir] = uigetfile([pwd, '/system_id/Prac/honeybee_payload/data/*.csv'], '[extract_data.m] Choose Prac DATA csv file (after running extract_flight_data.m)')
             data_path = strcat(parent_dir, file_name);
             data = readmatrix(data_path);
         end
         
+        clear 'vel' 'vel_sp' 'acc_sp' % also used in extract_flight_data.m
+        
+        time_offset = 0; % Data is cropped in extract_flight_data.m        
+        time = data(:,1);
+        time = (time-time(1)); % Time in seconds. Start at 0
+        
+        angle.x = data(:,2); % Payload angle about x axis in local NED
+        angle.y = data(:,3);
+
+        vel.x = data(:,4); % Local NED x velocity
+        vel.y = data(:,5);
+        vel.z = data(:,6);    
+
+        vel_sp.x = data(:,7); % Local NED x velocity setpoint
+        vel_sp.y = data(:,8);
+        vel_sp.z = data(:,9);
+
+        acc_sp.x = data(:,10); % Local NED x acceleration setpoint
+        acc_sp.y = data(:,11);
+        acc_sp.z = data(:,12);
+
+        switch control_vel_axis
+            case 'x'
+                if use_angular_rate % Use payload angular rate instead of angle
+                    error('Havent set up angular rate for practical flights yet');
+                else
+%                     y_data_noise = [vel.x, angle.y]; % Data still noisy
+                    y_data_noise = [vel.x, angle.y]; % add z vel
+                end
+                u_data_noise = [acc_sp.x];
+
+                vel_sp_data = [vel_sp.x];
+            case 'xy'
+                y_data_noise = [vel.x, vel.y, angle.x, angle.y];
+                u_data_noise = [acc_sp.x, acc_sp.y];
+                vel_sp_data = [vel_sp.x, vel_sp.y];
+            otherwise
+                error('Only supports control_vel_axis = x or xy')
+        end 
+
+        %% Smooth data (Tune window size till data still represented well)
+        y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
+        u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
+
+%         %% Plot 
+%         figure
+%         plot(time, y_data_smooth)
+%         hold on
+%         plot(time, y_data_noise)
+%         plot(time, u_data_smooth)
+%         plot(time, u_data_noise)    
+%         hold off
+%         title('Data noisy vs smooth')
+  
+        %% Create timeseries
+        y_data = timeseries(y_data_smooth, time);
+        u_data = timeseries(u_data_smooth, time);
+        vel_sp_data = timeseries(vel_sp_data, time);
+        
+        figure
+        plot(y_data)
+        hold on
+        plot(vel_sp_data)
+        plot(y_data)
+        hold off   
+
 end
 
 % Get simulation_data_file name
@@ -156,11 +222,14 @@ if add_training_latency
 end
 
 % Test/Train split
-T_test = 100; % [s] Time length of training data
+T_test = 100; % [s] Time length of training data    
 test_time = time_offset + (0:Ts:T_test)';
 
 data_end_time = y_data.Time(end) - 20; % Max length of data available. clip last bit.
 train_time = (test_time(end):Ts:data_end_time)';
+if strcmp(sim_type, 'Prac')
+    train_time = (0:Ts:data_end_time)'; % Use all data for Prac
+end
 
 % Training data
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
@@ -177,7 +246,7 @@ vel_sp_train = vel_sp_train.Data(:,1)';
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );  
 t_test = y_test.Time';
-if use_sitl_data
+if strcmp(sim_type, 'SITL')
     dtheta_test = resample(dtheta_data, test_time );
     dtheta_test = dtheta_test.Data';
 end
@@ -198,12 +267,16 @@ u_test = u_test - u_bar_test;
 ny = size(y_train,1);
 nu = size(u_train,1);
 
-% Save u_bar differently for SITL and Simulink
-if use_sitl_data
-    u_bar_sitl = u_bar
-else
-    u_bar_simulink = u_bar
-end
+% Scaling term for NMAE
+MAE_weight      = 1./(max(y_train,[],2) - min(y_train,[],2)); % Weighting of error of each state when calculating mean
+MAE_diff_weight = 1./(max(diff(y_train,1,2),[],2) - min(diff(y_train,1,2),[],2)); % Weighting of error of derivative each state when calculating mean
+
+% % Save u_bar differently for SITL and Simulink
+% if strcmp(sim_type, 'SITL')
+%     u_bar_sitl = u_bar
+% else
+%     u_bar_simulink = u_bar
+% end
 
 %% Plot 
 % figure

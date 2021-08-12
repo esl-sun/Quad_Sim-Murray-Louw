@@ -6,6 +6,7 @@ start_index_list = q + (1:index_interval:run.number*index_interval); % Start ind
 
 run.MAE_list = NaN*ones(ny,run.number); % Empty array for MAE of each run
 run_index = 1; % Initialise
+
 for start_index = start_index_list
     
     % Test data for this run
@@ -95,7 +96,7 @@ for start_index = start_index_list
     if plot_predictions
         figure;
         for i = 1:ny
-            subplot(2,1,i)
+            subplot(ny,1,i)
             if use_MAE_diff % Use MAE metric of diff of predicition
                 plot(t_run(3:end), diff(y_run(i,:),2,2), 'b');
                 hold on;

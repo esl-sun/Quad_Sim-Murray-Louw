@@ -12,7 +12,7 @@ try
     results(~results.q,:) = []; % remove empty rows
     
     % Parameters
-    best_row = find(results.MAE_mean == min(results.MAE_mean));
+    best_row = find(results.MAE_1 == min(results.MAE_1));
     best_results = results(best_row,:);
     q = double(best_results.q);
     p = double(best_results.p);
@@ -27,11 +27,11 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '!!!!!Override!!!!!!!'
-        q
-        p=q*4
+        q = 40
+        p = q/2
         
     end
    
@@ -50,7 +50,16 @@ end
 DMD_part_1;
 DMD_part_2;
 
+figure(1), semilogy(diag(S1), 'x'), hold on;
+title('Singular values of Omega, showing p truncation')
+plot(p, S1(p,p), 'ro'), hold off;
+
 run_model;
+
+figure
+semilogy(diag(S1), 'x'), hold on;
+title('Singular values of Omega, showing p truncation')
+plot(p, S1(p,p), 'ro'), hold off;
 
 %% Save model
 if save_model
@@ -72,17 +81,17 @@ end
 % legend('x', 'y', 'z')
 
 %% Plot preditions
-if plot_predictions
-    for i = 1:ny
-        figure;
-        plot(t_test, y_test(i,:), 'b');
-        hold on;
-        plot(t_test, y_hat(i,:), 'r--', 'LineWidth', 1);
-        hold off;
-        legend('actual', 'predicted')
-        title(['DMD - Test y', num2str(i), ' - ', simulation_data_file]);
-    end
-end
+% if plot_predictions
+%     for i = 1:ny
+%         figure;
+%         plot(t_test, y_test(i,:), 'b');
+%         hold on;
+%         plot(t_test, y_hat(i,:), 'r--', 'LineWidth', 1);
+%         hold off;
+%         legend('actual', 'predicted')
+%         title(['DMD - Test y', num2str(i), ' - ', simulation_data_file]);
+%     end
+% end
 
 function A = stabilise(A_unstable,max_iterations)
     % If some eigenvalues are unstable due to machine tolerance,

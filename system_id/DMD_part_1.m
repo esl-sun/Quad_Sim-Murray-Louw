@@ -28,3 +28,6 @@ Omega = [Y1; Xd; Upsilon]; % Combined matrix of Y above and U below
 
 % SVD of the Hankel matrix
 [U1,S1,V1] = svd(Omega, 'econ');
+% figure(1), semilogy(diag(S1), 'x'), hold on;
+% title('Singular values of Omega, showing p truncation')
+% plot(p, S1(p,p), 'ro'), hold off;

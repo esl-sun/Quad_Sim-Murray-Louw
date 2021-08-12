@@ -17,13 +17,13 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 50; % [s] Min value of training period in grid search
-T_train_max = 60; % Max value of training period in grid search
-T_train_increment = 10; % Increment value of training period in grid search
+T_train_min = 110; % [s] Min value of training period in grid search
+T_train_max = 110; % Max value of training period in grid search
+T_train_increment = 20; % Increment value of training period in grid search
 
-q_min = 10; % Min value of q in grid search
-q_max = 30; % Max value of q in grid search
-q_increment = 1; % Increment value of q in grid search
+q_min = 20; % Min value of q in grid search
+q_max = 78; % Max value of q in grid search
+q_increment = 2; % Increment value of q in grid search
 
 p_min = 6; % Min value of p in grid search
 p_max = q_max*4; % Max value of p in grid search
@@ -37,10 +37,10 @@ q_search = q_min:q_increment:q_max; % List of q parameters to search in
 run.number = 10; % Number of runs done for test data
 run.window = 20; % [s] Prediction time window/period used per run  
 run.N = floor(run.window/Ts); % number of data samples in prediction window
-MAE_weight      = 1./sqrt(max(abs(     y_train     ),[],2)); % Weighting of error of each state when calculating mean
-MAE_diff_weight = 1./sqrt(max(abs(diff(y_train,1,2)),[],2)); % Weighting of error of derivative each state when calculating mean
+MAE_weight      = 1./(max(y_train,[],2) - min(y_train,[],2)); % Weighting of error of each state when calculating mean
+MAE_diff_weight = 1./(max(diff(y_train,1,2),[],2) - min(diff(y_train,1,2),[],2)); % Weighting of error of derivative each state when calculating mean
 plot_predictions = 0; % Always set to 0 when looping DMD_run_model.m otherwiee opens many plots
-
+diff(y_train,1,2)
 % String for saved model filename
 if use_angular_rate
     payload_angle_str = '_angular_rate';
@@ -58,11 +58,6 @@ end
 Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)];
 
 % Simulator type
-if use_sitl_data
-    sim_type = 'SITL'; % Choose source of data: SITL or Simulink
-else
-    sim_type = 'Simulink'; % Choose source of data: SITL or Simulink
-end
 uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
 % Read previous results

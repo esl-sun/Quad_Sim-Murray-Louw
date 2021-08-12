@@ -2,9 +2,10 @@
 
 disp('start')
 close all;
+clear 'vel' 'vel_sp' 'acc_sp' % also used in extract_data.m
 
 Ts = 0.03
-load_csv_again = 1;
+load_csv_again = 0;
 
 %% Functions
 quat_rot_vect = @(vect, quat) quatrotate(quatinv(quat), vect); % Rotates vector by quaternion % built in "quatrotate" rotates the coordinate frame, not the vector, therefore use inverse in function (https://www.mathworks.com/matlabcentral/answers/465053-rotation-order-of-quatrotate)
@@ -72,7 +73,7 @@ uav_quat_ts = timeseries(uav_quat, attitude_time, 'Name', 'Attitude'); % Time se
 uav_quat_ts = resample(uav_quat_ts, time, 'linear'); % Resample for matching time sequence
 uav_quat    = uav_quat_ts.Data; % Data from resampled timeseries
 
-%% Velocity
+%% Velocity        
 vel    = vehicle_local_position(:, 11:13); % position of uav [x,y,z]
 vel_ts = timeseries(vel, position_time, 'Name', 'Velocity'); % Time series
 vel_ts = resample(vel_ts, time, 'linear'); % Resample for matching time sequence
@@ -147,9 +148,7 @@ payload_vector_angles(:,1) = -atan2(payload_vector(:,2), payload_vector(:,3)); %
 payload_vector_angles(:,2) =  atan2(payload_vector(:,1), payload_vector(:,3)); % y [radians] absolute angle of payload vector from z axis, about the y axis, projected on xz plane. NOT euler angle
 
 % payload_vector_angles = [payload_vector_angle_x, payload_vector_angle_y]; % [radians] [x, y] absolute angle of payload vector. NOT euler angles
-
-% Remove offset
-payload_vector_angles = payload_vector_angles - mean(payload_vector_angles);
+payload_vector_angles = payload_vector_angles - mean(payload_vector_angles); % Remove offset
 
 %% Write data to csv files
 % Current folder should be in project folder for this to work
@@ -157,7 +156,7 @@ data_matrix = [time, rad2deg(payload_vector_angles), vel, vel_sp, acc_sp];
 data_table = array2table(data_matrix);
 
 data_table.Properties.VariableNames = {
-    't', ...
+    'time', ...
     'angle.x', 'angle.y', ...
     'vel.x', 'vel.y', 'vel.z', ...
     'vel_sp.x', 'vel_sp.y', 'vel_sp.z', ...
