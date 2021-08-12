@@ -165,7 +165,7 @@ data_table.Properties.VariableNames = {
     };
 csv_index = strfind(csv_folder,'/');
 csv_name = csv_folder( csv_index(end-1)+1 : end-1 );
-writetable(data_table, [current_dir, '/practical_flights/csv/', csv_name, '.csv']);
+writetable(data_table, [current_dir, '/system_id/Prac/honeybee_payload/data/', csv_name, '.csv']);
 
 disp('CSV file generated')
 

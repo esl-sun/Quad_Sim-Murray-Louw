@@ -30,9 +30,9 @@ enable_velocity_step = 1 % Ignore position controller, use single velocity step 
 enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
 enable_smoother = 0 % Smooth PID pos control output with exponentional moving average
 
+sim_type = 'Prac'; % The origin of the data, 'Simulink' or 'SITL' or 'Prac'
 run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
 control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-use_sitl_data = 1 % Use data from SITL, else use data saved from Simulink
 choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference for MPC
 file_name_comment = '' % Comment added to simulation_data_file name
@@ -160,11 +160,6 @@ end
 initialize_quad_models_controllers;
 
 %% System ID
-if use_sitl_data
-    sim_type = 'SITL'; % Choose source of data: SITL or Simulink
-else
-    sim_type = 'Simulink'; % Choose source of data: SITL or Simulink
-end
 uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
 if enable_smoother
