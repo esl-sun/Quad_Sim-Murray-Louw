@@ -24,11 +24,11 @@ ylabel('MAE_mean')
 xlabel('q')
 
 %% write to csv
-csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'MAE_vs_q_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
+csv_filename = ['/home/esl/Masters/Thesis/', chapter,'/csv/', 'NMAE_vs_q_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
 csv_filename
 
-VariableTypes = {'double',  'double',   'double', 'double'};
-VariableNames = {'q',       'MAE_mean', 'MAE_1',  'MAE_2'};
+VariableTypes = {'double',  'double',    'double',  'double'};
+VariableNames = {'q',       'NMAE_mean', 'NMAE_1',  'NMAE_2'};
 csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
 csv_table(:,:) = array2table(csv_matrix);
 

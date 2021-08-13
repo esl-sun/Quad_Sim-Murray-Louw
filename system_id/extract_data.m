@@ -224,7 +224,7 @@ if add_training_latency
 end
 
 % Test/Train split
-T_test = 100; % [s] Time length of training data    
+T_test = 50; % [s] Time length of training data    
 test_time = time_offset + (0:Ts:T_test)';
 
 clip_end_data = 20;
