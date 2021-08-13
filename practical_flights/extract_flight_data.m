@@ -1,11 +1,14 @@
 %% Project payload angles to absolute coordinate frame 
+% Before running this script, first open terminal in directory with log file
+% Then run: ulog2csv log_name.ulg
+% to extract each topic to its own csv file
 
 disp('start')
 close all;
 clear 'vel' 'vel_sp' 'acc_sp' % also used in extract_data.m
 
 Ts = 0.03
-load_csv_again = 0;
+load_csv_again = 1;
 
 %% Functions
 quat_rot_vect = @(vect, quat) quatrotate(quatinv(quat), vect); % Rotates vector by quaternion % built in "quatrotate" rotates the coordinate frame, not the vector, therefore use inverse in function (https://www.mathworks.com/matlabcentral/answers/465053-rotation-order-of-quatrotate)

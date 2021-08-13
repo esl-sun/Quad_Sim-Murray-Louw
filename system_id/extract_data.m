@@ -172,7 +172,7 @@ switch sim_type
                     error('Havent set up angular rate for practical flights yet');
                 else
 %                     y_data_noise = [vel.x, angle.y]; % Data still noisy
-                    y_data_noise = [vel.x, angle.y]; % add z vel
+                    y_data_noise = [vel.x, angle.y]; 
                 end
                 u_data_noise = [acc_sp.x];
 
@@ -204,14 +204,16 @@ switch sim_type
         u_data = timeseries(u_data_smooth, time);
         vel_sp_data = timeseries(vel_sp_data, time);
         
-        figure
-        plot(y_data)
-        hold on
-        plot(vel_sp_data)
-        plot(y_data)
-        hold off   
+%         figure
+%         plot(y_data)
+%         hold on
+%         plot(vel_sp_data)
+%         plot(y_data)20
+%         hold off   
 
 end
+
+T_data = length(y_data.Time)*Ts
 
 % Get simulation_data_file name
 simulation_data_file = file_name;
@@ -225,11 +227,15 @@ end
 T_test = 100; % [s] Time length of training data    
 test_time = time_offset + (0:Ts:T_test)';
 
-data_end_time = y_data.Time(end) - 20; % Max length of data available. clip last bit.
-train_time = (test_time(end):Ts:data_end_time)';
+clip_end_data = 20;
 if strcmp(sim_type, 'Prac')
-    train_time = (0:Ts:data_end_time)'; % Use all data for Prac
+    clip_end_data = 0;
 end
+data_end_time = y_data.Time(end) - clip_end_data; % Max length of data available. clip last bit.
+train_time = (test_time(end):Ts:data_end_time)';
+% if strcmp(sim_type, 'Prac')
+%     train_time = (0:Ts:y_data.Time(end))'; % Use all data for Prac
+% end
 
 % Training data
 y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  

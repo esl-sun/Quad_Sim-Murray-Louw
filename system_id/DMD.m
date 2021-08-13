@@ -27,7 +27,7 @@ try
         p = double(best_results.p);
     end
     
-    override = 1;
+    override = 0;
     if override
         '!!!!!Override!!!!!!!'
         q = 40
@@ -55,6 +55,7 @@ title('Singular values of Omega, showing p truncation')
 plot(p, S1(p,p), 'ro'), hold off;
 
 run_model;
+MAE
 
 figure
 semilogy(diag(S1), 'x'), hold on;

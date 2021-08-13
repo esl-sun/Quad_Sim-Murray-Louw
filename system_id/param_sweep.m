@@ -67,16 +67,7 @@ best_mean_results = results((results.MAE_1 == min(results.MAE_1)),:)
 
 %% Plot results
 
-y_limits = [2e-3, 1e0];
-
-figure
-semilogy(results.q, results.MAE_1, '.')
-grid on
-ylabel('MAE_1 of prediction');
-xlabel('Number of delays in model, q');
-ylim(y_limits)
-title(['DMD, best q = ', num2str(best_mean_results.q)])
-
+y_limits = [2e-2, 4e-1];
 
 figure
 subplot(1,3,1)
@@ -119,7 +110,7 @@ grid on
 ylabel('MAE_1');
 xlabel('p');
 ylim(y_limits)
-title(['Checkout effect of Q'])
+title(['Checkout effect of Q', ' - best q = ', num2str(best_mean_results.q)])
 
 % %% Only for this Ts:
 % results_Ts = results((results.Ts == Ts),:);

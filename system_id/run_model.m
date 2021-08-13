@@ -115,7 +115,7 @@ for start_index = start_index_list
     end
 end
 
-MAE = mean(run.MAE_list,2); % Take worst MAE of all test runs
+MAE = mean(run.MAE_list,2); % Mean MAE of all test runs
 
 %% Plot error vs start condition
 if plot_predictions
