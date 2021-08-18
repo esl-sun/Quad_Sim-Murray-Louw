@@ -112,12 +112,12 @@ semilogy(results.q, results.MAE_1, '.')
 grid on
 ylabel('MAE_1');
 xlabel('q');
-ylim(y_limits)
+% ylim(y_limits)
 title(['Checkout effect of Q', ' - best q = ', num2str(best_mean_results.q)])
 
 %% plot q for specific Ttrain
 figure
-Ntrain_cur = floor(120/Ts);
+Ntrain_cur = floor(50/Ts);
 results_T = results((results.N_train == Ntrain_cur),:);
 semilogy(results_T.q, results_T.MAE_1, '.')
 grid on
@@ -125,19 +125,19 @@ ylabel('MAE_1');
 xlabel('q');
 ylim(y_limits)
 title(['Q', ' - T train = ', num2str(Ntrain_cur)])
-
-%% plot p for specific q and Ttrain
-figure
-Ntrain_cur = floor(80/Ts);
-q_cur = 20;
-results_T = results((results.N_train == Ntrain_cur),:);
-results_q = results_T((results_T.q == q_cur),:);
-semilogy(results_q.p, results_q.MAE_1, '.')
-grid on
-ylabel('MAE_1');
-xlabel('q');
-ylim(y_limits)
-title(['q = ', num2str(q_cur), ' - T train = ', num2str(Ntrain_cur)])
+% 
+% %% plot p for specific q and Ttrain
+% figure
+% Ntrain_cur = floor(80/Ts);
+% q_cur = 20;
+% results_T = results((results.N_train == Ntrain_cur),:);
+% results_q = results_T((results_T.q == q_cur),:);
+% semilogy(results_q.p, results_q.MAE_1, '.')
+% grid on
+% ylabel('MAE_1');
+% xlabel('q');
+% ylim(y_limits)
+% title(['q = ', num2str(q_cur), ' - T train = ', num2str(Ntrain_cur)])
 
 % %% Only for this Ts:
 % results_Ts = results((results.Ts == Ts),:);

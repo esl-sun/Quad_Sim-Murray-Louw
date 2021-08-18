@@ -37,11 +37,15 @@ position_time = vehicle_local_position(:,1)./1e6;
 setpoint_time = vehicle_local_position_setpoint(:,1)./1e6;
 
 %% Crop data
+vel    = vehicle_local_position(:, 11:13); % position of uav [x,y,z]
 vel_sp    = vehicle_local_position_setpoint(:, 7:9); % position of uav [x,y,z]
 
 if load_csv_again
     figure
     plot(setpoint_time, vel_sp);
+    hold on
+    plot(position_time, vel(:,1))
+    hold off
     legend('vel_sp.x', 'vel_sp.y', 'vel_sp.z');
     title('Click start and finish time of usable data')
 
@@ -76,8 +80,8 @@ uav_quat_ts = timeseries(uav_quat, attitude_time, 'Name', 'Attitude'); % Time se
 uav_quat_ts = resample(uav_quat_ts, time, 'linear'); % Resample for matching time sequence
 uav_quat    = uav_quat_ts.Data; % Data from resampled timeseries
 
-%% Velocity        
-vel    = vehicle_local_position(:, 11:13); % position of uav [x,y,z]
+%% Velocity   
+% vel extracted earlier
 vel_ts = timeseries(vel, position_time, 'Name', 'Velocity'); % Time series
 vel_ts = resample(vel_ts, time, 'linear'); % Resample for matching time sequence
 vel    = vel_ts.Data; % Data from resampled timeseries
@@ -218,6 +222,7 @@ title('j_y');
 
 disp('plotted')
 
+T_data = time(end)
 
 
 

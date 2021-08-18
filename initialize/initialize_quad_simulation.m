@@ -16,6 +16,7 @@ step_size_ros = 0.004; % [s] Step size for solver of simulink ROS nodes
 pos_control_latency = 0 ;% 0.05; % Transport delay added to acc_sp to match Simulink and SITL results
 add_training_latency = 1; % Add latency to training data for system identification
 enable_noise = 0
+tune_scale = 1; % Scale PID values
 
 uav_name = 'honeybee'
 enable_aerodynamics = 0 % 1 = add effect of air
@@ -38,7 +39,8 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 1
+pre_set_options = 5
+
 switch pre_set_options
     case 1 % Vel steps training
         use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
@@ -46,7 +48,8 @@ switch pre_set_options
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
-        file_name_comment = 'longer_times'
+        tune_scale = 0.7; % Scale PID values
+        file_name_comment = ''
         
     case 2 % PID vel step
         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
@@ -55,6 +58,43 @@ switch pre_set_options
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
         file_name_comment = '_single_step';
+        
+    case 3 % SITL MPC vel step
+        disp('SITL MPC vel step')
+        disp('-----------------')
+        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+        enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+        file_name_comment = '';
+        sim_type = 'SITL'; % The origin of the data, 'Simulink' or 'SITL' or 'Prac'
+        run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
+        control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
+        choose_model = 1 % Manually choose model file for MPC
+        
+    case 4 % Double pend training vel steps 
+        sim_type = 'Simulink'
+        tune_scale = 0.7; % Scale PID values
+        use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
+        file_name_comment = ''
+        
+    case 5 % Double pend MPC step
+        sim_type = 'Simulink'
+        use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
+        enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+        enable_random_waypoints = 0 % Set to 1 to generate random waypoints. Set to 0 to use manual waypoint entries
+        enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+        file_name_comment = ''
+       
 end
 
 %% Force dependant settings
@@ -174,7 +214,7 @@ switch payload_type
     case 1
         payload_str = ['single_pend', '_mp', num2str(mp), '_l', num2str(l)];
     case 2
-        payload_str = ['double_pend', '_m1', num2str(m1), '_m2', num2str(m2), '_l1', num2str(l1), '_l2', num2str(l2)],
+        payload_str = ['double_pend', '_m1-', num2str(mp1), '_m2-', num2str(mp2), '_l1-', num2str(l1), '_l2-', num2str(l2)],
 end
 
 if enable_velocity_step || enable_vel_training_input

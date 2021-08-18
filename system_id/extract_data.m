@@ -1,8 +1,11 @@
 %% Get data in a form for HAVOK or DMD to be performed
 % close all
-
+clear 'vel' 'vel_sp' 'acc_sp' % also used in extract_flight_data.m
+        
 switch sim_type
     case 'SITL'
+        seperate_test_file = 0; % extract testing data from seperate file
+        
         % Load data from csv into matrix (csv file created with payload_angle.py)
         if reload_data
             [file_name,parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose SITL log DATA csv file (from logger.y)')
@@ -88,8 +91,8 @@ switch sim_type
         plot(time, u_data_noise)    
         hold off
         title('Data noisy vs smooth')
-        xlim([321.6674  328.8901])
-        ylim([-4.4410    6.5628])
+%         xlim([321.6674  328.8901])
+%         ylim([-4.4410    6.5628])
     %     
         %% Create timeseries
         y_data = timeseries(y_data_smooth, time);
@@ -107,6 +110,8 @@ switch sim_type
     %     end
 
     case 'Simulink'
+        seperate_test_file = 0; % extract testing data from seperate file
+        
         % Extract data from .mat file saved from Simulink run
     %     simulation_data_file = 'PID_x_payload_mp0.2_l0.5_smooth'
     %     data_file = [uav_folder, '/data/', simulation_data_file, '.mat']
@@ -139,13 +144,13 @@ switch sim_type
         dtheta_data = out.theta_vel.Data;
         
     case 'Prac'
+%         seperate_test_file = 1; % extract testing data from seperate file
+%         
         if reload_data
             [file_name,parent_dir] = uigetfile([pwd, '/system_id/Prac/honeybee_payload/data/*.csv'], '[extract_data.m] Choose Prac DATA csv file (after running extract_flight_data.m)')
             data_path = strcat(parent_dir, file_name);
             data = readmatrix(data_path);
         end
-        
-        clear 'vel' 'vel_sp' 'acc_sp' % also used in extract_flight_data.m
         
         time_offset = 0; % Data is cropped in extract_flight_data.m        
         time = data(:,1);
@@ -213,61 +218,71 @@ switch sim_type
 
 end
 
-T_data = length(y_data.Time)*Ts
+T_data = floor(length(y_data.Time)*Ts)
 
 % Get simulation_data_file name
 simulation_data_file = file_name;
+% seperate_test_file=0
+if seperate_test_file
+    extract_seperate_test_data
+else
+    % Add latency to training data
+    if add_training_latency
+        u_data.Time = u_data.Time - pos_control_latency;
+    end
 
-% Add latency to training data
-if add_training_latency
-    u_data.Time = u_data.Time - pos_control_latency;
+    % Test/Train split
+    T_test = 50; % [s] Time length of training data    
+    test_time = time_offset + (0:Ts:T_test)';
+
+    clip_end_data = 20;
+    if strcmp(sim_type, 'Prac')
+        clip_end_data = 0;
+    end
+    data_end_time = y_data.Time(end) - clip_end_data; % Max length of data available. clip last bit.
+    train_time = (test_time(end):Ts:data_end_time)';
+    
+    if strcmp(sim_type, 'Prac')
+        train_time = (0:Ts:y_data.Time(end))'; % Use all data for Prac
+    end
+
+    % Training data
+    y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
+    u_train = resample(u_data, train_time );  
+    vel_sp_train = resample(vel_sp_data, train_time );  % For us in SITL_vs_Simulink_training.m
+    t_train = y_train.Time';
+    N_train = length(t_train);
+
+    y_train = y_train.Data';
+    u_train = u_train.Data';
+    vel_sp_train = vel_sp_train.Data(:,1)';
+
+    % Testing data
+    y_test = resample(y_data, test_time );  
+    u_test = resample(u_data, test_time );  
+    t_test = y_test.Time';
+    if strcmp(sim_type, 'SITL')
+        dtheta_test = resample(dtheta_data, test_time );
+        dtheta_test = dtheta_test.Data';
+    end
+    N_test = length(t_test); % Num of data samples for testing
+
+    y_test = y_test.Data';
+    u_test = u_test.Data';
 end
 
-% Test/Train split
-T_test = 50; % [s] Time length of training data    
-test_time = time_offset + (0:Ts:T_test)';
+switch sim_type
+    case 'Simulink'
+        disp('u_bar not subtracted')
+    otherwise
+        % Remove offset / Centre input around zero
+        u_bar = mean(u_train, 2)
+        u_train = u_train - u_bar;
 
-clip_end_data = 20;
-if strcmp(sim_type, 'Prac')
-    clip_end_data = 0;
+        % Re-calculate u_bar for test data, because acc_sp offset drifts
+        u_bar_test = mean(u_test, 2)
+        u_test = u_test - u_bar_test;
 end
-data_end_time = y_data.Time(end) - clip_end_data; % Max length of data available. clip last bit.
-train_time = (test_time(end):Ts:data_end_time)';
-% if strcmp(sim_type, 'Prac')
-%     train_time = (0:Ts:y_data.Time(end))'; % Use all data for Prac
-% end
-
-% Training data
-y_train = resample(y_data, train_time );% Resample time series to desired sample time and training period  
-u_train = resample(u_data, train_time );  
-vel_sp_train = resample(vel_sp_data, train_time );  % For us in SITL_vs_Simulink_training.m
-t_train = y_train.Time';
-N_train = length(t_train);
-
-y_train = y_train.Data';
-u_train = u_train.Data';
-vel_sp_train = vel_sp_train.Data(:,1)';
-
-% Testing data
-y_test = resample(y_data, test_time );  
-u_test = resample(u_data, test_time );  
-t_test = y_test.Time';
-if strcmp(sim_type, 'SITL')
-    dtheta_test = resample(dtheta_data, test_time );
-    dtheta_test = dtheta_test.Data';
-end
-N_test = length(t_test); % Num of data samples for testing
-
-y_test = y_test.Data';
-u_test = u_test.Data';
-
-% Remove offset / Centre input around zero
-u_bar = mean(u_train, 2)
-u_train = u_train - u_bar;
-
-% Re-calculate u_bar for test data, because acc_sp offset drifts
-u_bar_test = mean(u_test, 2)
-u_test = u_test - u_bar_test;
 
 % Dimentions
 ny = size(y_train,1);

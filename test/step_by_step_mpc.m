@@ -18,7 +18,8 @@
 
 % Extract data
 % dtheta_data = out.dtheta.Data'; % payload angular velocity is an unmeasured state
-dtheta_data = out.angle_rate.Data';
+out.theta_vel = resample(out.theta_vel, out.mo.Time);
+dtheta_data = out.theta_vel.Data';
 mo_data   = out.mo.Data';
 ov_data = [dtheta_data; mo_data]; % Output Variables [UO; MO]
 mv_data   = out.mv.Data';

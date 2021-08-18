@@ -12,14 +12,16 @@
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
 % Int(Vn_sp - Vn), Vn,      theta,                  dtheta]
 
-c = 0.08; % rotatioal damping
-d = 0.00; % linear velocity damping
-l_est = 1.1
+% c = 0.08; % rotatioal damping
+c_linear = 0.00; % linear velocity damping
+% l_est = 1.1
+l_est
+
 LQR.A= [    
             0       -1          0                           0;
-            0       -d/mq       mp*g/mq                     c/(l_est*mq);
+            0       -c_linear/mq       mp*g/mq                     c/(l_est*mq);
             0       0           0                           1;
-            0       d/(mq*l_est)     -1*(mp+mq)*g/(mq*l_est)     -c*(mp+mq)/(l_est^2*mq*mp)
+            0       c_linear/(mq*l_est)     -1*(mp+mq)*g/(mq*l_est)     -c*(mp+mq)/(l_est^2*mq*mp)
         ];
 
 
@@ -36,7 +38,7 @@ LQR.B = [
 %%Q_lqr = diag([1/(15^2) 1/(15^2) 1/(12^2) 1/(12^2) 2/((180*2*pi)^2) 3/((180*2*pi)^2) 2/((180*2*pi)^2) 3/((180*2*pi)^2)]);
 %%R_lqr = diag([1/(max_total_T^2) 1/(max_total_T^2)]);
 
-LQR.Q = diag([1 1 10 10]); % State weights
+LQR.Q = diag([1 3 10 10]); % State weights
 LQR.R = 3; % Input weights
 LQR.K = lqr(LQR.A, LQR.B, LQR.Q, LQR.R)
 %K = lqrd(Ass_aug, Bss_aug, Q_lqr, R_lqr, 1/sim_freq);

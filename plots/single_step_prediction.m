@@ -1,7 +1,7 @@
-
+chapter = 'results' % or 'system_id'
 reload_data = 0;
-write_csv = 1;
-algorithm = 'white'; % or 'white' for lqr white-box model
+write_csv = 0;
+algorithm = 'dmd'; % or 'white' for lqr white-box model
 Ts = 0.03;
 
 if reload_data
@@ -45,9 +45,9 @@ u_data = timeseries(u_data_smooth, time);
 dtheta_data = timeseries(dtheta_data_smooth, time);
 
 % Testing data
-time_offset = 0;
-Ts
-test_time = time_offset:Ts:time(end);
+time_start = 52;
+time_end = time_start + 42;
+test_time = time_start:Ts:time_end;
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );
 dtheta_test = resample(dtheta_data, test_time );
@@ -56,13 +56,29 @@ N_test = length(t_test); % Num of data samples for testing
 
 y_test = y_test.Data';
 u_test = u_test.Data';
-u_bar = mean(u_test(:, floor(size(u_test,2)/2):end), 2); % Use last half to determine offset
+
+figure
+plot(t_test, y_test)
+title('Test y data')
+
+%% Get offset of input data
+figure
+plot(u_test)
+title('Test input data')
+disp('Click start then stop index to calculate u_bar:')
+% [u_bar_index,~] = ginput(2)
+% u_bar = mean(u_test(:, u_bar_index(1):u_bar_index(2)), 2); % Use user selected indexes to determine offset
+u_bar = mean(u_test,2);
 u_test = u_test - u_bar;
+
+plot(t_test, u_test)
+title('Test input data')
+
+disp('u_bar calculated.')
+
 dtheta_test = dtheta_test.Data';
 
-% plot(t_test, y_test)
-
-% Run model prediction
+%% Run model prediction
 start_index = q+1;
 
 % Test data for this run
@@ -94,6 +110,8 @@ switch algorithm
                 y_delays = [y_hat(:,k); y_delays(1:(end-ny),:)]; % Add y(k) to y_delay for next step [y(k); y(k-1); ...]
             end
         end
+        y_hat(1,:) = y_hat(1,:) - y_hat(1,1); % Start vel at 0
+
         dmd.y_hat = y_hat;
 
     case 'havok'            
@@ -111,6 +129,8 @@ switch algorithm
         end
 
         y_hat = Y_hat(1:ny, :); % Extract only non-delay time series
+        y_hat(1,:) = y_hat(1,:) - y_hat(1,1); % Start vel at 0
+
         havok.y_hat = y_hat;
         
     case 'white'
@@ -133,10 +153,16 @@ switch algorithm
 %             X_hat_ts = resample(X_hat_ts, t_run);
 %             X_hat = X_hat_ts.Data;
 %             y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
+        
+        y_hat(1,:) = y_hat(1,:) - y_hat(1,1); % Start vel at 0
+
         white.y_hat = y_hat;
 end
 
 %% Plot
+y_run(1,:) = y_run(1,:) - y_run(1,1); % Start vel at 0
+t_run = t_run - t_run(1); % Start at t=0s
+
 figure
 plot(t_run, y_run)
 hold on
@@ -144,10 +170,10 @@ plot(t_run, y_hat, 'k--')
 
 %% write to csv
 if write_csv
-    t_run = t_run - t_run(1); % Start at t=0s
+    
     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
 
-    csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
+    csv_filename = ['/home/esl/Masters/Thesis/', chapter, '/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
     csv_filename
 
     VariableTypes = {'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double'};

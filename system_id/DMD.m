@@ -27,11 +27,12 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '!!!!!Override!!!!!!!'
-        q = 40
-        p = q/2
+%         q = 50
+        p = 55
+%         N_train = round(50/Ts)
         
     end
    
@@ -65,7 +66,7 @@ plot(p, S1(p,p), 'ro'), hold off;
 %% Save model
 if save_model
     model_file = [uav_folder, '/models/dmd_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, '.mat'];
-    save(model_file, 'A_dmd', 'B_dmd', 'Ts_dmd', 'q', 'p', 'ny', 'nu', 'u_bar')
+    save(model_file, 'A_dmd', 'B_dmd', 'Ts', 'q', 'p', 'ny', 'nu', 'u_bar')
     disp('model saved')
 end
 

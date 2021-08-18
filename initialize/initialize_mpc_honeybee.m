@@ -4,6 +4,7 @@
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 
+choose_model = 1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -18,12 +19,22 @@ end
 model = 'havok'; % Choose which model to use for MPC
 switch model
     case 'dmd'
-        
+        error('Still need to add integration state of payload angle for dmd')
     case 'havok'
-%         load('Data/havoc_model_5.mat')
-        A_mpc  = A_havok;
-        B_mpc  = B_havok;
+        
+        %% Add payload angular velocity for MPC
+        A_mpc = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
+        A_mpc = [zeros( size(A_mpc,1), num_axis ), A_mpc]; % Add left column zeros
+        B_mpc = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
+
+        % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+        A_mpc(1:num_axis, 2*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+        A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+%         A_mpc(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+%         A_mpc(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+
         Ts_mpc = Ts_havok;
+
 end
 
 % Add Unmeasured Disturbance
@@ -72,8 +83,8 @@ tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust
 mo_weight = 1; % Scale all MV
 
 vel_weight = 1; % Velocity tracking weight
-theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 4; % Derivative of Payload swing angle
+theta_weight = 4; % Payload swing angle. Larger = less swing angle, Smaller = more swing
+dtheta_weight = 6; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
@@ -87,8 +98,8 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 8; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = Ty; % Control period, desired control settling time
+Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
+Tu = 4; % Control period, desired control settling time
 PH = floor(Ty/Ts_mpc); % Prediction horizon
 mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
 mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)

@@ -7,12 +7,13 @@ vel_step_D = 0;
 %% Velocity training input
 rng_seed = 0;
 num_sps = 100; % Number of setpoints to produce
-vel_max = [0.5, 0, 0];  % Maximum velocity [vx, vy, vz]
-time_max = 30; % Max time between setpoints (s)
-time_min = 10; % Min time between setpoints (s)
+vel_max = [0.6, 0, 0];  % Maximum velocity [vx, vy, vz]
+time_max = 25; % Max time between setpoints (s)
+time_min = 15; % Min time between setpoints (s)
 rng_seed = 0; % Random seed for reproducability
     
 [vel_setpoints, vel_setpoints_time] = random_vel_setpoints(num_sps, vel_max, time_min, time_max, rng_seed);
+% [vel_setpoints, vel_setpoints_time] = max_min_vel_setpoints(num_sps, vel_max, time_min, time_max, rng_seed);
 
 % Manual vel setpoints: [x, y, z] = [N, E, D]   
 % vel_setpoints = [

@@ -53,33 +53,45 @@ vel_e_bias   = [0.2, -0.1, 0.3]*0;
 drift_factor = 200;
 drift_tau    = 4;
 
-%% Payload model
-% mp = 0.2;
-% l = 0.5;
-% c = 0.000; % From Willem simulations for match prac to sim 
-% k = 0;
+switch payload_type
+    case 1 % Single pendulum
+        
+        % mp = 0.2;
+        % l = 0.5;
+        % c = 0.000; % From Willem simulations for match prac to sim 
+        % k = 0;
 
-% Connector = 0.0165 kg
+        % Connector = 0.0165 kg
 
-mp = 0.0165 + 0.1;
-l = 1;
-c = 0.000; % From Willem simulations for match prac to sim 
-k = 0;
+        mp = 0.0165 + 0.1;
+        l = 1;
+        c = 0.000; % From Willem simulations for match prac to sim 
+        k = 0;
+        
+    case 2 % Double pendulum model
+        mp1 = 0.2
+        mp2 = 0.1 % Choose mp2 so that total payload maas same as single payload mass
+        
+        
+        if mp2 < 0
+            error('mp2 must be positive')
+        end
+        
+        l1 = 1
+        l2 = 0.2
+%         l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
 
-%% Double pendulum model
-% mp1 = 0.13
-% mp2 = mp - mp1 % Choose mp2 so that total payload maas same as single payload mass
-% if mp2 < 0
-%     error('mp2 must be positive')
-% end
-% 
-% l2 = 0.5
-% l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
-% 
-% l_eff = (l1*mp1 + (l1 + l2)*mp2)/(mp1 + mp2) % Effective single pendulum length
-% m_total = mp1 + mp2
-% 
-% c1 = 0.003;
-% c2 = 0.003;
+        l_eff = (l1*mp1 + (l1 + l2)*mp2)/(mp1 + mp2) % Effective single pendulum length
+        
+        l = l_eff; % for other dependancies
+        m_total = mp1 + mp2;
+        mp = mp1 + mp2; % for hover_init calculation
+
+        c1 = 0.00;
+        c2 = 0.00;
+        
+        ddtheta1_0 = -0.1;
+        ddtheta2_0 = 0.1;
+end
 
 

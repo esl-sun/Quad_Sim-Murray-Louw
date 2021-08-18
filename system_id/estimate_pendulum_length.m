@@ -9,7 +9,7 @@ mq
 mp
 
 % Estimate cable length with FFT
-reload_data = 1; % Re-choose csv data file for SITL data
+reload_data = 0; % Re-choose csv data file for SITL data
 plot_results = 0;
 
 % Extract data
@@ -18,12 +18,13 @@ plot_results = 0;
 close all
 
 % Signal
-signal = timeseries(y_data.Data(:,2), y_data.Time);
-signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
+% signal = timeseries(y_data.Data(:,2), y_data.Time);
+% signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
+signal = out.theta;
 plot(signal)
 
-window_start = 17;
-window_stop = window_start + 5;
+window_start = 10;
+window_stop = window_start + 10;
 max_length = 2;
 min_length = 0.5;
 
