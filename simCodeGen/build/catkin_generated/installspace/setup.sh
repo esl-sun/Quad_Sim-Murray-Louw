@@ -11,7 +11,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install}
+: ${_CATKIN_SETUP_DIR:=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 

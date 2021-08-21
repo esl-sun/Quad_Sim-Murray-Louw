@@ -24,7 +24,7 @@ ylabel('MAE_mean')
 xlabel('q')
 
 %% write to csv
-csv_filename = ['/home/esl/Masters/Thesis/', chapter,'/csv/', 'NMAE_vs_q_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
+csv_filename = ['/home/murray/Masters/Thesis/', chapter,'/csv/', 'NMAE_vs_q_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
 csv_filename
 
 VariableTypes = {'double',  'double',    'double',  'double'};

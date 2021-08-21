@@ -14,10 +14,10 @@ use_angular_rate = 0;
 algorithm = 'dmd'; % 'dmd' or 'havok'
 system_id_setup;
 
-% % Create csv file of results;
-% if write_csv
-%     MAE_vs_q;
-% end
+%Create csv file of results;
+if write_csv
+    MAE_vs_Ntrain;
+end
 % 
 % reload_data = 0; % Re-choose csv data file for SITL data
 % 

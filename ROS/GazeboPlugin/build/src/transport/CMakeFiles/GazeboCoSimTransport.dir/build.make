@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/esl/cmake-install/bin/cmake
+CMAKE_COMMAND = /home/murray/cmake-install/bin/cmake
 
 # The command to remove a file.
-RM = /home/esl/cmake-install/bin/cmake -E rm -f
+RM = /home/murray/cmake-install/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin
+CMAKE_SOURCE_DIR = /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build
+CMAKE_BINARY_DIR = /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build
 
 # Include any dependencies generated for this target.
 include src/transport/CMakeFiles/GazeboCoSimTransport.dir/depend.make
@@ -72,72 +72,72 @@ include src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o: ../src/transport/Client.cpp
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.o -c /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.i"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp > CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.i
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp > CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.i
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.s"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.s
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Client.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Client.cpp.s
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o: ../src/transport/Connection.cpp
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.o -c /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.i"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp > CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.i
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp > CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.i
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.s"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.s
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Connection.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Connection.cpp.s
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o: ../src/transport/ConnectionManager.cpp
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.o -c /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.i"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp > CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.i
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp > CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.i
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.s"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp -o CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.s
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/ConnectionManager.cpp -o CMakeFiles/GazeboCoSimTransport.dir/ConnectionManager.cpp.s
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o: ../src/transport/Server.cpp
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.o -c /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.i"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp > CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.i
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp > CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.i
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.s"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.s
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/Server.cpp -o CMakeFiles/GazeboCoSimTransport.dir/Server.cpp.s
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/flags.make
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o: ../src/transport/readWithTimeout.cpp
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o: src/transport/CMakeFiles/GazeboCoSimTransport.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o -c /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o -MF CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o.d -o CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.o -c /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.i"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp > CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.i
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp > CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.i
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.s"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp -o CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.s
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport/readWithTimeout.cpp -o CMakeFiles/GazeboCoSimTransport.dir/readWithTimeout.cpp.s
 
 # Object files for target GazeboCoSimTransport
 GazeboCoSimTransport_OBJECTS = \
@@ -268,18 +268,18 @@ GazeboCoSimTransport_EXTERNAL_OBJECTS =
 ../export/lib/libGazeboCoSimTransport.so: /usr/lib/x86_64-linux-gnu/libavutil.so
 ../export/lib/libGazeboCoSimTransport.so: /usr/lib/x86_64-linux-gnu/libavutil.so
 ../export/lib/libGazeboCoSimTransport.so: src/transport/CMakeFiles/GazeboCoSimTransport.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX shared library ../../../export/lib/libGazeboCoSimTransport.so"
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GazeboCoSimTransport.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX shared library ../../../export/lib/libGazeboCoSimTransport.so"
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GazeboCoSimTransport.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/build: ../export/lib/libGazeboCoSimTransport.so
 .PHONY : src/transport/CMakeFiles/GazeboCoSimTransport.dir/build
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/clean:
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && $(CMAKE_COMMAND) -P CMakeFiles/GazeboCoSimTransport.dir/cmake_clean.cmake
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport && $(CMAKE_COMMAND) -P CMakeFiles/GazeboCoSimTransport.dir/cmake_clean.cmake
 .PHONY : src/transport/CMakeFiles/GazeboCoSimTransport.dir/clean
 
 src/transport/CMakeFiles/GazeboCoSimTransport.dir/depend:
-	cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport/CMakeFiles/GazeboCoSimTransport.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport/CMakeFiles/GazeboCoSimTransport.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : src/transport/CMakeFiles/GazeboCoSimTransport.dir/depend
 

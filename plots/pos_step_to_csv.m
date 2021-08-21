@@ -17,7 +17,7 @@ if write_csv
     
     csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
     
-    csv_filename = ['/home/esl/Masters/Thesis/system_id/csv/', 'pos_step_', sim_type, '_', file_name, '.csv'];
+    csv_filename = ['/home/murray/Masters/Thesis/system_id/csv/', 'pos_step_', sim_type, '_', file_name, '.csv'];
     csv_filename
 
     VariableTypes = {'double', 'double'};

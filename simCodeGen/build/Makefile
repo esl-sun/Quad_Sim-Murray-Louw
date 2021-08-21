@@ -48,19 +48,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/esl/cmake-install/bin/cmake
+CMAKE_COMMAND = /home/murray/cmake-install/bin/cmake
 
 # The command to remove a file.
-RM = /home/esl/cmake-install/bin/cmake -E rm -f
+RM = /home/murray/cmake-install/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src
+CMAKE_SOURCE_DIR = /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
+CMAKE_BINARY_DIR = /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -68,25 +68,25 @@ CMAKE_BINARY_DIR = /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/home/esl/cmake-install/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
 install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/home/esl/cmake-install/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/home/esl/cmake-install/bin/cmake -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/home/esl/cmake-install/bin/cmake -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target list_install_components
@@ -101,7 +101,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/esl/cmake-install/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/murray/cmake-install/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -111,7 +111,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/home/esl/cmake-install/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/murray/cmake-install/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -121,19 +121,19 @@ edit_cache/fast: edit_cache
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/home/esl/cmake-install/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
 install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/home/esl/cmake-install/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/home/murray/cmake-install/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/home/esl/cmake-install/bin/ctest --force-new-ctest-process $(ARGS)
+	/home/murray/cmake-install/bin/ctest --force-new-ctest-process $(ARGS)
 .PHONY : test
 
 # Special rule for the target test
@@ -142,9 +142,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

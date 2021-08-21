@@ -14,6 +14,10 @@ for N_train = N_train_search
     t_train = t_train(:, 1:N_train);
     
     for q = q_search
+            if (N_train*Ts) < 5 && q > 75 % Does not work with larger q for this low data
+                break
+            end
+            
             q_is_new = 1; % 1 = first time using this q this session
             q
             tic;

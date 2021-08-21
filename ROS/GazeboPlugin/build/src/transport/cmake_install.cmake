@@ -1,4 +1,4 @@
-# Install script for directory: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport
+# Install script for directory: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/src/transport
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

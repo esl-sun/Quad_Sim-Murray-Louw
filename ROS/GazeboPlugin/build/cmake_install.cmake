@@ -1,4 +1,4 @@
-# Install script for directory: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin
+# Install script for directory: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,11 +44,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/msgsproto/cmake_install.cmake")
-  include("/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport/cmake_install.cmake")
-  include("/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazeboserver/cmake_install.cmake")
-  include("/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazebocustom/cmake_install.cmake")
-  include("/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazeboplugin/cmake_install.cmake")
+  include("/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/msgsproto/cmake_install.cmake")
+  include("/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/transport/cmake_install.cmake")
+  include("/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazeboserver/cmake_install.cmake")
+  include("/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazebocustom/cmake_install.cmake")
+  include("/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/src/gazeboplugin/cmake_install.cmake")
 
 endif()
 
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

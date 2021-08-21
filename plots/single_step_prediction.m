@@ -5,7 +5,7 @@ algorithm = 'dmd'; % or 'white' for lqr white-box model
 Ts = 0.03;
 
 if reload_data
-    [single.file_name, single.parent_dir] = uigetfile('/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
+    [single.file_name, single.parent_dir] = uigetfile('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
     single.data_path = strcat(single.parent_dir, single.file_name);
     single.data = readmatrix(single.data_path);
 end
@@ -173,7 +173,7 @@ if write_csv
     
     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
 
-    csv_filename = ['/home/esl/Masters/Thesis/', chapter, '/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
+    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
     csv_filename
 
     VariableTypes = {'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double'};

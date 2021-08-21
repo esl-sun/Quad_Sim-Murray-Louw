@@ -1,4 +1,4 @@
-# Install script for directory: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/msgsproto
+# Install script for directory: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/msgsproto
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,25 +43,25 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
+  if(EXISTS "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
     file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so"
+         FILE "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so"
          RPATH "")
   endif()
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
+   "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib" TYPE SHARED_LIBRARY FILES "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
-  if(EXISTS "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
+file(INSTALL DESTINATION "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib" TYPE SHARED_LIBRARY FILES "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
+  if(EXISTS "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/ROS/GazeboPlugin/export/lib/libmsgproto.so")
     endif()
   endif()
 endif()

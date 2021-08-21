@@ -19,16 +19,16 @@ CMake Deprecation Warning at CMakeLists.txt:4 (cmake_minimum_required):
   CMake that the project does not need compatibility with older versions.
 
 
--- Using CATKIN_DEVEL_PREFIX: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
+-- Using CATKIN_DEVEL_PREFIX: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
 -- Using CMAKE_PREFIX_PATH: /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2021a/toolbox/ros/mlroscpp/custom_messages
 -- This workspace overlays: /usr/local/MATLAB/R2021a/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2021a/toolbox/ros/mlroscpp/custom_messages
--- Found PythonInterp: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
--- Using PYTHON_EXECUTABLE: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2
+-- Found PythonInterp: /home/murray/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /home/murray/.matlab/R2021a/ros1/glnxa64/venv/bin/python2
 -- Using Debian Python package layout
 -- Using empy: /usr/bin/empy
 -- Using CATKIN_ENABLE_TESTING: ON
 -- Call enable_testing()
--- Using CATKIN_TEST_RESULTS_DIR: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/test_results
+-- Using CATKIN_TEST_RESULTS_DIR: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/test_results
 -- Found gmock sources under '/usr/src/googletest': gmock will be built
 CMake Deprecation Warning at /usr/src/googletest/CMakeLists.txt:1 (cmake_minimum_required):
   Compatibility with CMake < 2.8.12 will be removed from a future version of
@@ -54,7 +54,7 @@ CMake Deprecation Warning at /usr/src/googletest/googletest/CMakeLists.txt:48 (c
   CMake that the project does not need compatibility with older versions.
 
 
--- Found PythonInterp: /home/esl/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found version "2.7.17") 
+-- Found PythonInterp: /home/murray/.matlab/R2021a/ros1/glnxa64/venv/bin/python2 (found version "2.7.17") 
 -- Found gtest sources under '/usr/src/googletest': gtests will be built
 -- Using Python nosetests: /usr/bin/nosetests-2.7
 -- catkin 0.7.17
@@ -68,27 +68,27 @@ CMake Deprecation Warning at /usr/src/googletest/googletest/CMakeLists.txt:48 (c
 -- ==> add_subdirectory(robotrosgetstartedexample_edit)
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
-cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/esl/cmake-install/bin/cmake -S/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src -B/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build --check-build-system CMakeFiles/Makefile.cmake 0
-cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/esl/cmake-install/bin/cmake -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit//CMakeFiles/progress.marks
-cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/all
-make[1]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+-- Build files have been written to: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
+cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/murray/cmake-install/bin/cmake -S/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src -B/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build --check-build-system CMakeFiles/Makefile.cmake 0
+cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && /home/murray/cmake-install/bin/cmake -E cmake_progress_start /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit//CMakeFiles/progress.marks
+cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/all
+make[1]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target std_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_lisp
 [  0%] Built target geometry_msgs_generate_messages_eus
@@ -96,66 +96,66 @@ make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/s
 [  0%] Built target roscpp_generate_messages_eus
 [  0%] Built target geometry_msgs_generate_messages_nodejs
 [  0%] Built target geometry_msgs_generate_messages_py
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target roscpp_generate_messages_lisp
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target rosgraph_msgs_generate_messages_cpp
 [  0%] Built target rosgraph_msgs_generate_messages_lisp
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target geometry_msgs_generate_messages_cpp
 [  0%] Built target std_msgs_generate_messages_lisp
 [  0%] Built target rosgraph_msgs_generate_messages_eus
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target std_msgs_generate_messages_cpp
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target roscpp_generate_messages_cpp
 [  0%] Built target rosgraph_msgs_generate_messages_nodejs
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [  0%] Built target std_msgs_generate_messages_eus
 [  0%] Built target roscpp_generate_messages_nodejs
 [  0%] Built target rosgraph_msgs_generate_messages_py
 [  0%] Built target std_msgs_generate_messages_nodejs
-make[2]: Entering directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Entering directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 Consolidate compiler generated dependencies of target robotROSGetStartedExample_edit
-make[2]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+make[2]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
 [100%] Built target robotROSGetStartedExample_edit
-make[1]: Leaving directory '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
-/home/esl/cmake-install/bin/cmake -E cmake_progress_start /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles 0
-cd /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/preinstall
+make[1]: Leaving directory '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build'
+/home/murray/cmake-install/bin/cmake -E cmake_progress_start /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/CMakeFiles 0
+cd /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build && make  -f CMakeFiles/Makefile2 robotrosgetstartedexample_edit/preinstall
 Install the project...
-/home/esl/cmake-install/bin/cmake -P cmake_install.cmake
+/home/murray/cmake-install/bin/cmake -P cmake_install.cmake
 -- Install configuration: ""
--- Installing: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/pkgconfig/robotrosgetstartedexample_edit.pc
--- Up-to-date: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig.cmake
--- Up-to-date: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig-version.cmake
--- Installing: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/package.xml
--- Up-to-date: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit
-Base path: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen
-Source space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src
-Build space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
-Devel space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
-Install space: /home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install
+-- Installing: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/pkgconfig/robotrosgetstartedexample_edit.pc
+-- Up-to-date: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig.cmake
+-- Up-to-date: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/cmake/robotrosgetstartedexample_editConfig-version.cmake
+-- Installing: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/share/robotrosgetstartedexample_edit/package.xml
+-- Up-to-date: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install/lib/robotrosgetstartedexample_edit/robotROSGetStartedExample_edit
+Base path: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen
+Source space: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/src
+Build space: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build
+Devel space: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/devel
+Install space: /home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install
 ####
-#### Running command: "make cmake_check_build_system" in "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build"
+#### Running command: "make cmake_check_build_system" in "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build"
 ####
 ####
-#### Running command: "make install -j8 -l8" in "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit"
+#### Running command: "make install -j8 -l8" in "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/build/robotrosgetstartedexample_edit"
 ####

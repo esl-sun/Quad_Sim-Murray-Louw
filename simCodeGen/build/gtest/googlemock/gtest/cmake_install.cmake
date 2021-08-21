@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install")
+  set(CMAKE_INSTALL_PREFIX "/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

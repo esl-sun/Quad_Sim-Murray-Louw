@@ -26,7 +26,7 @@ hyper_str = ['_q', num2str(q), '_p', num2str(p)];
 T_train = round(N_train*Ts);
 T_train_str = ['_Ttrain_', num2str(T_train)];
 
-csv_filename = ['/home/esl/Masters/Thesis/', chapter, '/csv/', 'Singular_values_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, T_train_str, hyper_str '.csv'];
+csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'Singular_values_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, T_train_str, hyper_str '.csv'];
 csv_filename
 
 VariableTypes = {'double',  'double'};
@@ -37,7 +37,7 @@ csv_table(:,:) = array2table(csv_matrix);
 writetable(csv_table,csv_filename)
 
 %% Truncated
-csv_filename_trunc = ['/home/esl/Masters/Thesis/', chapter, '/csv/', 'Singular_values_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, T_train_str, hyper_str, '_trunc', '.csv'];
+csv_filename_trunc = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'Singular_values_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, T_train_str, hyper_str, '_trunc', '.csv'];
 
 VariableTypes = {'double',  'double'};
 VariableNames = {'index',   'S'};

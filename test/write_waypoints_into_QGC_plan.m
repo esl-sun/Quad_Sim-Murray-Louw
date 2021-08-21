@@ -4,7 +4,7 @@
 % - waypoints
 % - waypoints_time
 
-mission_folder = '/home/esl/Masters/QGroundControl/Missions/'
+mission_folder = '/home/murray/Masters/QGroundControl/Missions/'
 misson_file = 'x_steps_random.plan'
 file_ID = fopen([mission_folder, misson_file],'w'); % open file for writing
 
