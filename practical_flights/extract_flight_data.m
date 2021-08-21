@@ -222,7 +222,7 @@ title('j_y');
 
 disp('plotted')
 
-T_data = time(end)
+T_data = time(end) - time(1)
 
 
 
