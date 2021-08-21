@@ -1,4 +1,4 @@
-sim_type = 'Simulink'
+sim_type = 'Prac'
 reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 1;
 write_csv = 1; % Output results to csv for thesis
@@ -8,10 +8,10 @@ add_training_latency = 0;
 seperate_test_file = 0; % extract testing data from seperate file
         
 % chapter = 'system_id';
-% chapter = 'results'; % folder to save csv files in
+chapter = 'results'; % folder to save csv files in
 
 use_angular_rate = 0;
-algorithm = 'havok'; % 'dmd' or 'havok'
+algorithm = 'dmd'; % 'dmd' or 'havok'
 system_id_setup;
 
 % % Create csv file of results;

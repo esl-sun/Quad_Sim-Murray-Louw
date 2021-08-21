@@ -39,7 +39,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 5
+pre_set_options = 0
 
 switch pre_set_options
     case 1 % Vel steps training
@@ -152,7 +152,7 @@ step_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 0'); % Variant s
 % Change location of generated files
 myCacheFolder = '.matlab_cache/simCache';
 % myCodeFolder = '.matlab_cache/simCodeGen';
-myCodeFolder = '/home/esl/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen';
+myCodeFolder = '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen';
 Simulink.fileGenControl('set', 'CacheFolder', myCacheFolder, 'CodeGenFolder', myCodeFolder, 'createDir', true);
 
 % Generate QUAD_MODEL s-function

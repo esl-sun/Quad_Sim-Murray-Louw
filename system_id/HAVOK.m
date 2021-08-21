@@ -5,7 +5,7 @@
 
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
-save_model = 1; % 1 = Save this model , 0 = dont save
+save_model = 0; % 1 = Save this model , 0 = dont save
 use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 
 extract_data;
@@ -15,7 +15,7 @@ try
     results(~results.q,:) = []; % remove empty rows
     
     % Parameters
-    best_row = find(results.MAE_2 == min(results.MAE_2));
+    best_row = find(results.MAE_1 == min(results.MAE_1));
     best_results = results(best_row,:)
     q = double(best_results.q);
     p = double(best_results.p);
