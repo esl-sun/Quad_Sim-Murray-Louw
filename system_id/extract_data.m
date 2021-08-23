@@ -280,7 +280,8 @@ switch sim_type
         u_train = u_train - u_bar;
 
         % Re-calculate u_bar for test data, because acc_sp offset drifts
-        u_bar_test = mean(u_test, 2)
+%         u_bar_test = mean(u_test, 2)
+        u_bar_test = u_bar
         u_test = u_test - u_bar_test;
 end
 

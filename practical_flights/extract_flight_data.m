@@ -1,4 +1,4 @@
-%% Project payload angles to absolute coordinate frame 
+%% Extract data from logged topics of practical flight data and save in format for system identification
 % Before running this script, first open terminal in directory with log file
 % Then run: ulog2csv log_name.ulg
 % to extract each topic to its own csv file

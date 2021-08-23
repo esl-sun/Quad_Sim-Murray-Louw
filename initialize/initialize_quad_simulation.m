@@ -39,7 +39,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 0
+pre_set_options = 5
 
 switch pre_set_options
     case 1 % Vel steps training
@@ -87,7 +87,7 @@ switch pre_set_options
         sim_type = 'Simulink'
         use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
         payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
-        control_option = 2 % 0 = only PID, 1 = MPC, 2 = LQR
+        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         new_control_start_time = 1; % Time at which non-PID acc_sp starts to be used
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
@@ -197,7 +197,7 @@ end
 %% Quad Models and Controllers
 % execute .m file to initialize all linear models of quad dynamics for
 % different controllers
-initialize_quad_models_controllers;
+% initialize_quad_models_controllers;
 
 %% System ID
 uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav

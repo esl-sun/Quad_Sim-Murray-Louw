@@ -78,7 +78,7 @@ switch payload_type
         end
         
         l1 = 1
-        l2 = 0.2
+        l2 = 0.6
 %         l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
 
         l_eff = (l1*mp1 + (l1 + l2)*mp2)/(mp1 + mp2) % Effective single pendulum length
