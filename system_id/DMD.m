@@ -7,6 +7,24 @@ save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
 plot_predictions = 1;
 
+plot_index = 201; % start index to save to csv
+
+custom_test_data = 1 % Choose custom range of test data
+if custom_test_data
+    test_time = 27:Ts:65;
+    y_test = resample(y_data, test_time );  
+    u_test = resample(u_data, test_time );  
+    t_test = y_test.Time';
+    if strcmp(sim_type, 'SITL')
+        dtheta_test = resample(dtheta_data, test_time );
+        dtheta_test = dtheta_test.Data';
+    end
+    N_test = length(t_test); % Num of data samples for testing
+
+    y_test = y_test.Data';
+    u_test = u_test.Data';
+end
+
 try
     load(results_file);
     results(~results.q,:) = []; % remove empty rows

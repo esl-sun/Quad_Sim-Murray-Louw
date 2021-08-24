@@ -162,7 +162,7 @@ switch algorithm
 end
 
 %% Plot
-y_run(1,:) = y_run(1,:) - y_run(1,1); % Start vel at 0
+% y_run(1,:) = y_run(1,:) - y_run(1,1); % Start vel at 0
 t_run = t_run - t_run(1); % Start at t=0s
 
 figure
@@ -173,13 +173,14 @@ plot(t_run, y_hat, 'k--')
 %% write to csv
 if write_csv
     
-    csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
+%     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
+    csv_matrix = [t_run; u_run; y_run; y_hat]';
 
-    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'single_step_predictions_', sim_type, '_', single.file_name, '.csv'];
+    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '.csv'];
     csv_filename
 
-    VariableTypes = {'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double'};
-    VariableNames = {'time', 'acc_sp', 'vel', 'theta', 'vel_havok', 'theta_havok', 'vel_dmd', 'theta_dmd', 'vel_white', 'theta_white'};
+    VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
+    VariableNames = {'time',    'acc_sp',   'vel',      'theta',    'vel_hat',  'theta_hat'};
     csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
     csv_table(:,:) = array2table(csv_matrix);
 

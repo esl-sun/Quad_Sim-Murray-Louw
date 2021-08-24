@@ -110,7 +110,11 @@ for start_index = start_index_list
             end
             
             legend('actual', 'predicted')
-            title(['MAE 1: ', num2str(cur_MAE(1)), ' MAE 2: ', num2str(cur_MAE(2)), ' run index: ', num2str(run_index)]);
+            title(['start_index=', num2str(start_index), 'MAE 1: ', num2str(cur_MAE(1)), ' MAE 2: ', num2str(cur_MAE(2)), ' run index: ', num2str(run_index)]);
+            
+            if start_index == plot_index 
+                plot_prediction_from_run_model % save to csv for plotting for specific prediction from start index.
+            end
         end
     end
 end
