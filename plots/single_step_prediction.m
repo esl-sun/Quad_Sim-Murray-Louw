@@ -1,32 +1,34 @@
 chapter = 'results' % or 'system_id'
-reload_data = 0;
+reload_data = 1;
 write_csv = 0;
 algorithm = 'dmd'; % or 'white' for lqr white-box model
 Ts = 0.03;
 
-if reload_data
-    [single.file_name, single.parent_dir] = uigetfile('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
-    single.data_path = strcat(single.parent_dir, single.file_name);
-    single.data = readmatrix(single.data_path);
-end
+extract_data;
 
-time = single.data(:,1);
-time = (time-time(1)); % Time in seconds
-
-vel.x = single.data(:,5); % Local NED x velocity
-vel_sp.x = single.data(:,11); % Local NED x velocity setpoint
-acc_sp.x = single.data(:,14); % Local NED x acceleration setpoint
-angle.y = single.data(:,18);
-angle_rate.y = single.data(:,21);
-
-y_data_noise = [vel.x, angle.y]; % Data still noisy
-u_data_noise = [acc_sp.x];
-dtheta_data_noise = angle_rate.y;
-
-% Smooth data (Tune window size till data still represented well)
-y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
-u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
-dtheta_data_smooth = smoothdata(dtheta_data_noise, 'loess', 20);
+% if reload_data
+%     [single.file_name, single.parent_dir] = uigetfile(['/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/', sim_type, '/*.csv'], 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
+%     single.data_path = strcat(single.parent_dir, single.file_name);
+%     single.data = readmatrix(single.data_path);
+% end
+% 
+% time = single.data(:,1);
+% time = (time-time(1)); % Time in seconds
+% 
+% vel.x = single.data(:,5); % Local NED x velocity
+% vel_sp.x = single.data(:,11); % Local NED x velocity setpoint
+% acc_sp.x = single.data(:,14); % Local NED x acceleration setpoint
+% angle.y = single.data(:,18);
+% angle_rate.y = single.data(:,21);
+% 
+% y_data_noise = [vel.x, angle.y]; % Data still noisy
+% u_data_noise = [acc_sp.x];
+% dtheta_data_noise = angle_rate.y;
+% 
+% % Smooth data (Tune window size till data still represented well)
+% y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
+% u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
+% dtheta_data_smooth = smoothdata(dtheta_data_noise, 'loess', 20);
 
 %% Plot smooth
 % figure
@@ -42,7 +44,7 @@ dtheta_data_smooth = smoothdata(dtheta_data_noise, 'loess', 20);
 % Create timeseries 
 y_data = timeseries(y_data_smooth, time);
 u_data = timeseries(u_data_smooth, time);
-dtheta_data = timeseries(dtheta_data_smooth, time);
+% dtheta_data = timeseries(dtheta_data_smooth, time);
 
 % Testing data
 time_start = 52;
@@ -50,7 +52,7 @@ time_end = time_start + 42;
 test_time = time_start:Ts:time_end;
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );
-dtheta_test = resample(dtheta_data, test_time );
+% dtheta_test = resample(dtheta_data, test_time );
 t_test = y_test.Time';
 N_test = length(t_test); % Num of data samples for testing
 
@@ -62,21 +64,21 @@ plot(t_test, y_test)
 title('Test y data')
 
 %% Get offset of input data
-figure
-plot(u_test)
-title('Test input data')
-disp('Click start then stop index to calculate u_bar:')
-% [u_bar_index,~] = ginput(2)
-% u_bar = mean(u_test(:, u_bar_index(1):u_bar_index(2)), 2); % Use user selected indexes to determine offset
-u_bar = mean(u_test,2);
-u_test = u_test - u_bar;
+% figure
+% plot(u_test)
+% title('Test input data')
+% disp('Click start then stop index to calculate u_bar:')
+% % [u_bar_index,~] = ginput(2)
+% % u_bar = mean(u_test(:, u_bar_index(1):u_bar_index(2)), 2); % Use user selected indexes to determine offset
+% u_bar = mean(u_test,2);
+% u_test = u_test - u_bar;
+% 
+% plot(t_test, u_test)
+% title('Test input data')
+% 
+% disp('u_bar calculated.')
 
-plot(t_test, u_test)
-title('Test input data')
-
-disp('u_bar calculated.')
-
-dtheta_test = dtheta_test.Data';
+% dtheta_test = dtheta_test.Data';
 
 %% Run model prediction
 start_index = q+1;
