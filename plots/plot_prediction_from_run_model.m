@@ -13,8 +13,15 @@ csv_matrix = [t_run; u_run; y_run; y_hat]';
 csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(plot_index), '.csv'];
 csv_filename
 
-VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
-VariableNames = {'time',    'acc_sp',   'vel',      'theta',    'vel_hat',  'theta_hat'};
+switch control_vel_axis
+    case 'x'
+        VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
+        VariableNames = {'time',    'acc_sp',   'vel',      'theta',    'vel_hat',  'theta_hat'};
+    case 'xy'
+        VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double',   'double',   'double',       'double',       'double',       'double'};
+        VariableNames = {'time',    'acc_x_sp', 'acc_y_sp', 'vel_x',    'vel_y',    'theta_x',  'theta_y',  'vel_x_hat',    'vel_y_hat',    'theta_x_hat',  'theta_y_hat'};
+end
+
 csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
 csv_table(:,:) = array2table(csv_matrix);
 

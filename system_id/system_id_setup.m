@@ -17,13 +17,13 @@ extract_data;
 total_timer = tic; % Start timer for this script
 
 % Search space
-T_train_min = 50; % [s] Min value of training period in grid search
-T_train_max = 50; % Max value of training period in grid search
+T_train_min = 40; % [s] Min value of training period in grid search
+T_train_max = 40; % Max value of training period in grid search
 T_train_increment = 10; % Increment value of training period in grid search
 
-q_min = 70; % Min value of q in grid search
-q_max = 70; % Max value of q in grid search
-q_increment = 5; % Increment value of q in grid search
+q_min = 120; % Min value of q in grid search
+q_max = 150; % Max value of q in grid search
+q_increment = 10; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
 p_max = q_max; % Max value of p in grid search

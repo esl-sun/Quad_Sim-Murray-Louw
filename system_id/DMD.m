@@ -7,9 +7,9 @@ save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
 plot_predictions = 1;
 
-plot_index = 201; % start index to save to csv
+plot_index = 746; % start index to save to csv
 
-custom_test_data = 1 % Choose custom range of test data
+custom_test_data = 0 % Choose custom range of test data
 if custom_test_data
     test_time = 27:Ts:65;
     y_test = resample(y_data, test_time );  

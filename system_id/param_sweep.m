@@ -70,7 +70,7 @@ format short % back to default/short display
 results(~results.q,:) = []; % remove empty rows
 save(results_file, 'results', 'emptry_row')
 
-best_mean_results = results((results.MAE_1 == min(results.MAE_1)),:)
+best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
 %% Plot results
 
@@ -112,7 +112,7 @@ title(['Checkout effect of P'])
 
 %% plot q
 figure
-semilogy(results.q, results.MAE_1, '.')
+semilogy(results.q, results.MAE_mean, '.')
 grid on
 ylabel('MAE_1');
 xlabel('q');
