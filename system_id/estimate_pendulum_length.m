@@ -1,3 +1,4 @@
+% Estimate cable length with FFT
 % Code from Anton Erasmus
 
 disp('Estimating cable length with FFT')
@@ -9,7 +10,7 @@ mq
 mp
 
 % Estimate cable length with FFT
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 0;
 
 % Extract data
@@ -18,15 +19,15 @@ plot_results = 0;
 close all
 
 % Signal
-% signal = timeseries(y_data.Data(:,2), y_data.Time);
+signal = timeseries(y_data.Data(:,2), y_data.Time);
 % signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
-signal = out.theta;
+% signal = out.theta;
 plot(signal)
 
-window_start = 10;
+window_start = 37;
 window_stop = window_start + 10;
-max_length = 2;
-min_length = 0.5;
+max_length = 3;
+min_length = 0.2;
 
 start = find(abs(signal.Time - window_start) < 0.05)
 stop = find(abs(signal.Time - window_stop) < 0.05)

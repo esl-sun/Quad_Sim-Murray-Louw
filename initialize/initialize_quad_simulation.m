@@ -128,17 +128,6 @@ end
 %% Input smoothing
 moving_ave_exp = 0.97;
 
-%% Enable payload
-payload_variant = Simulink.Variant('payload_type == 1');
-payload_2D_variant = Simulink.Variant('payload_type == 2');
-
-%% Enable noise
-no_noise_variant = Simulink.Variant('enable_noise == 0'); % Variant subsytem block to uncomment payload if needed
-noise_variant = Simulink.Variant('enable_noise == 1');
-
-%% Enable MPC jerk limited trajectory
-jerk_limited_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 1'); % Variant subsytem block to uncomment payload if needed
-step_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 0'); % Variant subsytem block to uncomment payload if needed
 
 %% Simulation constants
 
@@ -157,6 +146,18 @@ Simulink.fileGenControl('set', 'CacheFolder', myCacheFolder, 'CodeGenFolder', my
 
 % Generate QUAD_MODEL s-function
 %mex Payload_parameter_estimation/RLS_MASS.c -outdir Payload_parameter_estimation
+
+%% Enable payload
+payload_variant = Simulink.Variant('payload_type == 1');
+payload_2D_variant = Simulink.Variant('payload_type == 2');
+
+%% Enable noise
+no_noise_variant = Simulink.Variant('enable_noise == 0'); % Variant subsytem block to uncomment payload if needed
+noise_variant = Simulink.Variant('enable_noise == 1');
+
+%% Enable MPC jerk limited trajectory
+jerk_limited_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 1'); % Variant subsytem block to uncomment payload if needed
+step_mpc_variant = Simulink.Variant('enable_jerk_limited_mpc == 0'); % Variant subsytem block to uncomment payload if needed
 
 %% Constants
 % execute .m file to initialize constants

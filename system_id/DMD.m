@@ -7,7 +7,7 @@ save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
 plot_predictions = 1;
 
-plot_index = 746; % start index to save to csv
+plot_index = 737; % start index to save to csv. 0 to not write anything to csv
 
 custom_test_data = 0 % Choose custom range of test data
 if custom_test_data
@@ -48,8 +48,8 @@ try
     override = 0;
     if override
         '!!!!!Override!!!!!!!'
-%         q = 50
-        p = 55
+        q = 100
+        p = 48
 %         N_train = round(50/Ts)
         
     end
