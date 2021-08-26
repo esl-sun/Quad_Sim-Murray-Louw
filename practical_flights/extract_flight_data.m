@@ -170,6 +170,9 @@ data_table.Properties.VariableNames = {
     'acc_sp.x', 'acc_sp.y', 'acc_sp.z'
     };
 csv_index = strfind(csv_folder,'/');
+if isempty(csv_index)
+    csv_index = strfind(csv_folder,'\');
+end
 csv_name = csv_folder( csv_index(end-1)+1 : end-1 );
 writetable(data_table, [current_dir, '/system_id/Prac/honeybee_payload/data/', csv_name, '.csv']);
 
