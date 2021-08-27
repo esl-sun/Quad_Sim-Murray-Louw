@@ -34,7 +34,7 @@ if write_csv
     MAE_vs_Ntrain;
 end
 
-algorithm = 'dmd'; % 'dmd' or 'havok'
+algorithm = 'havok'; % 'dmd' or 'havok'
 system_id_setup;
 if write_csv
     MAE_vs_Ntrain;
@@ -51,7 +51,7 @@ if write_csv
     MAE_vs_Ntrain;
 end
 
-algorithm = 'dmd'; % 'dmd' or 'havok'
+algorithm = 'havok'; % 'dmd' or 'havok'
 system_id_setup;
 if write_csv
     MAE_vs_Ntrain;
@@ -59,20 +59,20 @@ end
 
 % --------------------------------------------------------------
 
-file_name = '2021-08-12_02_manual_x_vel_steps_4mps.csv'
-data_path = strcat(parent_dir, file_name);
-data = readmatrix(data_path);
-algorithm = 'dmd'; % 'dmd' or 'havok'
-system_id_setup;
-if write_csv
-    MAE_vs_Ntrain;
-end
-
-algorithm = 'dmd'; % 'dmd' or 'havok'
-system_id_setup;
-if write_csv
-    MAE_vs_Ntrain;
-end
+% file_name = '2021-08-12_02_manual_x_vel_steps_4mps.csv'
+% data_path = strcat(parent_dir, file_name);
+% data = readmatrix(data_path);
+% algorithm = 'dmd'; % 'dmd' or 'havok'
+% system_id_setup;
+% if write_csv
+%     MAE_vs_Ntrain;
+% end
+% 
+% algorithm = 'havok'; % 'dmd' or 'havok'
+% system_id_setup;
+% if write_csv
+%     MAE_vs_Ntrain;
+% end
 
 % --------------------------------------------------------------
 
@@ -85,7 +85,7 @@ if write_csv
     MAE_vs_Ntrain;
 end
 
-algorithm = 'dmd'; % 'dmd' or 'havok'
+algorithm = 'havok'; % 'dmd' or 'havok'
 system_id_setup;
 if write_csv
     MAE_vs_Ntrain;
