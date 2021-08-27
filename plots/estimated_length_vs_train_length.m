@@ -6,9 +6,10 @@ disp('Estimating cable length with FFT')
 disp('--------------------------------')
 
 % Estimate cable length with FFT
+sim_type = 'Prac'
 real_length = 0.5
 
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 0;
 write_csv = 1;
 
@@ -21,7 +22,7 @@ close all
 signal = timeseries(y_data.Data(:,2), y_data.Time);
 plot(signal)
 
-start_time = 10;
+start_time = 20;
 max_length = 3; % Max cable length considered
 min_length = 0.2; % Minimum cable length considered
 f_res = 0.01; % Frequency resolution
@@ -29,7 +30,7 @@ f_res = 0.01; % Frequency resolution
 start_index = find(abs(signal.Time - start_time) < Ts);
 start_index = start_index(1);
 
-train_times = (Ts:0.3:20); % Array of training lengths considered
+train_times = (Ts:0.03:20); % Array of training lengths considered
 estimated_lengths = zeros(1,length(train_times)); % empty array for lengths estimated for each length of training time
 estimated_index = 1; % next estimated length entry index
 
@@ -44,10 +45,11 @@ for stop_time = start_time + train_times
     Fs = 1/T;
     
     train_data = signal.Data(start_index:stop_index);
-    figure
-    plot(signal.Time(start_index:stop_index), signal.Data(start_index:stop_index))
-    title('Data used by FFT')
-    ylabel('payload swing angle [rad]')
+    
+%     figure
+%     plot(signal.Time(start_index:stop_index), signal.Data(start_index:stop_index))
+%     title('Data used by FFT')
+%     ylabel('payload swing angle [rad]')
 
     % FFT
     Y = fft(train_data, floor(Fs/f_res));
@@ -70,12 +72,12 @@ for stop_time = start_time + train_times
     f = f(freq_start(1):freq_stop(1));
     P1 = P1(freq_start(1):freq_stop(1));
 
-    Plot
-    figure
-    plot(f,P1,'.-')
-    title('Single-Sided Amplitude Spectrum of X(t)')
-    xlabel('f (Hz)')
-    ylabel('|P1(f)|')
+%     %Plot
+%     figure
+%     plot(f,P1,'.-')
+%     title('Single-Sided Amplitude Spectrum of X(t)')
+%     xlabel('f (Hz)')
+%     ylabel('|P1(f)|')
 
     % Check for maximum
     fmax_index = find(P1 == max(P1));

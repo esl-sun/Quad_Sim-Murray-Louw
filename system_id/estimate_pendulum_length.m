@@ -14,7 +14,7 @@ reload_data = 1; % Re-choose csv data file for SITL data
 plot_results = 0;
 
 % Extract data
-% extract_data; % Run once uncommented. get error. then comment this and
+extract_data; % Run once uncommented. get error. then comment this and
 % run again. only need y_data to load, not train and test
 close all
 
@@ -25,9 +25,9 @@ signal = timeseries(y_data.Data(:,2), y_data.Time);
 plot(signal)
 
 window_start = 37;
-window_stop = window_start + 10;
+window_stop = window_start + 7;
 max_length = 3;
-min_length = 0.2;
+min_length = 0.01;
 
 start = find(abs(signal.Time - window_start) < 0.05)
 stop = find(abs(signal.Time - window_stop) < 0.05)
