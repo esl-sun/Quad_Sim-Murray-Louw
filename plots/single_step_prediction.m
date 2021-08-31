@@ -1,7 +1,7 @@
 chapter = 'results' % or 'system_id'
-reload_data = 1;
+reload_data = 0;
 write_csv = 0;
-algorithm = 'dmd'; % or 'white' for lqr white-box model
+algorithm = 'white'; % or 'white' for lqr white-box model
 Ts = 0.03;
 
 extract_data;
@@ -47,7 +47,7 @@ u_data = timeseries(u_data_smooth, time);
 % dtheta_data = timeseries(dtheta_data_smooth, time);
 
 % Testing data
-time_start = 52;
+time_start = 60;
 time_end = time_start + 42;
 test_time = time_start:Ts:time_end;
 y_test = resample(y_data, test_time );  
@@ -59,9 +59,9 @@ N_test = length(t_test); % Num of data samples for testing
 y_test = y_test.Data';
 u_test = u_test.Data';
 
-figure
-plot(t_test, y_test)
-title('Test y data')
+% figure
+% plot(t_test, y_test)
+% title('Test y data')
 
 %% Get offset of input data
 % figure
@@ -136,8 +136,28 @@ switch algorithm
         havok.y_hat = y_hat;
         
     case 'white'
-        dtheta_run = dtheta_test(:, start_index:end);
 
+        switch sim_type
+            case 'Prac'
+                theta_run = y_run(2,:);                
+                dtheta_run = diff(theta_run,1,2)./Ts;  
+                                        
+                % Shift by one index to match y_run = dtheta_run         
+                y_run = y_run(:,2:end);
+                u_run = u_run(:,2:end);
+                t_run = t_run(:,2:end);
+                
+%                 plot(t_run, theta_run)
+%                 hold on
+%                 plot(t_run, dtheta_run)
+%                 legend('theta', 'dtheta')
+                
+            otherwise
+                dtheta_run = dtheta_test(:, start_index:end);
+        end
+
+        
+        
         % dx = A*x + B*u;
         % x = [integral, vn, theta, dtheta]
         x0 = [0; y_run(:,1); dtheta_run(:,1)];
@@ -156,7 +176,7 @@ switch algorithm
 %             X_hat = X_hat_ts.Data;
 %             y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
         
-        y_hat(1,:) = y_hat(1,:) - y_hat(1,1); % Start vel at 0
+%         y_hat(1,:) = y_hat(1,:) - y_hat(1,1); % Start vel at 0
 
         white.y_hat = y_hat;
 end
@@ -166,9 +186,12 @@ end
 t_run = t_run - t_run(1); % Start at t=0s
 
 figure
-plot(t_run, y_run)
-hold on
 plot(t_run, y_hat, 'k--')
+
+hold on
+plot(t_run, y_run)
+
+hold off
 
 %% write to csv
 if write_csv

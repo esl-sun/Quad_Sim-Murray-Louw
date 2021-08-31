@@ -1,17 +1,23 @@
 % Estimate cable length with FFT
-% Code from Anton Erasmus
+% Used some code from Anton Erasmus
+
+sim_type = 'Prac'
+Ts = 0.03;
+reload_data = 0; % Re-choose csv data file for SITL data
+use_angular_rate = 0;
+control_vel_axis = 'x'; % only use x axis
 
 disp('Estimating cable length with FFT')
 disp('--------------------------------')
+
+l_actual = 0.5
+mq = 0.796
+mp = 0.2
 
 % Actual natural frequency
 wn = sqrt(g/l*(mq+mp)/mq) % rad/s
 mq
 mp
-
-% Estimate cable length with FFT
-reload_data = 1; % Re-choose csv data file for SITL data
-plot_results = 0;
 
 % Extract data
 extract_data; % Run once uncommented. get error. then comment this and
@@ -110,5 +116,8 @@ end
 % Measured oscillation frequency
 wn_measured = pend_freq(1)% rad/s
 
-% Estimated length (m)
+%% Estimated length (m)
+l_actual
 l_est
+
+PE = (l_est - l_actual)/l_actual

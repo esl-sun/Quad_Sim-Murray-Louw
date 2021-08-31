@@ -192,17 +192,19 @@ switch sim_type
 
         %% Smooth data (Tune window size till data still represented well)
         y_data_smooth = smoothdata(y_data_noise, 'loess', 20);
-        u_data_smooth = smoothdata(u_data_noise, 'gaussian', 6); % Smooth u differently because of non-differentialable spikes
+        u_data_smooth = smoothdata(u_data_noise, 'gaussian', 8); % Smooth u differently because of non-differentialable spikes
 
 %         %% Plot 
 %         figure
-%         plot(time, y_data_smooth)
+% %         plot(time, y_data_smooth)
+% %         hold on
+% %         plot(time, y_data_noise)
+%         plot(time, u_data_noise)
 %         hold on
-%         plot(time, y_data_noise)
+%         
 %         plot(time, u_data_smooth)
-%         plot(time, u_data_noise)    
 %         hold off
-%         title('Data noisy vs smooth')
+% %         title('Data noisy vs smooth')
   
         %% Create timeseries
         y_data = timeseries(y_data_smooth, time);
@@ -255,7 +257,7 @@ else
 
     y_train = y_train.Data';
     u_train = u_train.Data';
-    vel_sp_train = vel_sp_train.Data(:,1)';
+    vel_sp_train = vel_sp_train.Data';
 
     % Testing data
     y_test = resample(y_data, test_time );  
