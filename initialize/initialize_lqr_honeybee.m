@@ -12,7 +12,7 @@
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
 % Int(Vn_sp - Vn), Vn,      theta,                  dtheta]
 
-c = 0.0001; % rotatioal damping
+c = 0.08; % rotatioal damping
 c_linear = 0.00; % linear velocity damping
 % l_est = 1.1
 l_est

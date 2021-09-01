@@ -3,16 +3,16 @@
 
 sim_type = 'Prac'
 Ts = 0.03;
-reload_data = 0; % Re-choose csv data file for SITL data
+reload_data = 1; % Re-choose csv data file for SITL data
 use_angular_rate = 0;
 control_vel_axis = 'x'; % only use x axis
 
 disp('Estimating cable length with FFT')
 disp('--------------------------------')
 
-l_actual = 0.5
+l_actual = 2
 mq = 0.796
-mp = 0.2
+mp = 0.3
 
 % Actual natural frequency
 wn = sqrt(g/l*(mq+mp)/mq) % rad/s

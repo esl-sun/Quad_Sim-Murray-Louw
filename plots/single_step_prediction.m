@@ -1,8 +1,9 @@
 chapter = 'results' % or 'system_id'
 reload_data = 0;
-write_csv = 0;
+write_csv = 1;
 algorithm = 'white'; % or 'white' for lqr white-box model
 Ts = 0.03;
+time_start = 36.9 + 0.12 ;
 
 extract_data;
 
@@ -47,8 +48,8 @@ u_data = timeseries(u_data_smooth, time);
 % dtheta_data = timeseries(dtheta_data_smooth, time);
 
 % Testing data
-time_start = 60;
-time_end = time_start + 42;
+
+time_end = time_start + 20;
 test_time = time_start:Ts:time_end;
 y_test = resample(y_data, test_time );  
 u_test = resample(u_data, test_time );
@@ -164,7 +165,7 @@ switch algorithm
         t_span = t_run - t_run(1); % Start at zero]
         [t,X_hat] = ode45( @(t,x) LQR.A*x + LQR.B*( u_run(:,floor(t/Ts)+1) ), t_span, x0);
         y_hat = X_hat(:,[2,3])'; % Extract only non-delay time series
-
+        
         % Use finer resolution in ode
 %             x0 = [0; y_run(:,1); dtheta_run(:,1)];
 %             Ts_ode = 0.001;
@@ -183,7 +184,9 @@ end
 
 %% Plot
 % y_run(1,:) = y_run(1,:) - y_run(1,1); % Start vel at 0
-t_run = t_run - t_run(1); % Start at t=0s
+start = t_run(1)
+% t_run = t_run - t_run(1); % Start at t=0s
+t_run = t_run - 37.23; % Start at t=0s
 
 figure
 plot(t_run, y_hat, 'k--')
@@ -199,7 +202,7 @@ if write_csv
 %     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
     csv_matrix = [t_run; u_run; y_run; y_hat]';
 
-    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '.csv'];
+    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(time_start), '_diff_IC', '.csv'];
     csv_filename
 
     VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
