@@ -1,3 +1,5 @@
+%% Create csv file of velocity step from prac data without payload
+
 sim_type = 'Prac'
 chapter = 'modelling'
 use_angular_rate = 0;

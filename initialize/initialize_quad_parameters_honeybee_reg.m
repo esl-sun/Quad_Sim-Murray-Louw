@@ -1,9 +1,11 @@
 %% Honeybee Model
 
+inertial_scale = 1; % Scale Ixx and Iyy
+
 % Mass and Inertia
-mq = 0.784;
-Ixx = 9.305e-4;
-Iyy = 1.326e-3;
+mq = 0.796;
+Ixx = 9.305e-4 * inertial_scale;
+Iyy = 1.326e-3 * inertial_scale;
 Izz = 1.95e-3;
 I = [Ixx 0 0 ; 0 Iyy 0 ; 0 0 Izz]; % inertia matrix
 

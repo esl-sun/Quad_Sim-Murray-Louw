@@ -2,6 +2,7 @@
 % Run this script to setup all params to run Simulink file: quad_simulation_with_payload
 
 %% Simulation options
+disp('start')
 format compact
 
 sim_time = 20;
@@ -39,7 +40,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 1
+pre_set_options = 2
 
 switch pre_set_options
     case 1 % Vel steps training
@@ -53,11 +54,13 @@ switch pre_set_options
         file_name_comment = ''
         
     case 2 % PID vel step
-        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        sim_type = 'Simulink'
+        payload_type = 0 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+        tune_scale = 0.7; % Scale PID values
         file_name_comment = '_single_step';
         
     case 3 % SITL MPC vel step
