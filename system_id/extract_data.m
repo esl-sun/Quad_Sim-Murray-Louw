@@ -186,6 +186,10 @@ switch sim_type
                 y_data_noise = [vel.x, vel.y, angle.x, angle.y];
                 u_data_noise = [acc_sp.x, acc_sp.y];
                 vel_sp_data = [vel_sp.x, vel_sp.y];
+            case 'xyz'
+                y_data_noise = [vel.x, vel.y, vel.z, angle.x, angle.y];
+                u_data_noise = [acc_sp.x, acc_sp.y, acc_sp.z];
+                vel_sp_data = [vel_sp.x, vel_sp.y, vel_sp.z];
             otherwise
                 error('Only supports control_vel_axis = x or xy')
         end 

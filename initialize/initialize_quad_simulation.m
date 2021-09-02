@@ -39,11 +39,12 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 5
+pre_set_options = 1
 
 switch pre_set_options
     case 1 % Vel steps training
-        use_sitl_data = 0 % Use data from SITL, else use data saved from Simulink
+        sim_type = 'Simulink'
+        use_sitl_data = 0 % 1 = Use data from SITL, else use data saved from Simulink
         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
