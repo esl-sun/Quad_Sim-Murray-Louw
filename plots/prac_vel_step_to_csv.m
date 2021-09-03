@@ -58,7 +58,7 @@ plot(prac_step)
 %% write to csv
 if write_csv
   
-    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'vel_step_', sim_type, '_', file_name, '.csv'];
+    csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/', 'vel_step_', sim_type, '_', file_name, '.csv'];
     csv_filename
 
     VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double',   'double'};

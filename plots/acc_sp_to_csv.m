@@ -7,7 +7,7 @@ csv_matrix = [t_train; y_train; u_train; vel_sp_train]';
 
 csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
 
-csv_filename = ['/home/murray/Masters/Thesis/system_id/csv/', 'acc_sp_offset_', sim_type, '_', file_name, '.csv'];
+csv_filename = [getenv('HOME'), '/Masters/Thesis/system_id/csv/', 'acc_sp_offset_', sim_type, '_', file_name, '.csv'];
 csv_filename
 
 VariableTypes = {'double', 'double', 'double', 'double', 'double'};

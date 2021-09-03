@@ -133,7 +133,7 @@ hold off
 
 %% write to csv
 if write_csv
-    csv_filename = ['/home/murray/Masters/Thesis/results/csv/', 'cable_length_vs_train_time_', sim_type, '_', simulation_data_file, '_', num2str(start_time), '_', num2str(real_length), '.csv'];
+    csv_filename = [getenv('HOME'), '/Masters/Thesis/results/csv/', 'cable_length_vs_train_time_', sim_type, '_', simulation_data_file, '_', num2str(start_time), '_', num2str(real_length), '.csv'];
     csv_filename
     
     csv_matrix = [train_times', estimated_lengths', percentage_error'];

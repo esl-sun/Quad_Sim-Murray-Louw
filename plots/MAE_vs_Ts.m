@@ -24,7 +24,7 @@ ylabel('MAE_mean')
 xlabel('Ts')
 
 %% write to csv
-csv_filename = ['/home/murray/Masters/Thesis/system_id/csv/', 'MAE_vs_Ts_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
+csv_filename = [getenv('HOME'), '/Masters/Thesis/system_id/csv/', 'MAE_vs_Ts_', sim_type, '_', simulation_data_file, '_', algorithm, payload_angle_str, '.csv'];
 csv_filename
 
 VariableTypes = {'double',  'double',   'double', 'double'};

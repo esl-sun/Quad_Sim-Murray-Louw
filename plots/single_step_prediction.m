@@ -8,7 +8,7 @@ time_start = 36.9 + 0.12 ;
 extract_data;
 
 % if reload_data
-%     [single.file_name, single.parent_dir] = uigetfile(['/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/', sim_type, '/*.csv'], 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
+%     [single.file_name, single.parent_dir] = uigetfile([getenv('HOME'), '/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/', sim_type, '/*.csv'], 'Choose SINGLE STEP SITL log DATA csv file (from logger.y)')
 %     single.data_path = strcat(single.parent_dir, single.file_name);
 %     single.data = readmatrix(single.data_path);
 % end
@@ -202,7 +202,7 @@ if write_csv
 %     csv_matrix = [t_run; u_run; y_run; havok.y_hat; dmd.y_hat; white.y_hat]';
     csv_matrix = [t_run; u_run; y_run; y_hat]';
 
-    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(time_start), '_diff_IC', '.csv'];
+    csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(time_start), '_diff_IC', '.csv'];
     csv_filename
 
     VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};

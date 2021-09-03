@@ -135,7 +135,7 @@ end
 % Change location of generated files
 myCacheFolder = '.matlab_cache/simCache';
 % myCodeFolder = '.matlab_cache/simCodeGen';
-myCodeFolder = '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen';
+myCodeFolder = [getenv('HOME'), '/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen'];
 
 %% Constants
 % execute .m file to initialize constants

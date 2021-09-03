@@ -145,7 +145,8 @@ moving_ave_exp = 0.97;
 % Change location of generated files
 myCacheFolder = '.matlab_cache/simCache';
 % myCodeFolder = '.matlab_cache/simCodeGen';
-myCodeFolder = '/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen';
+myCodeFolder = [getenv('HOME'), '/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen'];
+myCodeFolder = [getenv('HOME'), '/Masters/Developer/MATLAB/Quad_Sim_Murray/simCodeGen'];
 Simulink.fileGenControl('set', 'CacheFolder', myCacheFolder, 'CodeGenFolder', myCodeFolder, 'createDir', true);
 
 % Generate QUAD_MODEL s-function

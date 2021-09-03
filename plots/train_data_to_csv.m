@@ -18,7 +18,7 @@ selected_rows = 1:2:length(t_train); % Only save every second sample for tikz me
 %     
 %     csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
 %     
-%     csv_filename = ['/home/murray/Masters/Thesis/system_id/csv/', 'training_data_', sim_type, '_', file_name, '.csv'];
+%     csv_filename = [getenv('HOME'), '/Masters/Thesis/system_id/csv/', 'training_data_', sim_type, '_', file_name, '.csv'];
 %     csv_filename
 % 
 %     VariableTypes = {'double', 'double', 'double', 'double', 'double'};
@@ -54,7 +54,7 @@ if write_csv
     
     csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
     
-    csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'training_data_', sim_type, '_', file_name, '.csv'];
+    csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/', 'training_data_', sim_type, '_', file_name, '.csv'];
     csv_filename
 
     csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);

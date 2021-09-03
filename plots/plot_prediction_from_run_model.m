@@ -10,7 +10,7 @@ t_run = t_run - t_run(1); % start at t=0s
 % y_run(1,:) = y_run(1,:) - y_run(1,1) % start at vel=0s
 csv_matrix = [t_run; u_run; y_run; y_hat]';
 
-csv_filename = ['/home/murray/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(plot_index), '.csv'];
+csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/', 'step_predictions_', sim_type, '_', file_name, '_', algorithm, '_', num2str(plot_index), '.csv'];
 csv_filename
 
 switch control_vel_axis

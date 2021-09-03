@@ -8,7 +8,7 @@ switch sim_type
         
         % Load data from csv into matrix (csv file created with payload_angle.py)
         if reload_data
-            [file_name,parent_dir] = uigetfile('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose SITL log DATA csv file (from logger.y)')
+            [file_name,parent_dir] = uigetfile([getenv('HOME'), '/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/SITL/*.csv', '[extract_data.m] Choose SITL log DATA csv file (from logger.y)'])
             data_path = strcat(parent_dir, file_name);
             data = readmatrix(data_path);
         end
