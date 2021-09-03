@@ -7,10 +7,13 @@ use_angular_rate = 0;
 Ts = 0.03;
 use_sitl_data = 0;
 reload_data = 1; % Re-choose csv data file
-control_vel_axis = 'xyz'
+control_vel_axis = 'x'
 write_csv = 1;
 
 extract_data;
+
+%% Get initial condition at step time
+
 
 %% Plot
 figure
@@ -48,11 +51,11 @@ vel_sp_data.Data(:,1)   = vel_sp_data.Data(:,1) - vel_sp_data.Data(1,1); % Start
 
 selected_rows = 1:2:length(time); % Only save every second sample for tikz memory constraint
 
-csv_matrix = [time, y_data.Data(:,[1,2,3]), vel_sp_data.Data]; % Only vel and vel_sp data
+csv_matrix = [time, y_data.Data, vel_sp_data.Data]; % Only vel and vel_sp data
 csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
 
 %% Prac data plot
-prac_matrix = [y_data.Data(:,1), vel_sp_data.Data(:,1)];
+prac_matrix = [y_data.Data(:,1), y_data.Data(:,2), vel_sp_data.Data(:,1)];
 prac_step = timeseries(prac_matrix, time);
 plot(prac_step)
 
@@ -62,8 +65,11 @@ if write_csv
     csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/', 'vel_step_', sim_type, '_', file_name, '.csv'];
     csv_filename
 
-    VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double',   'double'};
-    VariableNames = {'time',    'vel_sp.x', 'vel_sp.y', 'vel_sp.z', 'vel.x',    'vel.y',    'vel.z'};
+%     VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
+%     VariableNames = {'time',    'vel_sp.x', 'vel_sp.z', 'vel.x',    'vel.z',    'angle.y'};
+    VariableTypes = {'double',  'double',   'double',   'double'};
+    VariableNames = {'time',    'vel_sp.x', 'vel.x',    'angle.y'};
+    
     csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
     csv_table(:,:) = array2table(csv_matrix);
 

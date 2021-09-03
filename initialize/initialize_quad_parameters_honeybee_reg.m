@@ -2,6 +2,9 @@
 
 inertial_scale = 1; % Scale Ixx and Iyy
 
+% Initial conditions:
+theta_0 = -1*pi/180; % Initial theta
+
 % Mass and Inertia
 mq = 0.796;
 Ixx = 9.305e-4 * inertial_scale;
@@ -65,8 +68,8 @@ switch payload_type
 
         % Connector = 0.0165 kg
 
-        mp = 0.0165 + 0.1;
-        l = 1;
+        mp = 0.3;
+        l = 2;
         c = 0.000; % From Willem simulations for match prac to sim 
         k = 0;
         

@@ -1,5 +1,5 @@
 %% Velocity single step input
-vel_step_time = 0.51; % Time when vel step applied
+vel_step_time = 1.1; % Time when vel step applied
 vel_step_N = 2; % Size of North velocity step input
 vel_step_E = 0; 
 vel_step_D = 0;

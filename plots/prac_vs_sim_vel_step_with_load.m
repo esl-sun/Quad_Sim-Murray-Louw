@@ -2,7 +2,7 @@
 
 % First run prac_vel_step_to_csv.m
 
-write_csv = 1;
+write_csv = 0;
 chapter = 'modelling'
  
 %% Run simulation
@@ -11,9 +11,10 @@ out = sim('quad_simulation_with_payload.slx')
 disp('Simulation done.')
 
 %% Get simulink data
-sim_matrix = out.vel.Data(:,1); % vel data from simulink
+theta_deg = out.theta.Data * 180/pi; % Convert theta data from radians to degrees
+sim_matrix = [out.vel.Data(:,1), theta_deg]; % vel data from simulink
 sim_step = timeseries(sim_matrix, out.vel.Time);
-sim_step = resample(sim_step, prac_step.Time)
+sim_step = resample(sim_step, prac_step.Time);
 
 %% Plot data over each other
 figure(1)
