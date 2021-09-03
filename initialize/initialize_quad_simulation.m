@@ -20,7 +20,7 @@ enable_noise = 0
 tune_scale = 1; % Scale PID values
 
 uav_name = 'honeybee'
-enable_aerodynamics = 0 % 1 = add effect of air
+enable_aerodynamics = 1 % 1 = add effect of air
 payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
 
 control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR

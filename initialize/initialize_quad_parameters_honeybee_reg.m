@@ -25,9 +25,9 @@ hover_total_T = max_total_T * hover_perc; % total hover thrust
 hover_T = hover_total_T / 4; % hover thrust per motor
 
 % Aerodynamic:
-C_D = [0.064; 0.067; 0.089]; % From Pierro - need to calculate in flight test
+% C_D = [0.064; 0.067; 0.089]; % From Pierro - need to calculate in flight test
 % C_D = [0.2; 0.2; 0.2]; % Anton Thesis
-% C_D = [0.12; 0.12; 0.32]; % Murray added. From http://tinyurl.com/t87xgz8 - standard ZMR graph, pg.13, C_D = [15deg, 15deg, 90deg]
+C_D = [0.12; 0.12; 0.32] * 0.8; % Murray added. From http://tinyurl.com/t87xgz8 - standard ZMR graph, pg.13, C_D = [15deg, 15deg, 90deg]
 
 Cdp = 0.01*1;
 tau_w = 5;
