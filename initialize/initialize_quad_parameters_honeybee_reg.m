@@ -69,8 +69,8 @@ switch payload_type
         % Connector = 0.0165 kg
 
         mp = 0.3;
-        l = 2;
-        c = 0.000; % From Willem simulations for match prac to sim 
+        l = 2.25;
+        c = -0.22; % damping coef of payload angles
         k = 0;
         r_attach = 0.1; % Distance below CoM of payload attachement
         
