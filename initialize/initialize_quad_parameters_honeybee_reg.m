@@ -72,6 +72,7 @@ switch payload_type
         l = 2;
         c = 0.000; % From Willem simulations for match prac to sim 
         k = 0;
+        r_attach = 0.1; % Distance below CoM of payload attachement
         
     case 2 % Double pendulum model
         mp1 = 0.2
