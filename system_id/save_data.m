@@ -1,4 +1,12 @@
 
+%% Run simulation
+% disp('Start simulation.')
+% tic;
+% out = sim('quad_simulation_with_payload.slx')
+% toc;
+% disp('Simulation done.')
+
+%% Save data
 save_filename = [uav_folder, '/data/', simulation_data_file, '.mat']
 
 % Check for overwriting file

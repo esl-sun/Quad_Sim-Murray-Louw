@@ -40,7 +40,7 @@ enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference fo
 file_name_comment = '' % Comment added to simulation_data_file name
 
 %% Pre-set settings:
-pre_set_options = 2
+pre_set_options = 1
 
 switch pre_set_options
     case 1 % Vel steps training
