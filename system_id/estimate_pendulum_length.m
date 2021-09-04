@@ -1,7 +1,7 @@
 % Estimate cable length with FFT
 % Used some code from Anton Erasmus
 
-sim_type = 'Prac'
+sim_type = 'Simulink'
 Ts = 0.03;
 reload_data = 1; % Re-choose csv data file for SITL data
 use_angular_rate = 0;
