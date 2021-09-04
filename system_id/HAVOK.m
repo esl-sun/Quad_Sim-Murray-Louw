@@ -5,7 +5,7 @@
 
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
-save_model = 0; % 1 = Save this model , 0 = dont save
+save_model = 1; % 1 = Save this model , 0 = dont save
 use_MAE_diff = 0; % Use MAE metric of diff of predicitons and signal
 
 extract_data;
@@ -88,7 +88,7 @@ MAE
 %% Save model
 if save_model
     model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, '.mat'];
-    save(model_file, 'A_havok', 'B_havok', 'Ts_havok', 'q', 'p', 'ny', 'nu', 'u_bar')
+    save(model_file, 'A_havok', 'B_havok', 'Ts', 'q', 'p', 'ny', 'nu', 'u_bar')
     disp('model saved')
 end
 %% Run with HAVOK (A_havok, B_havok and x)

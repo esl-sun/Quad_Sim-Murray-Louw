@@ -4,7 +4,6 @@
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
 
-choose_model = 1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -16,11 +15,17 @@ if choose_model
     load(model_file) % Load plant model from saved data
 end
 
-model = 'havok'; % Choose which model to use for MPC
-switch model
+if strcmp(model_file_name(1:3), 'dmd') % Check what type of algorithm is model
+    algorithm = 'dmd'
+else
+    algorithm = 'havok'
+end
+
+switch algorithm
     case 'dmd'
         error('Still need to add integration state of payload angle for dmd')
     case 'havok'
+        
         
         %% Add payload angular velocity for MPC
         A_mpc = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
@@ -33,7 +38,7 @@ switch model
 %         A_mpc(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
 %         A_mpc(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
-        Ts_mpc = Ts_havok;
+        Ts_mpc = Ts;
 
 end
 
@@ -83,8 +88,8 @@ tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust
 mo_weight = 1; % Scale all MV
 
 vel_weight = 1; % Velocity tracking weight
-theta_weight = 4; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 6; % Derivative of Payload swing angle
+theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
+dtheta_weight = 4; % Derivative of Payload swing angle
 
 mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
@@ -99,10 +104,20 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
 Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 4; % Control period, desired control settling time
+Tu = 3; % Control period, desired control settling time
 PH = floor(Ty/Ts_mpc); % Prediction horizon
-mpc_vel.PredictionHorizon  = floor(Ty/Ts_mpc); % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
-mpc_vel.ControlHorizon     = floor(Tu/Ts_mpc); % Control horizon (samples)
+CH = floor(Tu/Ts_mpc); % Control Horizon
+
+% Must meet this codition: PH - CH > (q-1) (P - M > T in review(mpc_vel) report)
+if (PH - CH <= (q-1))
+    PH
+    CH
+    q
+    error('Should meet this condition: PH - CH > (q-1)')
+end
+
+mpc_vel.PredictionHorizon  = PH; % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
+mpc_vel.ControlHorizon     = CH; % Control horizon (samples)
 
 % mpc_vel.Weights.OutputVariables        = [1, 1, 1, 10, 10, zeros(1, (q-1)*ny)]*tuning_weight;
 
