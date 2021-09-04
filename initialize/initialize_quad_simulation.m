@@ -63,9 +63,9 @@ switch pre_set_options
         tune_scale = 0.7; % Scale PID values
         file_name_comment = '_single_step';
         
-    case 3 % SITL MPC vel step
-        disp('SITL MPC vel step')
-        disp('-----------------')
+    case 3 % MPC vel step
+        disp('MPC vel step')
+        disp('------------')
         payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID

@@ -74,8 +74,9 @@ best_mean_results = results((results.MAE_mean == min(results.MAE_mean)),:)
 
 %% Plot results
 
-y_limits = [2e-2, 4e-1];
+y_limits = [2e-3, 1e-1];
 
+%%
 figure
 subplot(1,3,1)
 semilogy(results.N_train.*Ts, results.MAE_1, '.')
@@ -116,20 +117,20 @@ semilogy(results.q, results.MAE_mean, '.')
 grid on
 ylabel('MAE_1');
 xlabel('q');
-% ylim(y_limits)
+ylim(y_limits)
 title(['Checkout effect of Q', ' - best q = ', num2str(best_mean_results.q)])
 
-%% plot q for specific Ttrain
-figure
-Ntrain_cur = floor(50/Ts);
-results_T = results((results.N_train == Ntrain_cur),:);
-semilogy(results_T.q, results_T.MAE_1, '.')
-grid on
-ylabel('MAE_1');
-xlabel('q');
-ylim(y_limits)
-title(['Q', ' - T train = ', num2str(Ntrain_cur)])
-% 
+% %% plot q for specific Ttrain
+% figure
+% Ntrain_cur = floor(50/Ts);
+% results_T = results((results.N_train == Ntrain_cur),:);
+% semilogy(results_T.q, results_T.MAE_1, '.')
+% grid on
+% ylabel('MAE_1');
+% xlabel('q');
+% ylim(y_limits)
+% title(['Q', ' - T train = ', num2str(Ntrain_cur)])
+% % 
 % %% plot p for specific q and Ttrain
 % figure
 % Ntrain_cur = floor(80/Ts);
