@@ -107,6 +107,14 @@ switch pre_set_options
        
 end
 
+%% Wind options
+enable_wind = 0; % 1 = Wind is enabled. 0 = no wind is simulated
+wind_velocity = 2; % Constant velcoity of wind applied as a step input disturbance
+wind_step_time = 8; % Time when wind velocity step is applied
+if enable_wind
+    file_name_comment = [ file_name_comment, '_wind_step_disturb' ];
+end
+
 %% Force dependant settings
 
 if payload_type == 0

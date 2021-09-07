@@ -30,13 +30,13 @@ signal = timeseries(y_data.Data(:,2), y_data.Time);
 % signal = out.theta;
 plot(signal)
 
-window_start = 37;
-window_stop = window_start + 7;
+window_start = 35;
+window_stop = window_start + 9;
 max_length = 3;
 min_length = 0.01;
 
-start = find(abs(signal.Time - window_start) < 0.05)
-stop = find(abs(signal.Time - window_stop) < 0.05)
+start = find(abs(signal.Time - window_start) < 0.05);
+stop = find(abs(signal.Time - window_stop) < 0.05);
 start = start(1);
 stop = stop(1);
 

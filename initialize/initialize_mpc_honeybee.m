@@ -3,7 +3,7 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-% choose_model=1
+choose_model = 1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -91,7 +91,7 @@ mo_weight = 1; % Scale all MV
 
 vel_weight = 2; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 5; % Derivative of Payload swing angle
+dtheta_weight = 10; % Derivative of Payload swing angle
 
 mv_weight = 1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 5; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
@@ -168,7 +168,7 @@ if length(pos_traj) < PH % Append entries
 end
 pre_generated_traj = pos_traj; % Generate pos x trajectory for single step size
 
-disp('RUNNING SIM FROM init_mpc.')
-tic
-out = sim('quad_simulation_with_payload.slx')
-toc
+% disp('RUNNING SIM FROM init_mpc.')
+% tic
+% out = sim('quad_simulation_with_payload.slx')
+% toc

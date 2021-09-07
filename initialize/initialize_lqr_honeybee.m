@@ -6,7 +6,7 @@
 % g = positive = 9.81
 
 % Run FFT to calculate pendulum length
-% estimate_pendulum_length
+% frst run: estimate_pendulum_length.m
 % l_est = estimated length
 
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
@@ -39,14 +39,19 @@ LQR.B = [
 %%Q_lqr = diag([1/(15^2) 1/(15^2) 1/(12^2) 1/(12^2) 2/((180*2*pi)^2) 3/((180*2*pi)^2) 2/((180*2*pi)^2) 3/((180*2*pi)^2)]);
 %%R_lqr = diag([1/(max_total_T^2) 1/(max_total_T^2)]);
 
-% states = [Int(Vn_sp - Vn), Vn, theta, dtheta]  
-LQR.Q = diag([0.1 10 0 40]); % State weights
-LQR.R = 5; % Input weights
+% states = [Int(Vn_sp - Vn), Vn, theta, dtheta]
+integrator_weight = 10;
+LQR.Q = diag([integrator_weight 10 0 100]); % State weights
+LQR.R = 8; % Input weights
 LQR.K = lqr(LQR.A, LQR.B, LQR.Q, LQR.R)
 %K = lqrd(Ass_aug, Bss_aug, Q_lqr, R_lqr, 1/sim_freq);
 
+disp('RUNNING SIM FROM init_mpc.')
+tic
+out = sim('quad_simulation_with_payload.slx')
+toc
 
-
+mpc_vs_lqr_vs_pid_to_csv
 
 
 

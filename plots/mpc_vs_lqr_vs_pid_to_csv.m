@@ -1,10 +1,12 @@
 %% Compare vel step. MPC vs LQR vs PID vs PID no_load (Simulink) 
 
-% First run prac_vel_step_to_csv.m
+% First run extract_data.m to get file_name for reference to training data 
 
 run_sim = 0;
 write_csv = 1;
 chapter = 'control'
+added_comment = '';
+% added_comment = ['_intg_weight_', num2str(integrator_weight)];
  
 %% Run simulation
 if run_sim
@@ -25,10 +27,11 @@ csv_matrix = [ ...
     out.vel_sp.Data(:,1), ...
     out.vel.Data(:,1), ...
     theta_deg, ...
-    out.acc_sp_mpc.Data(:,1)]; % Data to write to csv
+    out.acc_sp_mpc.Data(:,1), ...
+    out.acc.Data(:,1)    ]; % Data to write to csv
 
-VariableNames = {'time',    'vel_sp',   'vel',      'theta',    'acc_sp'};
-VariableTypes = {'double',  'double',   'double',   'double',   'double'};
+VariableNames = {'time',    'vel_sp',   'vel',      'theta',    'acc_sp',   'acc'};
+VariableTypes = {'double',  'double',   'double',   'double',   'double',   'double'};
 
 csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot smaller
 
@@ -36,7 +39,7 @@ csv_matrix = csv_matrix(selected_rows, :); % resample to make csv and tikz plot 
 if write_csv
   
     csv_filename = [getenv('HOME'), '/Masters/Thesis/', chapter, '/csv/',...
-                    'compare_control_', control_type, '_', sim_type, '_', file_name, '.csv'];
+                    'compare_control_', control_type, '_', sim_type, '_', simulation_data_file, added_comment, '.csv'];
     csv_filename
 
     csv_table = table('Size',size(csv_matrix),'VariableTypes',VariableTypes,'VariableNames',VariableNames);
