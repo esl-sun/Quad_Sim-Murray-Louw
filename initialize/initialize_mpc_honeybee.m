@@ -3,7 +3,7 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-
+% choose_model=1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -42,9 +42,11 @@ switch algorithm
 
 end
 
-% Add Unmeasured Disturbance
-% B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-% B_mpc(1,2) = 1e-2; % Unmeasured Disturbance only affects position
+% State vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
+
+% Add Unmeasured Input Disturbance
+B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
+B_mpc(2,2) = 1e-2; % Unmeasured Disturbance only affects v(k)
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -82,21 +84,21 @@ mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
 mpc_sys.OutputGroup.MO = num_axis + 1:(q*ny); % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
-% mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
+mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-par_control_weight = 1; % Weight of parallel controller
+par_control_weight = 0; % Weight of parallel controller
 integrator_gain = 0.1 * par_control_weight; % Integrator gain of controller added in parallel
 derivative_gain = 0.1 * par_control_weight; % Derivative gain of controller added in parallel
 
-vel_weight = 1; % Velocity tracking weight
+vel_weight = 2; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 4; % Derivative of Payload swing angle
+dtheta_weight = 5; % Derivative of Payload swing angle
 
-mv_weight = 1e-3; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 3; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mv_weight = 2; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
+mvrate_weight = 10; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 

@@ -74,14 +74,13 @@ switch pre_set_options
         choose_model = 0; % Let user choose model file for MPC
 
         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
-        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+        control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
         file_name_comment = '';
         run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
         control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
-        choose_model = 0 % Manually choose model file for MPC
         tune_scale = 0.7; % Scale PID values
         
     case 4 % Double pend training vel steps 

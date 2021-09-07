@@ -12,21 +12,22 @@
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
 % Int(Vn_sp - Vn), Vn,      theta,                  dtheta]
 
-par_control_weight = 1; % Weight of parallel controller
+par_control_weight = 0; % Weight of parallel controller
 integrator_gain = 0 * par_control_weight; % Integrator gain of controller added in parallel
 derivative_gain = 0.2 * par_control_weight; % Derivative gain of controller added in parallel
 
 
-c = 0.08; % rotatioal damping
+% c_lqr = 0.08; % rotatioal damping
+c_lqr = c; % rotatioal damping
 c_linear = 0.2; % linear velocity damping
 % l_est = 1.1
 l_est
 
 LQR.A= [    
             0       -1          0                           0;
-            0       -c_linear/mq       mp*g/mq                     c/(l_est*mq);
+            0       -c_linear/mq       mp*g/mq                     c_lqr/(l_est*mq);
             0       0           0                           1;
-            0       c_linear/(mq*l_est)     -1*(mp+mq)*g/(mq*l_est)     -c*(mp+mq)/(l_est^2*mq*mp)
+            0       c_linear/(mq*l_est)     -1*(mp+mq)*g/(mq*l_est)     -c_lqr*(mp+mq)/(l_est^2*mq*mp)
         ];
 
 
@@ -44,7 +45,7 @@ LQR.B = [
 %%R_lqr = diag([1/(max_total_T^2) 1/(max_total_T^2)]);
 
 % states = [Int(Vn_sp - Vn), Vn, theta, dtheta]  
-LQR.Q = diag([1 1 0 20]); % State weights
+LQR.Q = diag([0.1 10 0 40]); % State weights
 LQR.R = 5; % Input weights
 LQR.K = lqr(LQR.A, LQR.B, LQR.Q, LQR.R)
 %K = lqrd(Ass_aug, Bss_aug, Q_lqr, R_lqr, 1/sim_freq);
