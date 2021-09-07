@@ -93,8 +93,8 @@ vel_weight = 2; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
 dtheta_weight = 5; % Derivative of Payload swing angle
 
-mv_weight = 2; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 10; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mv_weight = 1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
+mvrate_weight = 5; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
@@ -168,7 +168,7 @@ if length(pos_traj) < PH % Append entries
 end
 pre_generated_traj = pos_traj; % Generate pos x trajectory for single step size
 
-% disp('RUNNING SIM FROM init_mpc.')
-% tic
-% out = sim('quad_simulation_with_payload.slx')
-% toc
+disp('RUNNING SIM FROM init_mpc.')
+tic
+out = sim('quad_simulation_with_payload.slx')
+toc
