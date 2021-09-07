@@ -12,11 +12,6 @@
 % same format as lqr_cartpend from Steve Brunton control bootcamp youtube
 % Int(Vn_sp - Vn), Vn,      theta,                  dtheta]
 
-par_control_weight = 0; % Weight of parallel controller
-integrator_gain = 0 * par_control_weight; % Integrator gain of controller added in parallel
-derivative_gain = 0.2 * par_control_weight; % Derivative gain of controller added in parallel
-
-
 % c_lqr = 0.08; % rotatioal damping
 c_lqr = c; % rotatioal damping
 c_linear = 0.2; % linear velocity damping

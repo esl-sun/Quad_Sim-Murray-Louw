@@ -89,10 +89,6 @@ mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-par_control_weight = 0; % Weight of parallel controller
-integrator_gain = 0.1 * par_control_weight; % Integrator gain of controller added in parallel
-derivative_gain = 0.1 * par_control_weight; % Derivative gain of controller added in parallel
-
 vel_weight = 2; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
 dtheta_weight = 5; % Derivative of Payload swing angle
