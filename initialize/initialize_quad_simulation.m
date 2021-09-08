@@ -42,7 +42,7 @@ file_name_comment = '' % Comment added to simulation_data_file name
 Ts_logging = 0.01; % Sample time to log data to "out" before scope block
 
 %% Pre-set settings:
-pre_set_options = 3
+pre_set_options = 1
 
 switch pre_set_options
     case 1 % Vel steps training
