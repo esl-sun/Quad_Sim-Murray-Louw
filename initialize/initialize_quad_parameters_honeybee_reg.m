@@ -83,7 +83,7 @@ switch payload_type
             error('mp2 must be positive')
         end
         
-        l1 = 1
+        l1 = 0.5
         l2 = 0.6
 %         l1 = (l*(mp1 + mp2)  - l2*mp2)/(mp1 + mp2) % Choose l2 so that effective pendulum length same as single pendulum length
 

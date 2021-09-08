@@ -48,7 +48,7 @@ switch pre_set_options
     case 1 % Vel steps training
         sim_type = 'Simulink'
         use_sitl_data = 0 % 1 = Use data from SITL, else use data saved from Simulink
-        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
