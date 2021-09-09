@@ -114,7 +114,7 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
+Ty = 6; % Prediction period, For guidance, minimum desired settling time (s)
 Tu = 3; % Control period, desired control settling time
 PH = floor(Ty/Ts_mpc); % Prediction horizon
 CH = floor(Tu/Ts_mpc); % Control Horizon

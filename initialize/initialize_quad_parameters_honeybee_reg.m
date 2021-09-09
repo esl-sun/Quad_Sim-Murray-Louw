@@ -67,10 +67,19 @@ switch payload_type
         % k = 0;
 
         % Connector = 0.0165 kg
+% 
+%         mp = 0.1;
+%         l = 0.5;
+%         c = 0; % damping coef of payload angles
 
         mp = 0.2;
         l = 1;
         c = 0; % damping coef of payload angles
+
+%         mp = 0.3;
+%         l = 2.25;
+%         c = -0.22; % damping coef of payload angles
+
         k = 0;
         r_attach = 0; % Distance below CoM of payload attachement
         

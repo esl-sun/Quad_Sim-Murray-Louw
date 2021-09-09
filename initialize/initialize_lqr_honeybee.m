@@ -14,9 +14,9 @@
 
 % c_lqr = 0.08; % rotatioal damping
 c_lqr = c; % rotatioal damping
-c_linear = 0.2; % linear velocity damping
+c_linear = 0.15; % linear velocity damping
 % l_est = 1.1
-l_est
+% l_est = 0.5
 
 LQR.A= [    
             0       -1          0                           0;
@@ -40,18 +40,18 @@ LQR.B = [
 %%R_lqr = diag([1/(max_total_T^2) 1/(max_total_T^2)]);
 
 % states = [Int(Vn_sp - Vn), Vn, theta, dtheta]
-integrator_weight = 10;
+integrator_weight = 0.2;
 LQR.Q = diag([integrator_weight 10 0 100]); % State weights
-LQR.R = 8; % Input weights
+LQR.R = 13; % Input weights
 LQR.K = lqr(LQR.A, LQR.B, LQR.Q, LQR.R)
 %K = lqrd(Ass_aug, Bss_aug, Q_lqr, R_lqr, 1/sim_freq);
 
-disp('RUNNING SIM FROM init_mpc.')
-tic
-out = sim('quad_simulation_with_payload.slx')
-toc
+% disp('RUNNING SIM FROM init_mpc.')
+% tic
+% out = sim('quad_simulation_with_payload.slx')
+% toc
 
-mpc_vs_lqr_vs_pid_to_csv
+% mpc_vs_lqr_vs_pid_to_csv
 
 
 
