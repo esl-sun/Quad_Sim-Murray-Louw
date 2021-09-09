@@ -98,12 +98,12 @@ mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-vel_weight = 2; % Velocity tracking weight
+vel_weight = 1.5; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 10; % Derivative of Payload swing angle
+dtheta_weight = 15; % Derivative of Payload swing angle
 
-mv_weight = 1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
-mvrate_weight = 5; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
+mv_weight = 0.1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
+mvrate_weight = 10; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
 mpc_vel = mpc(mpc_sys,Ts_mpc);
 
@@ -114,8 +114,8 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 6; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 3; % Control period, desired control settling time
+Ty = 8; % Prediction period, For guidance, minimum desired settling time (s)
+Tu = 4; % Control period, desired control settling time
 PH = floor(Ty/Ts_mpc); % Prediction horizon
 CH = floor(Tu/Ts_mpc); % Control Horizon
 
@@ -124,7 +124,8 @@ if (PH - CH <= (q-1))
     PH
     CH
     q
-    error('Should meet this condition: PH - CH > (q-1)')
+    'Warning: Should meet this condition: PH - CH > (q-1)'
+%     error('Should meet this condition: PH - CH > (q-1)')
 end
 
 mpc_vel.PredictionHorizon  = PH; % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
@@ -177,7 +178,7 @@ if length(pos_traj) < PH % Append entries
 end
 pre_generated_traj = pos_traj; % Generate pos x trajectory for single step size
 
-% disp('RUNNING SIM FROM init_mpc.')
-% tic
-% out = sim('quad_simulation_with_payload.slx')
-% toc
+disp('RUNNING SIM FROM init_mpc.')
+tic
+out = sim('quad_simulation_with_payload.slx')
+toc

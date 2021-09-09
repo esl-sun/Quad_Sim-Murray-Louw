@@ -2,9 +2,6 @@
 
 inertial_scale = 1; % Scale Ixx and Iyy
 
-% Initial conditions:
-theta_0 = -1*pi/180; % Initial theta
-
 % Mass and Inertia
 mq = 0.796;
 Ixx = 9.305e-4 * inertial_scale;
@@ -61,6 +58,10 @@ drift_tau    = 4;
 switch payload_type
     case 1 % Single pendulum
         
+        % Initial conditions:
+        theta_0 = -10*pi/180; % [rad] Initial theta
+        dtheta_0 = 0*pi/180; % [rad] Initial angular rate of theta
+
         % mp = 0.2;
         % l = 0.5;
         % c = 0.000; % From Willem simulations for match prac to sim 
@@ -84,6 +85,15 @@ switch payload_type
         r_attach = 0; % Distance below CoM of payload attachement
         
     case 2 % Double pendulum model
+        
+        % Initial conditions:
+        theta1_0 = -5*pi/180; % [rad] Initial angle of cable
+        dtheta1_0 = 0*pi/180; % [rad] Initial angular rate of theta1
+
+        theta2_0 = 0*pi/180; % [rad] Initial angle of elogated payload
+        dtheta2_0 = 0*pi/180; % [rad] Initial angular rate of theta2
+
+        % Physical parameters:
         mp1 = 0.2
         mp2 = 0.1 % Choose mp2 so that total payload maas same as single payload mass
         
@@ -104,9 +114,9 @@ switch payload_type
 
         c1 = 0.00;
         c2 = 0.00;
+
+        c = 0; % damping coef of payload angles, for LQR use
         
-        ddtheta1_0 = -0.1;
-        ddtheta2_0 = 0.1;
 end
 
 

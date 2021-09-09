@@ -42,7 +42,7 @@ file_name_comment = '' % Comment added to simulation_data_file name
 Ts_logging = 0.01; % Sample time to log data to "out" before scope block
 
 %% Pre-set settings:
-pre_set_options = 3
+pre_set_options = 1
 
 switch pre_set_options
     case 1 % Vel steps training
@@ -52,7 +52,7 @@ switch pre_set_options
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
-        tune_scale = 0.7; % Scale PID values
+        tune_scale = 1; % Scale PID values
         file_name_comment = ''
         
     case 2 % PID vel step

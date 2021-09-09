@@ -17,4 +17,7 @@ if write_csv
     MAE_vs_Ntrain;
 end
 
+% reload_data=0;
+% algorithm = 'havok'; % 'dmd' or 'havok'
+% system_id_setup;
 
