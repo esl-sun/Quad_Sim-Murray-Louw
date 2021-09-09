@@ -23,24 +23,33 @@ end
 
 switch algorithm
     case 'dmd'
-        error('Still need to add integration state of payload angle for dmd')
+        
+        %% Convert to form with state vector including delays like HAVOK model
+        A_d = B_dmd(:, 1:(q-1)*ny); % Delay state matrix as per thesis discription
+        
+        A_top    = [A_dmd, A_d]; % First ny rows of state matrix for MPC
+        A_bottom = [eye( (q-1)*ny ), zeros( (q-1)*ny, ny )]; % Bottom rows of matrix to propogate delay coordinates to new position
+        A = [A_top; A_bottom]; % A matrix for MPC
+        
+        B = [ B_dmd(:, ((q-1)*ny+1):end); zeros((q-1)*ny, nu)]; % B matrix for MPC
+
     case 'havok'
-        
-        
-        %% Add payload angular velocity for MPC
-        A_mpc = [zeros( num_axis, size(A_havok,2) ); A_havok]; % Add top row zeros
-        A_mpc = [zeros( size(A_mpc,1), num_axis ), A_mpc]; % Add left column zeros
-        B_mpc = [zeros( num_axis, size(B_havok,2) ); B_havok]; % Add top row zeros
-
-        % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-        A_mpc(1:num_axis, 2*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-        A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
-%         A_mpc(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-%         A_mpc(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
-
-        Ts_mpc = Ts;
-
+        A = A_havok;
+        B = B_havok;
 end
+
+%% Add payload angular velocity for MPC
+A_mpc = [zeros( num_axis, size(A,2) ); A]; % Add top row zeros
+A_mpc = [zeros( size(A_mpc,1), num_axis ), A_mpc]; % Add left column zeros
+B_mpc = [zeros( num_axis, size(B,2) ); B]; % Add top row zeros
+
+% Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
+A_mpc(1:num_axis, 2*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+%  A_mpc(1:num_axis, 3*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+%  A_mpc(1:num_axis, 5*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+
+Ts_mpc = Ts;
 
 % State vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
 

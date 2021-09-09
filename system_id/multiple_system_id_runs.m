@@ -10,7 +10,7 @@ seperate_test_file = 0; % extract testing data from seperate file
 
 chapter = 'control'; % folder to save csv files in ('system_id', 'results', 'control')
 
-algorithm = 'havok'; % 'dmd' or 'havok'
+algorithm = 'dmd'; % 'dmd' or 'havok'
 system_id_setup;
 
 if write_csv

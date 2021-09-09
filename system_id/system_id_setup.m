@@ -21,7 +21,7 @@ T_train_min = 80; % [s] Min value of training period in grid search
 T_train_max = 80; % Max value of training period in grid search
 T_train_increment = 5; % Increment value of training period in grid search
 
-q_min = 5; % Min value of q in grid search
+q_min = 50; % Min value of q in grid search
 q_max = 70; % Max value of q in grid search
 q_increment = 5; % Increment value of q in grid search
 
