@@ -1,10 +1,9 @@
 %% Honeybee Model
 
-inertial_scale = 2; % Scale Ixx and Iyy
+inertial_scale = 1; % Scale Ixx and Iyy
 
 % Mass and Inertia
 mq = 0.796;
-mq = mq*1.5 % change mq without LQR knowing
 Ixx = 9.305e-4 * inertial_scale;
 Iyy = 1.326e-3 * inertial_scale;
 Izz = 1.95e-3;
@@ -83,8 +82,17 @@ switch payload_type
 %         c = -0.22; % damping coef of payload angles
 
         mp = 0.3;
-        l = 1.5;
-        c = 0; % damping coef of payload angles
+        l = 0.5;
+        c = -0.0; % damping coef of payload angles
+
+        mq = mq - 0.25 % change mq without LQR knowing
+        
+        mq_lqr = 0.796
+        mp_lqr = (mp + mq) - mq_lqr
+
+%         mp = 0.3;
+%         l = 2;
+%         c = 0; % damping coef of payload angles
 
         k = 0;
         r_attach = 0; % Distance below CoM of payload attachement

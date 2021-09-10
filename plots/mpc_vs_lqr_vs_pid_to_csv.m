@@ -5,7 +5,8 @@
 run_sim = 0;
 write_csv = 1;
 chapter = 'control'
-added_comment = '';
+added_comment = ''
+% added_comment = ['_mq_', num2str(mq)];
 % added_comment = ['_intg_weight_', num2str(integrator_weight)];
  
 %% Run simulation

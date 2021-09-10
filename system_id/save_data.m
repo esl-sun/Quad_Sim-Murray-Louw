@@ -9,7 +9,7 @@ toc;
 disp('Simulation done.')
 
 %% Save data
-save_filename = [uav_folder, '/data/', simulation_data_file, '_mq_', num2str(mq), '.mat']
+save_filename = [uav_folder, '/data/', simulation_data_file, '.mat']
 
 % Check for overwriting file
 if isfile(save_filename)

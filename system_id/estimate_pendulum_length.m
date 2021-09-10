@@ -10,29 +10,32 @@ control_vel_axis = 'x'; % only use x axis
 disp('Estimating cable length with FFT')
 disp('--------------------------------')
 
-l_actual = 2
-mp = (mq + mp) - 0.796
-mq = 0.796
+l_actual = 2.25
+% mp_lqr = 0.1
+% mq_lqr = 0.796
 % mp = 0.3
 
 % Actual natural frequency
-wn = sqrt(g/l*(mq+mp)/mq) % rad/s
+wn = sqrt(g/l*(mq_lqr+mp_lqr)/mq_lqr) % rad/s
+mq_lqr
 mq
+m_ratio = mq/mq_lqr
+mp_lqr
 mp
 
 % Extract data
-extract_data; % Run once uncommented. get error. then comment this and
+% extract_data; % Run once uncommented. get error. then comment this and
 % run again. only need y_data to load, not train and test
 close all
 
 % Signal
-signal = timeseries(y_data.Data(:,2), y_data.Time);
+% signal = timeseries(y_data.Data(:,2), y_data.Time);
 % signal = resample(signal, y_data.Time(2):0.03:y_data.Time(end-1));
-% signal = out.theta;
+signal = out.theta;
 plot(signal)
 
-window_start = 35;
-window_stop = window_start + 9;
+window_start = 3;
+window_stop = window_start + 4;
 max_length = 3;
 min_length = 0.01;
 
@@ -111,7 +114,7 @@ end
 if pend_freq == inf
     l_est = 0;
 else
-    l_est = ((mq+mp)/mq)*g/((pend_freq(1) * 2*pi)^2);
+    l_est = ((mq_lqr+mp_lqr)/mq_lqr)*g/((pend_freq(1) * 2*pi)^2);
 end
 
 % Measured oscillation frequency

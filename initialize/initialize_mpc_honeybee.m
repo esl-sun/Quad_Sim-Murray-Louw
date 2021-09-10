@@ -98,9 +98,9 @@ mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 tuning_weight = 1; % Tuning weight for mv and mv rate together. Smaller = robust, Larger = aggressive
 mo_weight = 1; % Scale all MV
 
-vel_weight = 1.5; % Velocity tracking weight
+vel_weight = 2; % Velocity tracking weight
 theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-dtheta_weight = 15; % Derivative of Payload swing angle
+dtheta_weight = 10; % Derivative of Payload swing angle
 
 mv_weight = 0.1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 10; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)

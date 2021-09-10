@@ -40,6 +40,7 @@ choose_model = 1 % Manually choose model file for MPC
 enable_jerk_limited_mpc = 0; % Enable jerk limited pos S trajectory reference for MPC
 file_name_comment = '' % Comment added to simulation_data_file name
 Ts_logging = 0.01; % Sample time to log data to "out" before scope block
+run_csv_script = 0; % Run mpc vs lqr csv script
 
 %% Pre-set settings:
 pre_set_options = 3
@@ -52,18 +53,20 @@ switch pre_set_options
         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
-        tune_scale = 1; % Scale PID values
+        tune_scale = 0.7; % Scale PID values
         file_name_comment = ''
+        run_simulation = 1 % Set to 1 to automatically run simulink from MATLAB script
         
     case 2 % PID vel step
-        sim_type = 'Simulink'
-        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
-        control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
-        use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
-        enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
-        enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-        tune_scale = 0.7; % Scale PID values
-        file_name_comment = '_single_step';
+%         sim_type = 'Simulink'
+%         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+%         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
+%         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+%         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
+%         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+%         tune_scale = 0.7; % Scale PID values
+%         file_name_comment = '_single_step';
+        
         
     case 3 % MPC vel step
         sim_type = 'Simulink'; % The origin of the data, 'Simulink' or 'SITL' or 'Prac'
@@ -78,10 +81,14 @@ switch pre_set_options
         use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-        file_name_comment = '_1.5_x_mq';
+        file_name_comment = ['_mq_', num2str(mq), '_mp_', num2str(mp)];
+        if control_option == 2
+            file_name_comment = [file_name_comment, '_l_est_', num2str(l_est)]
+        end
         run_simulation = 1 % Set to 1 to automatically run simulink from MATLAB script
         control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
         tune_scale = 0.7; % Scale PID values
+        run_csv_script = 1; % Run mpc vs lqr csv script
         
     case 4 % Double pend training vel steps 
         sim_type = 'Simulink'
@@ -140,7 +147,7 @@ switch control_vel_axis
 end
 
 if enable_random_waypoints || enable_vel_training_input
-    sim_time = 400;
+    sim_time = 200;
 end
 
 
@@ -295,6 +302,10 @@ if run_simulation
     out = sim('quad_simulation_with_payload.slx')
     disp('Execution time:')
     toc
+end
+
+if run_csv_script
+    mpc_vs_lqr_vs_pid_to_csv
 end
 
 disp('Done.')
