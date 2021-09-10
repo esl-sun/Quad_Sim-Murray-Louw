@@ -11,8 +11,9 @@ disp('Estimating cable length with FFT')
 disp('--------------------------------')
 
 l_actual = 2
+mp = (mq + mp) - 0.796
 mq = 0.796
-mp = 0.3
+% mp = 0.3
 
 % Actual natural frequency
 wn = sqrt(g/l*(mq+mp)/mq) % rad/s

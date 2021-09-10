@@ -1,9 +1,10 @@
 %% Honeybee Model
 
-inertial_scale = 1; % Scale Ixx and Iyy
+inertial_scale = 2; % Scale Ixx and Iyy
 
 % Mass and Inertia
 mq = 0.796;
+mq = mq*1.5 % change mq without LQR knowing
 Ixx = 9.305e-4 * inertial_scale;
 Iyy = 1.326e-3 * inertial_scale;
 Izz = 1.95e-3;
@@ -27,7 +28,7 @@ hover_T = hover_total_T / 4; % hover thrust per motor
 % Aerodynamic:
 % C_D = [0.064; 0.067; 0.089]; % From Pierro - need to calculate in flight test
 % C_D = [0.2; 0.2; 0.2]; % Anton Thesis
-C_D = [0.12; 0.12; 0.32] * 0.8; % Murray added. From http://tinyurl.com/t87xgz8 - standard ZMR graph, pg.13, C_D = [15deg, 15deg, 90deg]
+C_D = [0.12; 0.12; 0.32] * 0.8; % Murray added. Baseline from http://tinyurl.com/t87xgz8 - standard ZMR graph, pg.13, C_D = [15deg, 15deg, 90deg]
 
 Cdp = 0.01*1;
 tau_w = 5;
@@ -59,7 +60,7 @@ switch payload_type
     case 1 % Single pendulum
         
         % Initial conditions:
-        theta_0 = -10*pi/180; % [rad] Initial theta
+        theta_0 = -5*pi/180; % [rad] Initial theta
         dtheta_0 = 0*pi/180; % [rad] Initial angular rate of theta
 
         % mp = 0.2;
@@ -73,13 +74,17 @@ switch payload_type
 %         l = 0.5;
 %         c = 0; % damping coef of payload angles
 
-        mp = 0.2;
-        l = 1;
-        c = 0; % damping coef of payload angles
+%         mp = 0.2;
+%         l = 1;
+%         c = 0; % damping coef of payload angles
 
 %         mp = 0.3;
 %         l = 2.25;
 %         c = -0.22; % damping coef of payload angles
+
+        mp = 0.3;
+        l = 1.5;
+        c = 0; % damping coef of payload angles
 
         k = 0;
         r_attach = 0; % Distance below CoM of payload attachement

@@ -14,24 +14,25 @@
 
 % c_lqr = 0.08; % rotatioal damping
 c_lqr = c; % rotatioal damping
-c_linear = 0.15; % linear velocity damping
+c_linear = 0.2; % linear velocity damping
 % l_est = 1.1
 % l_est = 0.5
+mq_lqr = 0.796;
 
 LQR.A= [    
             0       -1          0                           0;
-            0       -c_linear/mq       mp*g/mq                     c_lqr/(l_est*mq);
+            0       -c_linear/mq_lqr       mp*g/mq_lqr                     c_lqr/(l_est*mq_lqr);
             0       0           0                           1;
-            0       c_linear/(mq*l_est)     -1*(mp+mq)*g/(mq*l_est)     -c_lqr*(mp+mq)/(l_est^2*mq*mp)
+            0       c_linear/(mq_lqr*l_est)     -1*(mp+mq_lqr)*g/(mq_lqr*l_est)     -c_lqr*(mp+mq_lqr)/(l_est^2*mq_lqr*mp)
         ];
 
 
           % Fn
 LQR.B = [
             0; 
-            1/mq; 
+            1/mq_lqr; 
             0; 
-            -1/(mq*l_est)
+            -1/(mq_lqr*l_est)
         ];
 
 %Q_lqr = diag([50*0.5 50*0.5 50*1 50*1 2/100 3/100 2/100 3/100]); %50 50 /100 /100 /100

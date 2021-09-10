@@ -3,7 +3,7 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-choose_model = 1
+% choose_model = 1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -178,7 +178,7 @@ if length(pos_traj) < PH % Append entries
 end
 pre_generated_traj = pos_traj; % Generate pos x trajectory for single step size
 
-disp('RUNNING SIM FROM init_mpc.')
-tic
-out = sim('quad_simulation_with_payload.slx')
-toc
+% disp('RUNNING SIM FROM init_mpc.')
+% tic
+% out = sim('quad_simulation_with_payload.slx')
+% toc

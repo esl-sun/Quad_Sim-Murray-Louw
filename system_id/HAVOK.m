@@ -37,12 +37,12 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         'Override --------------------------------------------------------'
-        q = 50
-        p = 12
-        N_train = 130
+        q = 100
+        p = 119
+%         N_train = 130
         
     end
     % % Override parameters:
