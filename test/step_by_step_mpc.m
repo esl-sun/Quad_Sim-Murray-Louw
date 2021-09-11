@@ -38,8 +38,8 @@ v = []; % No measured distrubances
 y_rows = 1:3
 
 %% Plot step for step
-start_pausing_time = 1.5; % Set time where it should start pausing and plotting. Press Enter to continue
-pause_interval = 0.1; % Size of time gap between pauses
+start_pausing_time = 0.7; % Set time where it should start pausing and plotting. Press Enter to continue
+pause_interval = 0.05; % Size of time gap between pauses
 
 figure(1)
 
@@ -53,7 +53,7 @@ for k = 1:N % every timestep k
     end
     
     [mv, info] = mpcmove(mpc_vel, x_mpc, ym, r, v);
-    if mod(k, pause_interval/Ts_mpc) == 0 && (k*Ts_mpc > start_pausing_time)
+    if mod(k, floor(pause_interval/Ts_mpc)) == 0 && (k*Ts_mpc > start_pausing_time)
         figure(1)
         for state = y_rows
             subplot(4,1,state)
