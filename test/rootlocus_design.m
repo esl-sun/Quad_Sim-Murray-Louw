@@ -31,6 +31,13 @@ Tmax = 6.85; % [N] Max thrust per motor
 d = 0.11; % [m] quad arm length
 Rn = 7.997e-3; % [m] virtual yaw moment arm
 
+
+% motor coefficients
+% motor_coeff_1 = [-0.0000000397959403 0.0001996456801152 -0.2773896905520106 118.7667175238575652];
+% motor_coeff_2 = [-0.0000000413595098 0.0002069219596305 -0.2858221900173662 121.2675504198610383];
+% motor_coeff_3 = [-0.0000000406769540 0.0002028435504012 -0.2787807080476987 117.7570545685150876];
+% motor_coeff_4 = [-0.0000000386173758 0.0001927613593388 -0.2630242287303664 109.8400430499503813];
+
 %% Step response
 step_sim_time = 1*10;
 step_sim_freq = 250;
@@ -40,14 +47,17 @@ disturb = 1;
 disturb_time = 20;
 disturb_val = 0.01;
 
+
+
+
 %%%%%% ------------------ longitudinal controllers ---------------- %%%%%%%
 %% pitch rate (Q):
 s = tf('s');
 
-% Pitch Rate
-Kp_pr = 0.06;
-Ki_pr = 0.2;
-Kd_pr = 0.0017;
+% Gains pitch rate
+Kp_pr = 0.086;
+Ki_pr = 0.02;
+Kd_pr = 0.003;
 
 % linear plant
 G_pitch_rate_ol = 2*Tmax*(d/(tau*Iyy))/(s*(s+1/tau));
@@ -63,13 +73,14 @@ G_pitch_rate_cl = D_pitch_rate*G_pitch_rate_ol/(1+D_pitch_rate*G_pitch_rate_ol);
 fb_pitch_rate = bandwidth(G_pitch_rate_cl)
 
 % bandwidth without controller
-aaaa = bandwidth(G_pitch_rate_ol/(1 + G_pitch_rate_ol))
+aaaa = bandwidth(G_pitch_rate_ol/(1+G_pitch_rate_ol))
+
 
 
 %% pitch angle
 
 % Gain pitch angle
-Kp_pa = 10;
+Kp_pa = 3;
 
 % linear plant
 G_pitch_angle_ol = (G_pitch_rate_cl)*(1/s);
@@ -89,22 +100,22 @@ bbbbb = bandwidth(G_pitch_angle_ol/(1+G_pitch_angle_ol))
 %% linear velocity north (Vn)
 
 % gains linear velocity north
-Kp_vn = 0.05*0.7; % thrust setpoint based
-Ki_vn = 0.025*0.7;
-Kd_vn = 0.01*0.7;
+Kp_vn = 0.048;
+Ki_vn = 0.008;
+Kd_vn = 0.002;
+
 
 % linear plant
 G_vn_ol = (4*Tmax)*(1/(2*mq*g))*(G_pitch_angle_cl)*(2*mq*g)*(1/mq)*(1/s);
-
-enable_payload = 1;
+enable_payload = 0;
 if enable_payload
    G_pln = 4*Tmax*(1/(mq*s) - (g*mpr)/(mq*(lr*mq*s^3 + g*mpr*s + g*mq*s)));
    G_vn_ol = G_pitch_angle_cl * G_pln; 
 end
 
-rltool(G_vn_ol)
+%rltool(G_vn_ol)
 
-%% PID controller
+% PID controller
 D_vn = Kp_vn+Ki_vn/s+Kd_vn*s;
 %rltool(D_vn*G_vn_ol)
 
@@ -117,8 +128,6 @@ fb_vn = bandwidth(G_vn_cl)
 
 % bandwidth without controller
 cccc = bandwidth(G_vn_ol/(1+G_vn_ol))
-
-stop
 %% inertial position north (N)
 
 % gain position north

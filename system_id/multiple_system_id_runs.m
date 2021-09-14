@@ -7,6 +7,7 @@ control_vel_axis = 'x'; % only use x axis
 add_training_latency = 0;
 use_angular_rate = 0;
 seperate_test_file = 0; % extract testing data from seperate file
+train_with_pid_and_mpc = 1; % USe training data with PID and MPC controllers in one simulation
 
 chapter = 'control'; % folder to save csv files in ('system_id', 'results', 'control')
 

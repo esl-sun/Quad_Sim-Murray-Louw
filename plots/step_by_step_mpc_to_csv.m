@@ -15,8 +15,8 @@ vel_sp = ref_data(2,(0:PH)+k)';
 prediction.vel = info.Yopt(:,2);
 actual.vel = ov_data(2,(0:PH)+k)';
 
-prediction.theta = info.Yopt(:,3);
-actual.theta = ov_data(3,(0:PH)+k)';
+prediction.theta = info.Yopt(:,3) * 180/pi; % [deg]
+actual.theta = ov_data(3,(0:PH)+k)' * 180/pi; % [deg]
 
 prediction.vel = prediction.vel - (prediction.vel(1) - actual.vel(1)); % Start at same y
 

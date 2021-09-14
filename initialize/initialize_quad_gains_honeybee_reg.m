@@ -1,4 +1,4 @@
-%% GRIFFIN Control Gains
+%% Honeybee Control Gains
 
 %% Body Rates
 Ts_angular_rate_control = 1/1000; % Hz

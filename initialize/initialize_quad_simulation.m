@@ -58,15 +58,25 @@ switch pre_set_options
         run_simulation = 0 % Set to 1 to automatically run simulink from MATLAB script
         
     case 2 % PID vel step
-%         sim_type = 'Simulink'
-%         payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
-%         control_option = 0 % 0 = only PID, 1 = MPC, 2 = LQR
-%         use_new_control = 0 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
-%         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
-%         enable_velocity_step = 1 % Ignore position controller, use single velocity step input
-%         tune_scale = 0.7; % Scale PID values
-%         file_name_comment = '_single_step';
+        sim_type = 'Simulink'; % The origin of the data, 'Simulink' or 'SITL' or 'Prac'
         
+        disp('Training PID then MPC')
+        disp('---------------------')
+        
+        choose_model = 1; % Let user choose model file for MPC
+
+        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
+        use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
+        new_control_start_time = 40; % Time at which non-PID acc_sp starts to be used
+        
+        enable_vel_training_input = 1 % Ignore other velocity sp input, use velocity sepoints for training data
+        enable_velocity_step = 1 % Ignore position controller, use single velocity step input
+        file_name_comment = '_PID_and_MPC_training';
+        control_vel_axis = 'x' % Axis that MPC controls. 'x' or 'xy'
+        tune_scale = 0.7; % Scale PID values
+        run_csv_script = 0; % Run mpc vs lqr csv script
+        run_simulation = 1 % Set to 1 to automatically run simulink from MATLAB script
         
     case 3 % MPC vel step
         sim_type = 'Simulink'; % The origin of the data, 'Simulink' or 'SITL' or 'Prac'

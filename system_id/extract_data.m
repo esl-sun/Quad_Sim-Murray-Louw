@@ -241,15 +241,22 @@ else
     T_test = 50; % [s] Time length of training data    
     test_time = time_offset + (0:Ts:T_test)';
 
-    clip_end_data = 20;
-    if strcmp(sim_type, 'Prac')
-        clip_end_data = 0;
+    clip_end_data = 0;
+    if strcmp(sim_type, 'SITL')
+        clip_end_data = 20;
     end
     data_end_time = y_data.Time(end) - clip_end_data; % Max length of data available. clip last bit.
     train_time = (test_time(end):Ts:data_end_time)';
     
     if strcmp(sim_type, 'Prac')
         train_time = (0:Ts:y_data.Time(end))'; % Use all data for Prac
+    end
+    
+    if train_with_pid_and_mpc
+        T_test = 100; % [s] Time length of training data    
+        test_time = 20 + (0:Ts:T_test)';
+
+        train_time = (0:Ts:190)';
     end
 
     % Training data

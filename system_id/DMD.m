@@ -3,7 +3,7 @@
 
 % Extract data
 reload_data = 0; % Re-choose csv data file for SITL data
-save_model = 1; % 1 = Save this model , 0 = dont save
+save_model = 0; % 1 = Save this model , 0 = dont save
 extract_data;
 plot_predictions = 1;
 
@@ -45,11 +45,11 @@ try
         p = double(best_results.p);
     end
     
-    override = 0;
+    override = 1;
     if override
         '!!!!!Override!!!!!!!'
-        q = 100
-        p = 48
+        q = 200
+        p = 200
 %         N_train = round(50/Ts)
         
     end
