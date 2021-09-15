@@ -102,13 +102,13 @@ if enable_payload
    G_vn_ol = G_pitch_angle_cl * G_pln; 
 end
 
-rltool(G_vn_ol)
+% rltool(G_vn_ol)
 
 %% PID controller
-D_vn = Kp_vn+Ki_vn/s+Kd_vn*s;
+D_vn = Kp_vn + Ki_vn/s + Kd_vn*s;
 %rltool(D_vn*G_vn_ol)
 
-G_vn_cl = D_vn*G_vn_ol/(1+D_vn*G_vn_ol);
+G_vn_cl = D_vn*G_vn_ol/(1 + D_vn*G_vn_ol);
 
 
 

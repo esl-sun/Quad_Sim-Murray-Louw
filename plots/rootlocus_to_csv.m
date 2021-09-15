@@ -3,35 +3,35 @@
 
 % Transfer functions
 s = tf('s');
-G = G_VN_OL;
-D = D_VN;
+G = G_vn_ol;
+D = D_vn;
 
 [G_NUM, G_DENOM] = tfdata(G, 'v');
 
-clear zero;
-clear zeros; % Clear any zero variables masking the function
-[ctrl_zeros, ctrl_gain] = zero(D*s^0);
-p_gain = 0;
-i_gain = 0;
-d_gain = 0;
-if isempty(ctrl_zeros)
-    p_gain =  ctrl_gain;
-elseif length(ctrl_zeros) == 1
-    p_gain = ctrl_gain;
-    i_gain = p_gain * abs(ctrl_zeros(1));
-elseif length(ctrl_zeros) == 2
-    d_gain = ctrl_gain;
-    p_gain = d_gain*(abs(ctrl_zeros(1)) + abs(ctrl_zeros(2)));
-    i_gain = d_gain*abs(ctrl_zeros(1))*abs(ctrl_zeros(2));
-end
+% clear zero;
+% clear zeros; % Clear any zero variables masking the function
+% [ctrl_zeros, ctrl_gain] = zero(D*s^0);
+% p_gain = 0;
+% i_gain = 0;
+% d_gain = 0;
+% if isempty(ctrl_zeros)
+%     p_gain =  ctrl_gain;
+% elseif length(ctrl_zeros) == 1
+%     p_gain = ctrl_gain;
+%     i_gain = p_gain * abs(ctrl_zeros(1));
+% elseif length(ctrl_zeros) == 2
+%     d_gain = ctrl_gain;
+%     p_gain = d_gain*(abs(ctrl_zeros(1)) + abs(ctrl_zeros(2)));
+%     i_gain = d_gain*abs(ctrl_zeros(1))*abs(ctrl_zeros(2));
+% end
 
 Gol = G*D;
 
-Root locus data
+% Root locus data
 [r_plant, gain_plant] = rlocus(G); % Poles and zeros of open loop system
 [r, gain] = rlocus(Gol); % Poles and zeros of closed loop system
 [Z, K] = zero(Gol); % Gain K
-
+stop
 % Obtain real and imaginary parts
 % Plant
 rl_plant = zeros(length(r_plant), 2*min(size(r_plant)));
