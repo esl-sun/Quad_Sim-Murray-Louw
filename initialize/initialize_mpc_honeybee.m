@@ -3,7 +3,7 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-% choose_model = 1
+choose_model = 1
 if choose_model
     if use_sitl_data
         start_folder = [pwd, '/system_id/SITL/*.mat'];
@@ -55,7 +55,7 @@ Ts_mpc = Ts;
 
 % Add Unmeasured Input Disturbance
 B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-B_mpc(2,2) = 1e-2; % Unmeasured Disturbance only affects v(k)
+B_mpc(2,2) = 1; % Unmeasured Disturbance only affects v(k)
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -114,8 +114,8 @@ x_mpc = mpcstate(mpc_vel); % Initial state
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
 % x_mpc = mpcstate(mpc_vel, [], [], [], [], covariance);
 
-Ty = 8; % Prediction period, For guidance, minimum desired settling time (s)
-Tu = 4; % Control period, desired control settling time
+Ty = 5; % Prediction period, For guidance, minimum desired settling time (s)
+Tu = 3.5; % Control period, desired control settling time
 PH = floor(Ty/Ts_mpc); % Prediction horizon
 CH = floor(Tu/Ts_mpc); % Control Horizon
 

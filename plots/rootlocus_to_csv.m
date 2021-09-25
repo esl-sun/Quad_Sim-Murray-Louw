@@ -16,8 +16,11 @@ rlocus(G)
 hold on
 r_ol = rlocus(G,1); % Get poles for gain of k = 1
 plot(real(r_ol), imag(r_ol), 'rs')
+title('open loop root locus')
 ylim([-4 4])
 xlim([-5 0.2])
+matlab2tikz('rootlocus_ol.tex');
+
 % In Figure GUI: Save as .eps
 
 %% Plot closed loop
@@ -26,10 +29,14 @@ rlocus(GD)
 hold on
 r_control = rlocus(GD,1); % Get poles for gain of 1
 plot(real(r_control), imag(r_control), 'rs')
+title('closed loop root locus')
 ylim([-4 4])
 xlim([-5 0.2])
+% matlab2tikz('rootlocus_cl.tex');
+
 stop
-% Root locus data
+
+%% Root locus data
 [r_plant, gain_plant] = rlocus(G); % Poles and zeros of open loop system
 [r, gain] = rlocus(Gol); % Poles and zeros of closed loop system
 [Z, K] = zero(Gol); % Gain K

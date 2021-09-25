@@ -86,7 +86,7 @@ switch pre_set_options
         
         choose_model = 1; % Let user choose model file for MPC
 
-        payload_type = 2 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
+        payload_type = 1 % 0 = no payload, 1 = 3D swinging payload, 2 = 2D double pendulum payload
         control_option = 1 % 0 = only PID, 1 = MPC, 2 = LQR
         use_new_control = 1 % Set to 1 to use non-PID (MPC or LQR) control signals. Set to 0 to only use PID
         enable_vel_training_input = 0 % Ignore other velocity sp input, use velocity sepoints for training data
@@ -125,7 +125,7 @@ switch pre_set_options
 end
 
 %% Wind options
-enable_wind = 0; % 1 = Wind is enabled. 0 = no wind is simulated
+enable_wind = 1; % 1 = Wind is enabled. 0 = no wind is simulated
 wind_velocity = 2; % Constant velcoity of wind applied as a step input disturbance
 wind_step_time = 8; % Time when wind velocity step is applied
 if enable_wind
@@ -305,18 +305,18 @@ initialize_controller_inputs; % Scheduled waypoints and velocity setpoints
 %% Step response
 initialize_step 
 
-%% Run simulation
-if run_simulation
-    tic;
-    disp('Start simulation.')
-    out = sim('quad_simulation_with_payload.slx')
-    disp('Execution time:')
-    toc
-end
-
-if run_csv_script
-    mpc_vs_lqr_vs_pid_to_csv
-end
+% %% Run simulation
+% if run_simulation
+%     tic;
+%     disp('Start simulation.')
+%     out = sim('quad_simulation_with_payload.slx')
+%     disp('Execution time:')
+%     toc
+% end
+% 
+% if run_csv_script
+%     mpc_vs_lqr_vs_pid_to_csv
+% end
 
 disp('Done.')
 

@@ -77,18 +77,18 @@ switch payload_type
 %         l = 1;
 %         c = 0; % damping coef of payload angles
 
-%         mp = 0.3;
-%         l = 2.25;
-%         c = -0.22; % damping coef of payload angles
-
         mp = 0.3;
-        l = 0.5;
-        c = -0.0; % damping coef of payload angles
+        l = 2.25;
+        c = -0.22; % damping coef of payload angles
 
-        mq = mq - 0.25 % change mq without LQR knowing
-        
-        mq_lqr = 0.796
-        mp_lqr = (mp + mq) - mq_lqr
+%         mp = 0.3;
+%         l = 2;
+%         c = -0.0; % damping coef of payload angles
+
+%         mq = mq - 0.25 % change mq without LQR knowing
+%         
+%         mq_lqr = 0.796
+%         mp_lqr = (mp + mq) - mq_lqr
 
 %         mp = 0.3;
 %         l = 2;
