@@ -94,22 +94,22 @@ xlabel('T_train');
 ylim(y_limits)
 title(['DMD, best q = ', num2str(best_mean_results.q)])
 
-subplot(1,3,3)
-semilogy(results.N_train.*Ts, results.MAE_2, '.')
-grid on
-ylabel('MAE 2');
-xlabel('T_train');
-ylim(y_limits)
-title(['DMD, best q = ', num2str(best_mean_results.q)])
+% subplot(1,3,3)
+% semilogy(results.N_train.*Ts, results.MAE_2, '.')
+% grid on
+% ylabel('MAE 2');
+% xlabel('T_train');
+% ylim(y_limits)
+% title(['DMD, best q = ', num2str(best_mean_results.q)])
 
-%% plot p
-figure
-semilogy(results.p, results.MAE_1, '.')
-grid on
-ylabel('MAE_1');
-xlabel('p');
-ylim(y_limits)
-title(['Checkout effect of P'])
+% %% plot p
+% figure
+% semilogy(results.p, results.MAE_1, '.')
+% grid on
+% ylabel('MAE_1');
+% xlabel('p');
+% ylim(y_limits)
+% title(['Checkout effect of P'])
 
 %% plot q
 figure
