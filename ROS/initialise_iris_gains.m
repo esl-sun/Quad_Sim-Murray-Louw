@@ -15,6 +15,10 @@ max_vel_xy = 5;
 max_vel_z_up = 5;
 max_vel_z_down = 5;
 
+MPC_ACC_HOR_MAX = 5; 
+MPC_ACC_DOWN_MAX = 3;
+MPC_ACC_UP_MAX = 4;
+
 % D term filter
 vel_dterm_cutoff = 40; %Hz
 [vel_filt_num, vel_filt_denom] = discrete_lpf_filter(vel_dterm_cutoff, 1/Ts_sim);
