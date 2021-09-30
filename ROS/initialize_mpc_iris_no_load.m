@@ -52,7 +52,7 @@ Ts_mpc = Ts;
 
 % Add Unmeasured Input Disturbance
 B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-B_mpc(2,2) = 1; % Unmeasured Disturbance only affects v(k)
+B_mpc(2,2) = 0.1; % Unmeasured Disturbance only affects v(k)
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
