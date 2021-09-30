@@ -81,8 +81,9 @@ end
 old_status = mpcverbosity('off'); % No display messages
 
 % Use dtheta as unmeasured output
-mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
-mpc_sys.OutputGroup.MO = num_axis + 1:(q*ny); % Measured Output
+% mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
+% mpc_sys.OutputGroup.MO = num_axis + (1:size(A_mpc,1)); % Measured Output
+mpc_sys.OutputGroup.MO = 1:size(A_mpc,1); % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
 mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2

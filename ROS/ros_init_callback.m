@@ -1,7 +1,7 @@
 %% Used in InitCallback function of any Simulink model using ros to initialise connections
 disp('[InitFcn] Running initialise function for ROS connections')
-% rosshutdown
-% rosinit('192.168.55.1')
+rosshutdown
+rosinit('192.168.55.1')
 
 enable_mpc_control = 1; % Set to 0 to use PID control
 
