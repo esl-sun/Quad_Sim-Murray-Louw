@@ -3,13 +3,16 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-choose_model = 1
-if choose_model
-    start_folder = [pwd, '/system_id/HITL/iris/models/*.mat'];
-    [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc_iris_no_load.m] Choose MODEL .mat file to use for mpc')
-    model_file = (strcat(model_parent_dir, '/', model_file_name));
-    load(model_file) % Load plant model from saved data
-end
+% choose_model = 1
+% if choose_model
+%     start_folder = [pwd, '/system_id/HITL/iris/models/*.mat'];
+%     [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc_iris_no_load.m] Choose MODEL .mat file to use for mpc')
+%     model_file = (strcat(model_parent_dir, model_file_name));
+%     load(model_file) % Load plant model from saved data
+% end
+
+% Hardcoded laod model
+load('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/HITL/iris/models//dmd_model_no_noise_no_load.csv_q50_p50_angle.mat');
 
 if strcmp(model_file_name(1:3), 'dmd') % Check what type of algorithm is model
     algorithm = 'dmd'
