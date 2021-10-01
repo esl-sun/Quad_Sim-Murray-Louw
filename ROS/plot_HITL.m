@@ -38,6 +38,10 @@ angle.x = data(:,17); % Payload angle about x axis in local NED
 angle.y = data(:,18);
 angle.z = data(:,19);
 
+simulink_acc_sp.x = data(:,20); % Local NED x acceleration setpoint commanded by simulink node
+simulink_acc_sp.y = data(:,21);
+simulink_acc_sp.z = data(:,22);
+
 %% Group data
 y_data_noise = [vel.x, vel.y, vel.z]; % Data still noisy
 u_data_noise = [acc_sp.x, acc_sp.y, acc_sp.z];
@@ -53,3 +57,14 @@ plot(time, vel_sp_data)
 hold off
 
 title(['Velocity step - HITL - ', file_name])
+
+%% Plot simulink acc_sp vs received-and_returned sp
+figure
+plot(time, simulink_acc_sp.y)
+hold on
+plot(time, acc_sp.x)
+hold off
+legend('simulink', 'received and returned')
+title(['Simulink vs received sp - HITL - ', file_name])
+
+
