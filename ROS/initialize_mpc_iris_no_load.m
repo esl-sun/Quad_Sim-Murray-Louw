@@ -50,10 +50,12 @@ Ts_mpc = Ts;
 % A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
 % State vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
+% No load State vector = [v(k), v(k-1), ...]
 
 % Add Unmeasured Input Disturbance
 B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-B_mpc(2,2) = 0.01; % Unmeasured Disturbance only affects v(k)
+% B_mpc(2,2) = 0.1; % Unmeasured Disturbance only affects v(k)
+B_mpc(1, nu+1) = 0.1; % No load version of Unmeasured Disturbance only affects v(k)
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -94,7 +96,7 @@ mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 
 mo_weight = 1; % Scale all MO variables
 
-vel_weight = 0.1; % Velocity tracking weight
+vel_weight = 2; % Velocity tracking weight
 % theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
 % dtheta_weight = 10; % Derivative of Payload swing angle
 
