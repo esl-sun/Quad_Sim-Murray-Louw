@@ -43,10 +43,13 @@ simulink_acc_sp.y = data(:,21);
 simulink_acc_sp.z = data(:,22);
 
 %% Group data
-y_data_noise = [vel.x, vel.y, vel.z]; % Data still noisy
-u_data_noise = [acc_sp.x, acc_sp.y, acc_sp.z];
+% y_data_noise = [vel.x, vel.y, vel.z]; % Data still noisy
+% u_data_noise = [acc_sp.x, acc_sp.y, acc_sp.z];
+% vel_sp_data = [vel_sp.x, vel_sp.y, vel_sp.z];
 
-vel_sp_data = [vel_sp.x, vel_sp.y, vel_sp.z];
+y_data_noise = [vel.x, angle.y]; % Data still noisy
+u_data_noise = [acc_sp.x];
+vel_sp_data = [vel_sp.x];
 
 %% Plot 
 figure
