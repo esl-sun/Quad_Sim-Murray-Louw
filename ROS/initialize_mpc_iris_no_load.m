@@ -13,12 +13,13 @@
 
 % Hardcoded laod model
 load('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/HITL/iris/models//dmd_model_no_noise_no_load.csv_q50_p50_angle.mat');
+algorithm = 'dmd';
 
-if strcmp(model_file_name(1:3), 'dmd') % Check what type of algorithm is model
-    algorithm = 'dmd'
-else
-    algorithm = 'havok'
-end
+% if strcmp(model_file_name(1:3), 'dmd') % Check what type of algorithm is model
+%     algorithm = 'dmd'
+% else
+%     algorithm = 'havok'
+% end
 
 switch algorithm
     case 'dmd'
@@ -52,7 +53,7 @@ Ts_mpc = Ts;
 
 % Add Unmeasured Input Disturbance
 B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-B_mpc(2,2) = 0.1; % Unmeasured Disturbance only affects v(k)
+B_mpc(2,2) = 0.01; % Unmeasured Disturbance only affects v(k)
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -93,7 +94,7 @@ mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
 
 mo_weight = 1; % Scale all MO variables
 
-vel_weight = 2; % Velocity tracking weight
+vel_weight = 0.1; % Velocity tracking weight
 % theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
 % dtheta_weight = 10; % Derivative of Payload swing angle
 
