@@ -55,6 +55,7 @@ vel_sp_data = [vel_sp.x];
 figure
 plot(time, y_data_noise)
 hold on
+plot(time, y_data_noise, '.')
 plot(time, u_data_noise)
 plot(time, vel_sp_data)  
 hold off
@@ -70,4 +71,7 @@ hold off
 legend('simulink', 'received and returned')
 title(['Simulink vs received sp - HITL - ', file_name])
 
-
+%% Plot logging frequency:
+figure
+plot(diff(time))
+title('logging sample time')
