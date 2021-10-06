@@ -44,8 +44,8 @@ switch sim_type
 
         switch control_vel_axis
             case 'x'
-%                 y_data_noise = [vel.x, angle.y]; % Data still noisy
-                y_data_noise = [vel.x]; % Data still noisy
+                y_data_noise = [vel.x, angle.y]; % Data still noisy
+%                 y_data_noise = [vel.x]; % Data still noisy
                 u_data_noise = [acc_sp.x];
 
                 vel_sp_data = [vel_sp.x];
@@ -351,7 +351,6 @@ else
         test_time = time_offset + (0:Ts:T_test)';
 
         train_time = (test_time(end):Ts:y_data.Time(end))'; % Use all data for Prac
-        test_time = train_time;
     end
     
     if train_with_pid_and_mpc

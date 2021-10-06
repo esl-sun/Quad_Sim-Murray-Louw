@@ -36,7 +36,7 @@ try
     p = double(best_results.p);
     N_train = double(best_results.N_train);
     
-    only_q_Ts = 0; % Try best result for specific q
+    only_q_Ts = 1; % Try best result for specific q
     if only_q_Ts
         q = 20;
         q_results = results((results.q == q & results.Ts == Ts),:);
@@ -49,7 +49,7 @@ try
     if override
         '!!!!!Override!!!!!!!'
         q = 50
-        p = 21
+        p = 50
 %         N_train = round(50/Ts)
         
     end
