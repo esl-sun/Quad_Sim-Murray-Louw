@@ -42,6 +42,8 @@ simulink_acc_sp.x = data(:,20); % Local NED x acceleration setpoint commanded by
 simulink_acc_sp.y = data(:,21);
 simulink_acc_sp.z = data(:,22);
 
+qp_status= data(:,23);
+
 %% Group data
 % y_data_noise = [vel.x, vel.y, vel.z]; % Data still noisy
 % u_data_noise = [acc_sp.x, acc_sp.y, acc_sp.z];
@@ -58,7 +60,10 @@ hold on
 plot(time, y_data_noise, '.')
 plot(time, u_data_noise)
 plot(time, vel_sp_data)  
+plot(time, qp_status, 'r')  
+
 hold off
+ylim([-0.2 1.2])
 
 title(['Velocity step - HITL - ', file_name])
 

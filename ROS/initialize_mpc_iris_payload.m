@@ -52,11 +52,11 @@ A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta
 %% New state vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
 
 %% Add Unmeasured Input Disturbance
-B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)]; % New column is for estimated input disturbance
-B_mpc(2, nu+1) = 0.1; % Unmeasured Disturbance only affects v(k)
-if(num_axis~=1)
-    error("Change disturbance model to account for disturbance in both axis")
-end
+% B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)]; % New column is for estimated input disturbance
+% B_mpc(2, nu+1) = 0.1; % Unmeasured Disturbance only affects v(k)
+% if(num_axis~=1)
+%     error("Change disturbance model to account for disturbance in both axis")
+% end
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -92,7 +92,7 @@ mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
 mpc_sys.OutputGroup.MO = num_axis + (1:size(A_mpc,1)-num_axis); % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
-mpc_sys.InputGroup.UD = 2; % Unmeasured input disturbance at channel 2
+% mpc_sys.InputGroup.UD = 2; % Unmeasured input disturbance at channel 2
 
 mo_weight = 1; % Scale all MO variables
 
