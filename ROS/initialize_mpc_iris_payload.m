@@ -3,16 +3,16 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
-% choose_model = 1
-% if choose_model
-%     start_folder = [pwd, '/system_id/HITL/iris/models/*.mat'];
-%     [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc_iris_no_load.m] Choose MODEL .mat file to use for mpc')
-%     model_file = (strcat(model_parent_dir, model_file_name));
-%     load(model_file) % Load plant model from saved data
-% end
+choose_model = 0
+if choose_model
+    start_folder = [pwd, '/system_id/HITL/iris/models/*.mat'];
+    [model_file_name, model_parent_dir] = uigetfile(start_folder, '[init_mpc_iris_payload.m] Choose MODEL .mat file to use for mpc')
+    model_file = (strcat(model_parent_dir, model_file_name));
+    load(model_file) % Load plant model from saved data
+end
 
 % Hardcoded laod model
-load('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/HITL/iris/models//dmd_model_no_noise_no_load.csv_q50_p50_angle.mat');
+% load('/home/murray/Masters/Developer/MATLAB/Quad_Sim_Murray/system_id/HITL/iris/models/dmd_model_no_noise_payload.csv_q50_p50_angle.mat');
 algorithm = 'dmd';
 
 % if strcmp(model_file_name(1:3), 'dmd') % Check what type of algorithm is model
@@ -40,22 +40,23 @@ end
 
 Ts_mpc = Ts;
 
-% %% Add payload angular velocity for MPC
-% A_mpc = [zeros( num_axis, size(A_mpc,2) ); A_mpc]; % Add top row zeros
-% A_mpc = [zeros( size(A_mpc,1), num_axis ), A_mpc]; % Add left column zeros
-% B_mpc = [zeros( num_axis, size(B_mpc,2) ); B_mpc]; % Add top row zeros
+%% Add payload angular velocity to state space matrices for MPC
+A_mpc = [zeros( num_axis, size(A_mpc,2) ); A_mpc]; % Add top row zeros
+A_mpc = [zeros( size(A_mpc,1), num_axis ), A_mpc]; % Add left column zeros
+B_mpc = [zeros( num_axis, size(B_mpc,2) ); B_mpc]; % Add top row zeros
 
 % Numeric differentiation: dtheta(k+1) approx.= dtheta(k) = 1/Ts*theta(k) - 1/Ts*theta(k-1)
-% A_mpc(1:num_axis, 2*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
-% A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
+A_mpc(1:num_axis, 2*num_axis+(1:num_axis)) =  1/Ts*eye(num_axis); % 1/Ts*theta(k)
+A_mpc(1:num_axis, 4*num_axis+(1:num_axis)) = -1/Ts*eye(num_axis); % - 1/Ts*theta(k-1)
 
-% State vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
-% No load State vector = [v(k), v(k-1), ...]
+%% New state vector = [dtheta(k), v(k), theta(k), v(k-1), theta(k-1), ...]
 
-% Add Unmeasured Input Disturbance
-B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)];
-% B_mpc(2,2) = 0.1; % Unmeasured Disturbance only affects v(k)
-B_mpc(1, nu+1) = 0.1; % No load version of Unmeasured Disturbance only affects v(k)
+%% Add Unmeasured Input Disturbance
+B_mpc = [B_mpc, zeros(size(B_mpc,1), 1)]; % New column is for estimated input disturbance
+B_mpc(2, nu+1) = 0.1; % Unmeasured Disturbance only affects v(k)
+if(num_axis~=1)
+    error("Change disturbance model to account for disturbance in both axis")
+end
 
 % Other state matrices
 C_mpc = eye(size(A_mpc,1));
@@ -87,27 +88,26 @@ end
 old_status = mpcverbosity('off'); % No display messages
 
 % Use dtheta as unmeasured output
-% mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
-% mpc_sys.OutputGroup.MO = num_axis + (1:size(A_mpc,1)); % Measured Output
-mpc_sys.OutputGroup.MO = 1:size(A_mpc,1); % Measured Output
+mpc_sys.OutputGroup.UO = 1:num_axis; % Unmeasured payload anglular velocity
+mpc_sys.OutputGroup.MO = num_axis + (1:size(A_mpc,1)-num_axis); % Measured Output
 
 mpc_sys.InputGroup.MV = 1:nu; % Munipulated Variable indices
-mpc_sys.InputGroup.UD = 2; % Unmeasured disturbance at channel 2
+mpc_sys.InputGroup.UD = 2; % Unmeasured input disturbance at channel 2
 
 mo_weight = 1; % Scale all MO variables
 
 vel_weight = 2; % Velocity tracking weight
-% theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
-% dtheta_weight = 10; % Derivative of Payload swing angle
+theta_weight = 0; % Payload swing angle. Larger = less swing angle, Smaller = more swing
+dtheta_weight = 10; % Derivative of Payload swing angle
 
 tuning_weight = 1; % Tune relationship between inputs and outputs simueltaneously
 mv_weight = 0.1; % Tuning weight for manipulated variables only (Smaller = aggressive, Larger = robust)
 mvrate_weight = 10; % Tuning weight for rate of manipulated variables (Smaller = aggressive, Larger = robust)
 
-mpc_iris_no_load = mpc(mpc_sys,Ts_mpc);
+mpc_iris_payload = mpc(mpc_sys,Ts_mpc);
 
 % Manually set covariance
-x_mpc = mpcstate(mpc_iris_no_load); % Initial state
+x_mpc = mpcstate(mpc_iris_payload); % Initial state
 % covariance = zeros(size(x_mpc.Covariance));
 % covariance(1:ny, 1:ny) = diag([1e-3, 1e-3, 1e-3, 1e-4, 1e-4]); % Manually tune uncertainty of each state                                               pos   vel    theta
 % covariance(1:ny+2*num_axis, 1:ny+2*num_axis) = diag([1e-1, 1e-1, 1e-5, 1e-5]); % Uncertainty of each measured state
@@ -127,14 +127,16 @@ if (PH - CH <= (q-1))
 %     error('Should meet this condition: PH - CH > (q-1)')
 end
 
-mpc_iris_no_load.PredictionHorizon  = PH; % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
-mpc_iris_no_load.ControlHorizon     = CH; % Control horizon (samples)
+mpc_iris_payload.PredictionHorizon  = PH; % t_s/Ts_mpc; % Prediction horizon (samples), initial guess according to MATLAB: Choose Sample Time and Horizons
+mpc_iris_payload.ControlHorizon     = CH; % Control horizon (samples)
 %%
-mpc_iris_no_load.Weights.OutputVariables = mo_weight*tuning_weight*  [ ...  
-                                        vel_weight*    ones(1,num_axis), ...
-                                                       zeros(1, (q-1)*ny) ...
-                                                            ];
+mpc_iris_payload.Weights.OutputVariables =  mo_weight*      tuning_weight*  [ ...  
+                                                dtheta_weight*  ones(1,num_axis), ...
+                                                vel_weight*     ones(1,num_axis), ...
+                                                theta_weight*   ones(1,num_axis), ...
+                                                                zeros(1, (q-1)*ny) ...
+                                                                            ];
 
-mpc_iris_no_load.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
-mpc_iris_no_load.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
+mpc_iris_payload.Weights.ManipulatedVariables   = mv_weight*ones(1,nu)*tuning_weight;
+mpc_iris_payload.Weights.ManipulatedVariablesRate     = mvrate_weight*ones(1,nu)/tuning_weight;
 

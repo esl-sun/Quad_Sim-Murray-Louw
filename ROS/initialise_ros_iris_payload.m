@@ -24,4 +24,4 @@ end
 mpc_states = 1; % Indexes to select for MPC control
 
 initialise_iris_gains;
-initialize_mpc_iris_no_load;
+initialize_mpc_iris_payload;
