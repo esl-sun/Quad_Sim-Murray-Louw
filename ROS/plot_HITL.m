@@ -84,3 +84,6 @@ title(['Simulink vs received sp - HITL - ', file_name])
 figure
 plot(diff(time))
 title('logging sample time')
+
+%% Plot CPU and Memory
+

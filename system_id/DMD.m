@@ -5,7 +5,7 @@
 reload_data = 0; % Re-choose csv data file for SITL data
 save_model = 1; % 1 = Save this model , 0 = dont save
 extract_data;
-plot_predictions = 1;
+plot_predictions = 0;
 
 plot_index = 737; % start index to save to csv. 0 to not write anything to csv
 
@@ -38,7 +38,7 @@ try
     
     only_q_Ts = 1; % Try best result for specific q
     if only_q_Ts
-        q = 20;
+        q = 50;
         q_results = results((results.q == q & results.Ts == Ts),:);
         best_row = find(q_results.MAE_mean == min(q_results.MAE_mean));
         best_results = q_results(best_row,:)
@@ -83,7 +83,7 @@ plot(p, S1(p,p), 'ro'), hold off;
 
 %% Save model
 if save_model
-    model_file = [uav_folder, '/models/dmd_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, latency_str, '.mat'];
+    model_file = [uav_folder, '/models/dmd_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '_Ts', num2str(Ts), payload_angle_str, latency_str, '.mat'];
     save(model_file, 'A_dmd', 'B_dmd', 'Ts', 'q', 'p', 'ny', 'nu', 'u_bar')
     disp('model saved')
 end
