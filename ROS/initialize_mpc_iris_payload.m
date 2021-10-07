@@ -3,6 +3,7 @@
 
 % Internal plant model
 % model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), '.mat'];
+'Need to choose model and then set to zero before Build and Load code'
 choose_model = 0
 if choose_model
     start_folder = [pwd, '/system_id/HITL/iris/models/*.mat'];

@@ -87,7 +87,7 @@ MAE
 
 %% Save model
 if save_model
-    model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, '.mat'];
+    model_file = [uav_folder, '/models/havok_model_', simulation_data_file, '_q', num2str(q), '_p', num2str(p), payload_angle_str, latency_str, '.mat'];
     save(model_file, 'A_havok', 'B_havok', 'Ts', 'q', 'p', 'ny', 'nu', 'u_bar')
     disp('model saved')
 end

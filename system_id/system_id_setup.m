@@ -22,7 +22,7 @@ T_train_max = 120; % Max value of training period in grid search
 T_train_increment = 10; % Increment value of training period in grid search
 
 q_min = 20; % Min value of q in grid search
-q_max = 80; % Max value of q in grid search
+q_max = 20; % Max value of q in grid search
 q_increment = 10; % Increment value of q in grid search
 
 p_min = 2; % Min value of p in grid search
@@ -47,6 +47,11 @@ if use_angular_rate
 else
     payload_angle_str = '_angle';
 end
+if add_training_latency
+    latency_str = ['_latency-', num2str(pos_control_latency)];
+else
+    latency_str = '';
+end
 
 % Create empty results table
 VariableTypes = {'double', 'int16',   'int16', 'int16', 'double'}; % id, q, p, MAE
@@ -61,7 +66,7 @@ Size = [length(q_search)*length(p_min:p_increment:p_max), length(VariableTypes)]
 uav_folder = ['system_id/', sim_type, '/', uav_name]; % Base folder for this uav
 
 % Read previous results
-results_file = [uav_folder, '/results/', simulation_data_file, '_', algorithm, payload_angle_str, '.mat'];
+results_file = [uav_folder, '/results/', simulation_data_file, '_', algorithm, payload_angle_str, latency_str, '.mat'];
 try
     load(results_file);
     results(~results.q,:) = []; % remove empty rows

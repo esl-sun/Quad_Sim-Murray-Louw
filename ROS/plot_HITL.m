@@ -42,7 +42,11 @@ simulink_acc_sp.x = data(:,20); % Local NED x acceleration setpoint commanded by
 simulink_acc_sp.y = data(:,21);
 simulink_acc_sp.z = data(:,22);
 
-qp_status= data(:,23);
+if size(data,2) > 22
+    qp_status= data(:,23);
+else
+    qp_status = ones(size(data,1),1);
+end
 
 %% Group data
 % y_data_noise = [vel.x, vel.y, vel.z]; % Data still noisy
